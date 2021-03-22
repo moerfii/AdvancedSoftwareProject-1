@@ -6,7 +6,7 @@ const { Pool } = require("pg");
 const cors = require("cors");
 const { query } = require("express");
 
-PORT = process.env.PORT;
+PORT = 8888
 
 const app = express();
 app.use( express.json());   //only needed if we have POST requests
