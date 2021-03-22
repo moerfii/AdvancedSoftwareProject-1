@@ -1,7 +1,7 @@
 #Build db
 FROM postgres:13 as dumper
 
-COPY test_dump.sql /docker-entrypoint-initdb.d/
+COPY pg_dump.sql /docker-entrypoint-initdb.d/
 
 RUN ["sed", "-i", "s/exec \"$@\"/echo \"skipping...\"/", "/usr/local/bin/docker-entrypoint.sh"]
 
