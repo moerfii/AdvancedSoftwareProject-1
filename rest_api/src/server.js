@@ -11,7 +11,7 @@ PORT = 8888
 const app = express();
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
-
+//to check on travis
 
 const pool = new Pool({
     host: process.env.DB_HOST,
@@ -37,7 +37,7 @@ app.get(
     "/listings",
     (req,res) => {
         pool.query(
-            "SELECT * FROM listing;",
+            "SELECT * FROM public.listing;",
             (error,result) => {
                 if(error) {console.log(error)}
                 res.status(200).send(result.rows);
@@ -97,11 +97,22 @@ app.get(
         )
     }
 )
-
-app.listen(
-    PORT,
-    () => {
-        console.log(`serving from port ${PORT}`);
+/*
+pool.query(
+    "SELECT * FROM pg_catalog.pg_tables;",
+    (error, result) => {
+        console.log(result.rows)
     }
 )
-
+*/
+console.log(pool.options)
+if(require.main === module) {
+    app.listen(
+        PORT,
+        () => {
+            console.log(`serving from port ${PORT}`);
+        }
+    )
+} else {
+    exports.app = app;
+}
