@@ -1,0 +1,51 @@
+language: node_js
+
+# define version
+node_js:
+ - 13
+
+addons:
+  postgresql: "12"
+  apt:
+    packages:
+      postgresql-12
+      postgresql-client-12
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U travis
+  - psql -c '\c travis_ci_test;' -U travis
+  - psql -c 'create table if not exists  listing (
+                	id integer primary key,
+                	name varchar(200),
+                	host_id integer,
+                	host_name Varchar(100),
+                	neighbourhood_group varchar(30),
+                	neighbourhood varchar(30),
+                	latitude decimal,
+                	longitude decimal,
+                	room_type varchar(15),
+                	price integer,
+                	minimum_nights integer,
+                	number_of_reviews integer,
+                	last_review date,
+                	reviews_per_month decimal,
+                	calculated_host_listing_count integer,
+                	availability_365 integer
+                );' -U travis
+  - psql -c 'create table if not exists review (
+                	listing_id integer references listing(id) on delete cascade,
+                	review_id integer primary key,
+                	date date,
+                	reviewer_id integer,
+                	reviewer_name varchar(100),
+                	comments text
+                );' -U travis
+  - psql -c "insert into listing values(1,'Clean & quiet apt home by the park',2787,'John','Brooklyn','Kensington','40.647490000000005',-73.97237,'Private room',149,1,9,'2018-10-19',0.21,6,365);" -U travis
+  - psql -c "insert into review values(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis    
+
+env:
+  - DB_HOST = 'localhost' PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME=travis_ci_test DB_USER=postgres DB_PASSWORD=''
+# command to run tests
+script:
+ - npm test
+

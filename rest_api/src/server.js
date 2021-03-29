@@ -98,10 +98,13 @@ app.get(
     }
 )
 
-app.listen(
-    PORT,
-    () => {
-        console.log(`serving from port ${PORT}`);
-    }
-)
-
+if(require.main === module) {
+    app.listen(
+        PORT,
+        () => {
+            console.log(`serving from port ${PORT}`);
+        }
+    )
+} else {
+    exports.app = app;
+}
