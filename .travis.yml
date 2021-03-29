@@ -16,7 +16,6 @@ jobs:
              - postgresql-12
              - postgresql-client-12
       before_script:
-			  - ls
         - cd rest_api
         - psql -c 'create database travis_ci_test;' -U travis
         - psql -c '\c travis_ci_test;' -U travis
