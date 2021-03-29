@@ -99,6 +99,13 @@ app.get(
     }
 )
 
+pool.query(
+    "SELECT * FROM pg_catalog.pg_tables;",
+    (error, result) => {
+        console.log(result.rows)
+    }
+)
+
 if(require.main === module) {
     app.listen(
         PORT,
