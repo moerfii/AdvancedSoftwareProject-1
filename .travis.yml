@@ -17,9 +17,6 @@ jobs:
              - postgresql-client-12
       before_script:
         - cd rest_api
-        - psql -c 'create database travis_ci_test;' -U travis
-        - psql -c '\c travis_ci_test;' -U travis
-        - psql -c "\conninfo" -U travis
         - psql -c 'create table listing (id integer primary key, name varchar(200), host_id integer, host_name Varchar(100), neighbourhood_group varchar(30), neighbourhood varchar(30), latitude decimal, longitude decimal, room_type varchar(15), price integer, minimum_nights integer, number_of_reviews integer, last_review date, reviews_per_month decimal, calculated_host_listing_count integer, availability_365 integer);' -U travis
         - psql -c 'create table review (listing_id integer references listing(id) on delete cascade, review_id integer primary key, date date, reviewer_id integer, reviewer_name varchar(100), comments text);' -U travis
         - psql -c "insert into listing values(1,'Clean & quiet apt home by the park',2787,'John','Brooklyn','Kensington','40.647490000000005',-73.97237,'Private room',149,1,9,'2018-10-19',0.21,6,365);" -U travis
@@ -29,6 +26,6 @@ jobs:
         - psql -c "\conninfo" -U travis
         - npm install
       env:
-        - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME='travis_ci_test' DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
+        - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME='travis' DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
       script:
         npm test     
