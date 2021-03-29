@@ -26,7 +26,7 @@ jobs:
         - npm install
         - psql -c "alter user travis with password 'travispassword'" -U travis
         - psql -c "select * from listing;" -U travis
-				- psql -c "commit;" -U travis
+        - psql -c "commit;" -U travis
       env:
         - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME=travis_ci_test DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
       script:
