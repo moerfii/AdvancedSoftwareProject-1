@@ -5,12 +5,12 @@ Since github does not allow large files I splitted the db dump into multiple fil
 
 0. Create an .env file and copy paste the following:
 
-PORT = 8888
-DB_HOST = postgres
-DB_USER = ase_user
-DB_PASSWORD = aseisgreat
-DB_NAME = ase
-DB_PORT= 5432
+PORT = 8888  
+DB_HOST = localhost  
+DB_USER = ase_user  
+DB_PASSWORD = aseisgreat  
+DB_NAME = ase  
+DB_PORT= 5432  
 
 1. go to /db and execute assembleDump.py
     -> the file pg_dump.sql should appear in this folder
