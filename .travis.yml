@@ -25,6 +25,7 @@ jobs:
         - psql -c "insert into review values(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
         - npm install
         - psql -c "alter user travis with password 'travispassword'" -U travis
+        - psql -c "select * from listing;" -U travis
       env:
         - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME=travis_ci_test DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
       script:
