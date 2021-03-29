@@ -12,8 +12,7 @@ const app = express();
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
 //to check on travis
-console.log(process.env.DB_PASSWORD)
-console.log(process.env.DB_NAME)
+
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -98,14 +97,15 @@ app.get(
         )
     }
 )
-
+/*
 pool.query(
     "SELECT * FROM pg_catalog.pg_tables;",
     (error, result) => {
         console.log(result.rows)
     }
 )
-
+*/
+console.log(pool.options)
 if(require.main === module) {
     app.listen(
         PORT,
