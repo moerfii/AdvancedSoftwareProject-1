@@ -24,6 +24,6 @@ jobs:
         - psql -c "insert into listing values(1,'Clean & quiet apt home by the park',2787,'John','Brooklyn','Kensington','40.647490000000005',-73.97237,'Private room',149,1,9,'2018-10-19',0.21,6,365);" -U travis
         - psql -c "insert into review values(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
       env:
-        - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME=travis_ci_test DB_USER=travis DB_PASSWORD=''
+        - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME=travis_ci_test DB_USER=travis DB_PASSWORD='' PGPORT=5433 PGUSER=travis
       script:
         npm test     
