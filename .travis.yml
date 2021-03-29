@@ -16,7 +16,8 @@ jobs:
              - postgresql-12
              - postgresql-client-12
       before_script:
-        - cd rest-api
+			  - ls
+        - cd rest_api
         - psql -c 'create database travis_ci_test;' -U travis
         - psql -c '\c travis_ci_test;' -U travis
         - psql -c 'create table if not exists  listing (id integer primary key, name varchar(200), host_id integer, host_name Varchar(100), neighbourhood_group varchar(30), neighbourhood varchar(30), latitude decimal, longitude decimal, room_type varchar(15), price integer, minimum_nights integer, number_of_reviews integer, last_review date, reviews_per_month decimal, calculated_host_listing_count integer, availability_365 integer);' -U travis
