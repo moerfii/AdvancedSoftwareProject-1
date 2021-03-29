@@ -13,7 +13,7 @@ app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
 //to check on travis
 console.log(process.env.DB_PASSWORD)
-
+console.log(process.env.DB_NAME)
 const pool = new Pool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
