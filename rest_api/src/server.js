@@ -38,7 +38,7 @@ app.get(
     "/listings",
     (req,res) => {
         pool.query(
-            "SELECT * FROM listing;",
+            "SELECT * FROM public.listing;",
             (error,result) => {
                 if(error) {console.log(error)}
                 res.status(200).send(result.rows);
