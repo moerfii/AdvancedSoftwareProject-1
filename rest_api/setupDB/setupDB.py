@@ -18,8 +18,8 @@ def createTables():
     print("Creating tables")
     conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD}")
     cur = conn.cursor()
-    cur.execute("drop table review")
-    cur.execute("Drop table listing")
+    #cur.execute("drop table review")
+    #cur.execute("Drop table listing")
     cur.execute("""
                 create table if not exists  listing (
                 	id integer primary key,
