@@ -42,11 +42,11 @@ Data for a specific review, e.g.
 **/**  
 overview page.  
 
-**/listings**
+**/listings**  
 returns all listing as json
 Example request: ```http://localhost:8888/listings```
 
-**/listings/location**
+**/listings/location**  
 Returns the id, longitude and latitude of all listings.  
 
 Accepts the following Search parameters for longitude and latitude:  
@@ -59,7 +59,7 @@ Example Request:  ```http://localhost:8888/listings/location?lon1=10&lon2=20&lat
 returns all data for listing with _ID_.  
 Example request: ```http://localhost:8888/listing/2539```  
   
-**/listing/_ID_/reviews**
+**/listing/_ID_/reviews**  
 returns all reviews for listing with _ID_.  
 Example request: ```http://localhost:8888/listing/2539/reviews```  
   
