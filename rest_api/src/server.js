@@ -37,15 +37,47 @@ app.get(
     "/listings",
     (req,res) => {
         pool.query(
-            "SELECT * FROM public.listing;",
+            "SELECT * FROM listing;",
             (error,result) => {
-                if(error) {console.log(error)}
-                res.status(200).send(result.rows);
+                if(error) {
+                    console.log(error)
+                    res.status(500).send();
+                } else {
+                    console.log(result.rows)
+                    res.status(200).send(result.rows);
+                }
             }
         )
     }
 )
 
+/*
+returns locations of all listings
+*/
+app.get(
+    "/listings/location",
+    (req,res) => {
+        var lat1 = req.query.lat1 ? Number(req.query.lat1) : -180
+        var lat2 = req.query.lat2 ? Number(req.query.lat2) :  180
+        var lon1 = req.query.lon1 ? Number(req.query.lon1) : -180
+        var lon2 = req.query.lon2 ? Number(req.query.lon2) :  180
+        pool.query(
+            `SELECT id, longitude, latitude
+             FROM listing
+             WHERE longitude >= $1 AND longitude <= $2
+             AND latitude >= $3 AND latitude <= $4;`,
+             [lon1, lon2, lat1, lat2],
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
 /*
 Returns specific listing
 */
@@ -56,8 +88,12 @@ app.get(
             "SELECT * FROM listing WHERE id=$1",
             [req.params.id],
             (error,result) => {
-                if(error) {console.log(error)}
-                res.status(200).send(result.rows);
+                if(error) {
+                    console.log(error)
+                    res.status(500).send()
+                } else {
+                    res.status(200).send(result.rows);
+                }
             }
         )
     })
@@ -73,8 +109,12 @@ app.get(
             "SELECT * FROM review WHERE listing_id=$1",
             [req.params.id],
             (error, result) => {
-                if(error) {console.log(error)}
-                res.status(200).send(result.rows);
+                if(error) {
+                    console.log(error)
+                    res.status(500).send()
+                } else {
+                    res.status(200).send(result.rows);
+                }
             }
         )
     }
@@ -91,21 +131,17 @@ app.get(
             "SELECT * FROM review WHERE listing_id=$1 AND review_id=$2",
             [req.params.id, req.params.review_id],
             (error,result) => {
-                if(error) {console.log(error)}
-                res.status(200).send(result.rows);
+                if(error) {
+                    console.log(error)
+                    res.status(500).send()
+                } else {
+                    res.status(200).send(result.rows);
+                }
             }
         )
     }
 )
-/*
-pool.query(
-    "SELECT * FROM pg_catalog.pg_tables;",
-    (error, result) => {
-        console.log(result.rows)
-    }
-)
-*/
-console.log(pool.options)
+
 if(require.main === module) {
     app.listen(
         PORT,

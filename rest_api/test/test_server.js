@@ -1,5 +1,6 @@
 var chai = require("chai")
     ,chaiHttp = require("chai-http") ;
+const { get } = require("superagent");
 chai.use(chaiHttp);
 var {app} = require("../src/server.js");
 
@@ -16,6 +17,16 @@ describe("Checking all requests/responses", () => {
                expect(res).to.have.status(200);
                done();
            })
+        })
+    })
+    describe("Get location data of all reviews", () => {
+        it("returns status 200", (done) => {
+            chai.request(app)
+            .get("/listings/location")
+            .end((err,res) => {
+                expect(res).to.have.status(200);
+                done();
+            })
         })
     })
     describe("get listing #2539 (/listing/2539)", () => {
@@ -35,7 +46,7 @@ describe("Checking all requests/responses", () => {
             .end(function (err, res) {
                 expect(res).to.have.status(200);
                 done();
-            })
+            }).timeout(5000)
         })
     })
     describe("get review #55688172 of listing  #2539 (/listing/2539/reviews/55688172)", () => {
