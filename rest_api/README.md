@@ -38,34 +38,35 @@ Data for a specific review, e.g.
 ```
 
 ## Queries
+### Adding Search Params
+To add a search param to a request use ```COLUMNNAME.OPERATOR=VALUE```, where `COLUMNNAME` is a columnname as defined in the db models section. `OPERATOR` can take the following values: eq for =, ge for >=, le for <=. `VALUE` is the value you want to send, note that if the value is a string you must enclose it in '' e.g. `'a string'`  
+To add search params to a GET request use `URL?COLUMNNAME.OPERATOR=VALUE`, e.g. `http://localhost:8888/listings?latitude.le=70`. To chain search parameters use & e.g.`http://localhost:8888/listings?latitude.le=70&longitude.eq=4`
+
 ### GET
 **/**  
 overview page.  
 
 **/listings**  
-returns all listing as json
+returns all listing as json. Accepts search params.  
 Example request: ```http://localhost:8888/listings```
 
 **/listings/location**  
-Returns the id, longitude and latitude of all listings.  
+Returns the id, longitude and latitude of all listings. Accepts search params.  
 
-Accepts the following Search parameters for longitude and latitude:  
-lat1, lat2, lon1, lon2. If they are not specified they will be set to 
-either -180 (lat1, lon1) or 180(lat2, lon2). The query will then return
-all listings between lat1 and lat2 and between lon1 and lon2.  
-Example Request:  ```http://localhost:8888/listings/location?lon1=10&lon2=20&lat1=-70&lat2=0```   
+Example Request:  ```http://localhost:8888/listings/location?longitude.ge=10&longitude.le=20&latitude.ge=-70&latitude.le=0```   
 
 **listing/_ID_**  
-returns all data for listing with _ID_.  
+returns all data for listing with _ID_. Doesn't accept search params.  
 Example request: ```http://localhost:8888/listing/2539```  
   
 **/listing/_ID_/reviews**  
-returns all reviews for listing with _ID_.  
+returns all reviews for listing with _ID_. Accepts search params.  
 Example request: ```http://localhost:8888/listing/2539/reviews```  
   
 **/listing/_ID_/review/_REVIEWID_**  
-returns review with id _REVIEWID_ for listing with id _ID_.  
+returns review with id _REVIEWID_ for listing with id _ID_. Doesn't accept search params.  
 Example request: ```http://localhost:8888/listing/2539/review/55688172```    
+
 ## Setup
 Since github does not allow large files I splitted the db dump into multiple files.
 
