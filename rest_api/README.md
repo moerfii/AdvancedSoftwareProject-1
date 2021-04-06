@@ -70,17 +70,25 @@ Example request: ```http://localhost:8888/listing/2539/review/55688172```
 ## Setup
 Since github does not allow large files I splitted the db dump into multiple files.
 
-0. Create an .env file and copy paste the following:
+0. Create an .env file, copy paste the following and add your infos to it:
 
 PORT = 8888  
 DB_HOST = localhost  
-DB_USER = ase_user  
-DB_PASSWORD = aseisgreat  
-DB_NAME = ase  
-DB_PORT= 5432  
+DB_USER = YOUR_POSTGRES_USER_NAME  
+DB_PASSWORD = YOUR_POSTGRES_PASSWORD  
+DB_NAME = YOUR_DB_NAME  
+DB_PORT= YOUR_POSTGRES_PORT  
 
+if you use docker:
 1. go to /db and execute assembleDump.py
     -> the file pg_dump.sql should appear in this folder
 2. come back here and use "docker compose up"
     -> rest_api and db should be built and run
     -> access rest_api via browser on "http://localhost:8888/", there you will find an overview
+
+if you use node directly:
+1. Go into the setupDB folder, modify the setupDB.py file so that it connects to your database
+2. download the necessary data and store them in a new directory called data
+3. execute setup.py
+4. go into the rest_api folder and use `npm install`
+5. use `npm start` 
