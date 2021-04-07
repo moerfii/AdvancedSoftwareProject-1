@@ -320,13 +320,13 @@ app.get(
 )
 
 app.get(
-    "/reviews/:listing_id",
+    "/reviews/:id",
     (req,res) => {
-        var query = `SELECT * FROM review WHERE listing_id=$1`
+        var query = `SELECT * FROM review WHERE id=$1`
         
         pool.query(
             query,
-            [req.params.listing_id],
+            [req.params.id],
             (error, result) => {
                 if(error) {
                     console.log(error)
