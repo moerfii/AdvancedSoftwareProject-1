@@ -2,28 +2,94 @@
 
 
 ## DB Models
-*listing*  
-Has data for each listing, e.g.  
+*listing_location*  
+stores id, latitude, longitude 
+example
 ```
 {
-    id: 22911,  
-    name: 'The Stuydio Modern and Light Filled',  
-    host_id: 87773,  
-    host_name: 'Shelly',  
-    neighbourhood_group: 'Brooklyn',  
-    neighbourhood: 'Bedford-Stuyvesant',  
-    latitude: '40.684129999999996',  
-    longitude: '-73.92357',  
-    room_type: 'Entire home/apt',  
-    price: 125,  
-    minimum_nights: 7,  
-    number_of_reviews: 139,  
-    last_review: 2018-10-27T22:00:00.000Z,  
-    reviews_per_month: '1.23',  
-    calculated_host_listing_count: 2,  
-    availability_365: 311  
+    "id": 2539,
+    "latitude": "40.647490000000005",
+    "longitude": "-73.97237"
+  
 }
 ```
+  
+*listing_detail*
+stores additional information relevant to the consumer
+example
+```
+ {
+    "id": 2539,
+    "thumbnail_url": null,
+    "medium_url": null,
+    "picture_url": "https://a0.muscache.com/im/pictures/3949d073-a02e-4ebc-aa9c-ac74f00eaa1f.jpg?aki_policy=large",
+    "xl_picture_url": null,
+    "name": "Clean & quiet apt home by the park",
+    "listing_url": "https://www.airbnb.com/rooms/2539",
+    "price": 0,
+    "summary": "Renovated apt home in elevator building.",
+    "space": "Spacious, renovated, and clean apt home, one block to F train, 25 minutes to lower Manhatten",
+    "description": "Renovated apt home in elevator building. Spacious, renovated, and clean apt home, one block to F train, 25 minutes to lower Manhatten Close to Prospect Park and Historic Ditmas Park Very close to F and G trains and Express bus into NY.  The B and Q are closeby also. If this room is unavailable on your desired dates, check out our other rooms, such as:  https://www.airbnb.com/rooms/10267242",
+    "neighborhood_overview": "Close to Prospect Park and Historic Ditmas Park",
+    "transit": "Very close to F and G trains and Express bus into NY.  The B and Q are closeby also.",
+    "access": null,
+    "host_id": 2787,
+    "guests_included": 1,
+    "number_of_reviews": 9
+ }
+```
+  
+*listing_other*
+stores other information  
+example  
+```
+{
+    "id": 2539,
+    "square_feet": 0,
+    "property_type": "Apartment",
+    "room_type": "Private room",
+    "neighbourhood_cleansed": "Kensington",
+    "neighbourhood_group_cleansed": "Brooklyn",
+    "minimum_nights": 1,
+    "maximum_nights": 730
+}
+```
+  
+*listing_reviews*
+stores review ratings  
+example  
+```
+{
+    "id": 2539,
+    "review_scores_rating": "98.0",
+    "review_scores_accuracy": "10.0",
+    "review_scores_cleanliness": "10.0",
+    "review_scores_checkin": "10.0",
+    "review_scores_communication": "10.0",
+    "review_scores_location": "10.0",
+    "review_scores_value": "10.0"
+}
+```
+  
+*host*
+stores host data
+example
+```
+{
+    "host_id": 2787,
+    "host_location": "New York, New York, United States",
+    "host_is_superhost": "f",
+    "host_neighbourhood": "Gravesend",
+    "host_listings_count": 6,
+    "host_total_listings_count": 6,
+    "host_identity_verified": "t",
+    "calculated_host_listings_count": 6,
+    "calculated_host_listings_count_entire_homes": 0,
+    "calculated_host_listings_count_private_rooms": 5,
+    "calculated_host_listings_count_shared_rooms": 1
+}
+```
+
 *review*  
 Data for a specific review, e.g.
 ```
@@ -43,29 +109,53 @@ To add a search param to a request use ```COLUMNNAME.OPERATOR=VALUE```, where `C
 To add search params to a GET request use `URL?COLUMNNAME.OPERATOR=VALUE`, e.g. `http://localhost:8888/listings?latitude.le=70`. To chain search parameters use & e.g.`http://localhost:8888/listings?latitude.le=70&longitude.eq=4`
 
 ### GET
+all GET requests can be expanded with `/ID` to get data for a specific id, naturally this query doesn't accept search parameters.   e.g. ```http://localhost:8888/listing_location/2539```  
+  
+  
 **/**  
-overview page.  
+overview page. outdated  
 
-**/listings**  
-returns all listing as json. Accepts search params.  
-Example request: ```http://localhost:8888/listings```
+**/listing_location**  
+returns all location data. Accepts search params.  
+Example requests:   
+```http://localhost:8888/listing_location```  
+```http://localhost:8888/listing_location?longitude.ge=-70&latitude.le=0```  
+```http://localhost:8888/listing_location/2539```  
 
-**/listings/location**  
-Returns the id, longitude and latitude of all listings. Accepts search params.  
+**/listing_detail**  
+Connects to db with same name. 
+Example reequests:  
+```http://localhost:8888/listing_detail``` NOTE: Try not to use this, since it delivers over 100MB of data  
+```http://localhost:8888/listing_detail?&price.le=100&guests_included.ge=2```   
+```http://localhost:8888/listing_detail/2539```   
 
-Example Request:  ```http://localhost:8888/listings/location?longitude.ge=10&longitude.le=20&latitude.ge=-70&latitude.le=0```   
+**listing_other**  
+Connects to db with same name.   
+Example request:  
+```http://localhost:8888/listing_other```  
+```http://localhost:8888/listing_other?square_feet.ge=100```  
+```http://localhost:8888/listing_other/2539```  
 
-**listing/_ID_**  
-returns all data for listing with _ID_. Doesn't accept search params.  
-Example request: ```http://localhost:8888/listing/2539```  
-  
-**/listing/_ID_/reviews**  
+
+**listing_reviews**
+Connects to db with same name.
+```http://localhost:8888/listing_reviews```  
+```http://localhost:8888/listing_reviews?review_scores_cleanliness.ge=5```  
+```http://localhost:8888/listing_reviews/2539```  
+
+**host**
+Connects to db with same name.  
+```http://localhost:8888/host```  
+```http://localhost:8888/host?host_is_superhost='t'```  
+```http://localhost:8888/host/2787```  
+
+**/reviews**  
 returns all reviews for listing with _ID_. Accepts search params.  
-Example request: ```http://localhost:8888/listing/2539/reviews```  
+Example request: 
+```http://localhost:8888/reviews``` NOTE: Too much data don't use this  
+```http://localhost:8888/reviews?listing_id.eq=2595```  
+```http://localhost:8888/listing/17857```  
   
-**/listing/_ID_/review/_REVIEWID_**  
-returns review with id _REVIEWID_ for listing with id _ID_. Doesn't accept search params.  
-Example request: ```http://localhost:8888/listing/2539/review/55688172```    
 
 ## Setup
 Since github does not allow large files I splitted the db dump into multiple files.
