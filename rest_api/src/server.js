@@ -4,8 +4,7 @@ dotenv.config();
 const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
-const { query } = require("express");
-var sanitizer = require("sanitize")();
+
 
 PORT = 8888
 
@@ -55,7 +54,6 @@ function buildQuery(queryString,query,setAND=false) {
         const val = value.replace(/[";]/g,"")
         queryString += `${colName} ${operator} ${val}`
      });
-     console.log(queryString);
      return queryString
 }
 /*
@@ -80,7 +78,6 @@ app.get(
                     console.log(error)
                     res.status(500).send();
                 } else {
-                    console.log(result.rows)
                     res.status(200).send(result.rows);
                 }
             }
