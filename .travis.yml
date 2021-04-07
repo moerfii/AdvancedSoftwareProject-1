@@ -4,8 +4,8 @@ jobs:
       python: 3.7
       before_script:
         - cd Frontend
-      script:
-        - pytest
+      install:
+        -  pip install -r requirements.txt
 
     - language: node_js
       node_js: 13 
