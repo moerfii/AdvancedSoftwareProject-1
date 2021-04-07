@@ -92,12 +92,179 @@ app.get(
 returns locations of all listings
 */
 app.get(
-    "/listings/location",
+    "/listing_location",
     (req,res) => {
-        var query = "SELECT id, longitude, latitude FROM listing"
+        var query = "SELECT * FROM listing_location"
         query = buildQuery(query,req.query)
         pool.query(
             query,
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/listing_location/:id",
+    (req,res) => {
+        var query = "SELECT * FROM listing_location WHERE id=$1"
+        pool.query(
+            query,
+            [req.params.id],
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/listing_detail",
+    (req,res) => {
+        var query = "SELECT * FROM listing_detail"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/listing_detail/:id",
+    (req,res) => {
+        var query = "SELECT * FROM listing_detail WHERE id=$1"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            [req.params.id],
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+
+app.get(
+    "/listing_other",
+    (req,res) => {
+        var query = "SELECT * FROM listing_other"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+
+app.get(
+    "/listing_other/:id",
+    (req,res) => {
+        var query = "SELECT * FROM listing_other WHERE id=$1"
+        pool.query(
+            query,
+            [req.params.id],
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/listing_reviews",
+    (req,res) => {
+        var query = "SELECT * FROM listing_reviews"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/listing_reviews/:id",
+    (req,res) => {
+        var query = "SELECT * FROM listing_reviews WHERE id=$1"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            [req.params.id],
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/host",
+    (req,res) => {
+        var query = "SELECT * FROM host"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            (error, result) => {
+                if(error) {
+                    console.log(error);
+                    res.status(500).send();
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
+app.get(
+    "/host/:id",
+    (req,res) => {
+        var query = "SELECT * FROM host WHERE host_id=$1"
+        query = buildQuery(query,req.query)
+        pool.query(
+            query,
+            [req.params.id],
             (error, result) => {
                 if(error) {
                     console.log(error);
@@ -134,13 +301,12 @@ app.get(
 returns reviews for listing id
 */
 app.get(
-    "/listing/:id/reviews",
+    "/reviews",
     (req,res) => {
-        var query = buildQuery(`SELECT * FROM review WHERE listing_id=$1 `,req.query,true)
+        var query = buildQuery(`SELECT * FROM review`,req.query)
         
         pool.query(
             query,
-            [req.params.id],
             (error, result) => {
                 if(error) {
                     console.log(error)
@@ -153,7 +319,25 @@ app.get(
     }
 )
 
-
+app.get(
+    "/reviews/:listing_id",
+    (req,res) => {
+        var query = `SELECT * FROM review WHERE listing_id=$1`
+        
+        pool.query(
+            query,
+            [req.params.listing_id],
+            (error, result) => {
+                if(error) {
+                    console.log(error)
+                    res.status(500).send()
+                } else {
+                    res.status(200).send(result.rows);
+                }
+            }
+        )
+    }
+)
 /*
 returns specific review for specific listing
 */
