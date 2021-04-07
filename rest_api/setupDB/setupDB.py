@@ -18,8 +18,9 @@ def createTables():
     print("Creating tables")
     conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD}")
     cur = conn.cursor()
-    cur.execute("drop table review")
-    debug=True
+    debug=False
+
+
     if not debug:
         cur.execute(
             """
@@ -99,25 +100,25 @@ def createTables():
             )
             """
         )
-    cur.execute(
-        """
-        create table if not exists review (
-            listing_id integer,
-            id integer primary key,
-            date date,
-            reviewer_id integer,
-            reviewer_name varchar(100),
-            comments text
+        cur.execute(
+            """
+            create table if not exists review (
+                listing_id integer,
+                id integer primary key,
+                date date,
+                reviewer_id integer,
+                reviewer_name varchar(100),
+                comments text
+            )
+            """
         )
-        """
-    )
     conn.commit()
     conn.close()
 
 def addListingsAndHost(path):
     engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
     df = pd.read_csv(path)
-    """
+    
     listing_location = df[['id','latitude','longitude']]
     streamData(listing_location,'listing_location')
     
@@ -146,11 +147,12 @@ def addListingsAndHost(path):
     listing_detail = replaceNewline(listing_detail,'neighborhood_overview')
     listing_detail = replaceNewline(listing_detail,'transit')
     listing_detail = replaceNewline(listing_detail,'access')
-    listing_detail['price'] = listing_detail['price'].str.replace("$",'').str.replace(",",'').str.replace('','0').str.replace('.00','').str.replace('.0','')
-    listing_detail.fillna("",inplace=True)
+    listing_detail['price'] = listing_detail['price'].str.replace("$",'').str.replace(",",'').str.replace('.00','')
+    listing_detail.loc[listing_detail['price']=='','price'] = 0
+    listing_detail['price'] = listing_detail['price'].astype(np.int32)
     listing_detail = listing_detail.drop([20395,32319,41689,42208],axis=0)
     streamData(listing_detail,'listing_detail')
-    
+
     listing_other = df[[
         'id',
         'square_feet',
@@ -161,8 +163,8 @@ def addListingsAndHost(path):
         'minimum_nights',
         'maximum_nights'
     ]]
-    listing_other['square_feet'] = listing_other['square_feet'].astype(str)
-    listing_other['square_feet'] = listing_other['square_feet'].str.replace('','0').str.replace('.00','').str.replace('.0','')
+    listing_other['square_feet'].fillna(0,inplace=True)
+    listing_other['square_feet'] = listing_other['square_feet'].astype(np.int32)
 
     streamData(listing_other,"listing_other")
     
@@ -177,7 +179,7 @@ def addListingsAndHost(path):
         'review_scores_value',
     ]]
     streamData(listing_reviews,"listing_reviews")
-    """
+    
     host = df[[
         'host_id',
         'host_location',
@@ -267,8 +269,9 @@ def deleteUnnecessaryChars(df,column):
     return df
 
 if __name__=="__main__":
+    
     createTables()
-    #addListingsAndHost("data/listings.csv")
+    addListingsAndHost("data/listings.csv")
     addReviews("data/reviews.csv")
 
 
