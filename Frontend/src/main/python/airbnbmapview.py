@@ -4,6 +4,7 @@ from kivy.app import App
 import requests
 import json
 from airbnbmarker import AirbnbMarker
+from kivy_garden.mapview import clustered_marker_layer
 
 
 class AirbnbMapView(MapView):
@@ -24,6 +25,9 @@ class AirbnbMapView(MapView):
         lat1, lon1, lat2, lon2 = self.get_bbox()
         data = requests.get(f"http://localhost:8888/listings/location?lat1={lat1}&lat2={lat2}&lon1={lon1}&lon2={lon2}")
         listings = json.loads(data.text)
+
+        layer = clustered_marker_layer()
+
         for listing in listings:
             id = listing['id']
             if id in self.listing_id_list:
@@ -39,7 +43,7 @@ class AirbnbMapView(MapView):
         marker.listing_data = listing
 
         # add marker to map
-        self.add_widget(marker)
+        self.add_marker(marker)
 
         # keep track of markers id (avoid adding marker twice and keep it onscreen)
         id = listing['id']
