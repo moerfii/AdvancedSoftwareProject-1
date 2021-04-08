@@ -3,3 +3,11 @@ node_modules
 pg_dump.sql
 data
 .idea
+.coverage
+__pycache__
+target
+.idea
+.toml
+env
+.png
+cache
