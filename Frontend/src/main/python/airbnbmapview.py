@@ -1,16 +1,17 @@
-from kivy_garden.mapview import MapView, MapMarkerPopup
+from kivy_garden.mapview import MapView
 from kivy.clock import Clock
 from kivy.app import App
+from kivy_garden.mapview.clustered_marker_layer import ClusteredMarkerLayer
+from kivy_garden.mapview import MapMarkerPopup
+
 import requests
 import json
 from airbnbmarker import AirbnbMarker
-from kivy_garden.mapview.clustered_marker_layer import ClusterMapMarker
 
 
 class AirbnbMapView(MapView):
     getting_airbnb_timer = None
     listing_id_list = []
-    layer = ClusterMapMarker
 
     def start_getting_airbnb_in_fov(self):
         # After one second, get listings in field of view
@@ -27,16 +28,36 @@ class AirbnbMapView(MapView):
         data = requests.get(f"http://localhost:8888/listings/location?lat1={lat1}&lat2={lat2}&lon1={lon1}&lon2={lon2}")
         listings = json.loads(data.text)
 
+        layer = ClusteredMarkerLayer()
         for listing in listings:
             id = listing['id']
             if id in self.listing_id_list:
                 continue
             else:
-                lat = float(listing['latitude']) * 180 - 90
-                lon = float(listing['longitude']) * 360 - 180
-                MapMarkerPopup.source = 'marker.png'
-                self.layer.add_marker(lon=lon, lat=lat, cls=MapMarkerPopup, options={'source': 'marker.png'})
-                listing_id = listing['id']
-                self.listing_id_list.append(listing_id)
+                # self.add_listing(listing)
+                layer.add_marker(
+                    # id_listing=listing['id'],
+                    lon=float(listing['longitude']),
+                    lat=float(listing['latitude']),
+                    cls=AirbnbMarker,
+                    options={
+                        "source": "marker.png",
+                        "id_listing": listing['id']
+                    }
+                )
 
-        self.add_widget(self.layer)
+        self.add_widget(layer)
+
+        def add_listing(self, listing):
+            # create marker
+            lat = listing['latitude']
+            lon = listing['longitude']
+            marker = AirbnbMarker(id_listing=listing['id'], lat=lat, lon=lon, source='marker.png')
+            marker.listing_data = listing
+
+            # add marker to map
+            self.add_widget(marker)
+
+            # keep track of markers id (avoid adding marker twice and keep it onscreen)
+            id = listing['id']
+            self.listing_id_list.append(id)
