@@ -25,7 +25,7 @@ class AirbnbMapView(MapView):
     def get_airbnb_in_fov(self, *args):
         app = App.get_running_app()
         lat1, lon1, lat2, lon2 = self.get_bbox()
-        data = requests.get(f"http://localhost:8888/listings/location?lat1={lat1}&lat2={lat2}&lon1={lon1}&lon2={lon2}")
+        data = requests.get(f"http://localhost:8888/listing_location?latitude.ge={lat1}&latitude.le={lat2}&longitude.ge={lon1}&longitude.le={lon2}")
         listings = json.loads(data.text)
 
         layer = ClusteredMarkerLayer()
