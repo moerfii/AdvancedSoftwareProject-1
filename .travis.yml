@@ -1,6 +1,9 @@
 jobs:
-  include:
+  include:        
     - language: python
+      addons:
+        sonarcloud:
+          organization: "flruee" 
       python: 3.7
       before_script:
         - cd Frontend
@@ -8,8 +11,12 @@ jobs:
       script:
         - cd src/unittest/python
         - pytest test_test.py
+        - sonar-scanner
         
     - language: node_js
+      addons:
+        sonarcloud:
+          organization: "flruee" 
       node_js: 13 
       addons:
          postgresql: 12
