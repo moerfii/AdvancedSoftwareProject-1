@@ -2,6 +2,7 @@
 
 
 ScreenManager:
+    id: screen_manager
     MapScreen:
     FormScreen:
     CompareScreen:
@@ -18,7 +19,7 @@ ScreenManager:
 
 
 <MapScreen>
-    name: 'map'
+    name: 'mapscreen'
     BoxLayout:
         orientation: 'vertical'
         MDToolbar:
@@ -26,24 +27,29 @@ ScreenManager:
             left_action_items: [["menu", lambda x: app.callback(x)]]
             right_action_items: [['magnify', lambda x: app.search_menu.show_confirmation_dialog()]]
             md_bg_color: app.theme_cls.primary_color
-
+        MDSlider:
+            id: listing_count
+            min: 0
+            max: 10000
+            color: app.theme_cls.accent_color
+            size_hint: [0.5,0.10]
         AirbnbMapView:
 
 
 <FormScreen>
-    name: 'form'
+    name: 'formscreen'
     BoxLayout:
         Button:
             text: 'Go to Map'
             on_press:
                 root.manager.transition.direction = 'right'
-                root.manager.current = 'map'
+                root.manager.current = 'mapscreen'
 
 <CompareScreen>
-    name: 'compare'
+    name: 'comparescreen'
     BoxLayout:
         Button:
             text: 'Go to Map'
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.current = 'map'
+                root.manager.current = 'mapscreen'

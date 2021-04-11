@@ -1,4 +1,6 @@
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
 
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.app import MDApp
@@ -8,8 +10,12 @@ from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 
 
+class ContentNavigationDrawer(BoxLayout):
+    screen_manager = ObjectProperty()
+    nav_drawer = ObjectProperty()
 
 class MapScreen(Screen):
+
     pass
 
 class FormScreen(Screen):
@@ -47,9 +53,9 @@ class MainApp(MDApp):
             width_mult=4,
         )
         self.sm = ScreenManager(transition=WipeTransition())
-        self.sm.add_widget(MapScreen(name='map'))
-        self.sm.add_widget(FormScreen(name='form'))
-        self.sm.add_widget((CompareScreen(name='compare')))
+        self.sm.add_widget(MapScreen(name='mapscreen'))
+        self.sm.add_widget(FormScreen(name='formscreen'))
+        self.sm.add_widget((CompareScreen(name='comparescreen')))
         return self.sm
 
     def callback(self, button):
