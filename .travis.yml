@@ -44,5 +44,4 @@ jobs:
         - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME='travis' DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
       script:
         - npm test
-        - cd ..
         - sonar-scanner
