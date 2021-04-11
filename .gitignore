@@ -11,3 +11,4 @@ target
 env
 .png
 cache
+.vscode
