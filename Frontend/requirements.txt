@@ -13,8 +13,6 @@ importlib-metadata==3.10.0
 kivy-garden.mapview==1.0.5
 mapview==1.0.5
 mockito==1.2.2
-packaging==0.9
-pip==21.0.1
 pluggy==0.13.1
 py==1.10.0
 pybuilder==0.12.10
