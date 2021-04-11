@@ -10,9 +10,6 @@ colorama==0.4.4
 docutils==0.16
 idna==2.10
 importlib-metadata==3.10.0
-kivy-deps.angle==0.3.0
-kivy-deps.glew==0.3.0
-kivy-deps.sdl2==0.3.1
 kivy-garden.mapview==1.0.5
 mapview==1.0.5
 mockito==1.2.2
