@@ -57,6 +57,16 @@ function buildQuery(queryString,query,setAND=false) {
      });
      return queryString
 }
+
+function returnDBResults(error, result,res) {
+    if(error) {
+        console.log(error);
+        res.status(500).send();
+    } else {
+
+        res.status(200).send(result.rows);
+    }
+}
 /*
 overview site
 */
@@ -77,15 +87,8 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
+            (error,result) => returnDBResults(error,result,res)
+        );        
     }
 )
 app.get(
@@ -95,14 +98,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -113,14 +109,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -132,14 +121,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -151,14 +133,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -170,14 +145,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -188,14 +156,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -207,14 +168,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -225,14 +179,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -244,14 +191,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -266,14 +206,7 @@ app.get(
         
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -286,14 +219,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
