@@ -27,8 +27,8 @@ jobs:
         - psql -c "INSERT INTO listing_other VALUES(1,0,'Apartment','Private room','Kensington','Brooklyn',1,730);"
         - psql -c 'CREATE TABLE listing_reviews(id integer NOT NULL,review_scores_rating numeric,review_scores_accuracy numeric,review_scores_cleanliness numeric,review_scores_checkin numeric,review_scores_communication numeric,review_scores_location numeric,review_scores_value numeric,CONSTRAINT listing_reviews_pkey PRIMARY KEY (id));'
         - psql -c "INSERT INTO listing_reviews VALUES(1,98.0,10.0,10.0,10.0,10.0,10.0,10.0);"
-        - psql -c 'CREATE TABLE review (listing_id integer references listing(id) on delete cascade, review_id integer primary key, date date, reviewer_id integer, reviewer_name varchar(100), comments text);' -U travis
-        - psql -c "INSERT INTO review vVALUES(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
+        - psql -c 'CREATE TABLE review (listing_id integer, review_id integer primary key, date date, reviewer_id integer, reviewer_name varchar(100), comments text);' -U travis
+        - psql -c "INSERT INTO review VALUES(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
         - psql -c "alter user travis with password 'travispassword'" -U travis
         - npm install
       env:
