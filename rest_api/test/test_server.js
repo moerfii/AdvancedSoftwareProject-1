@@ -140,15 +140,6 @@ describe("Checking all requests/responses", () => {
         }).timeout(5000)
     })
     describe("/reviews", () => {
-        /*
-        it("returns status 200", (done) => {
-            chai.request(app)
-            .get("/reviews")
-            .end(function (err, res) {
-                expect(res).to.have.status(200);
-                done();
-            })
-        }).timeout(10000)*/
         it("returns status 200 for id 17857", (done) => {
             chai.request(app)
             .get("/reviews/17857")

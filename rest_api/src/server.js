@@ -6,9 +6,10 @@ const { Pool } = require("pg");
 const cors = require("cors");
 const axios = require("axios")
 
-PORT = 8888
+const PORT = process.env.PORT
 
 const app = express();
+app.disable('x-powered-by');
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
 //to check on travis
@@ -64,26 +65,7 @@ app.get(
     (req,res) => {
         res.sendFile("index.html",{root: __dirname})
     })
-/*
-Returns all listings
-*/
-app.get(
-    "/listings",
-    (req,res) => {
-        var query = buildQuery("SELECT * FROM listing",req.query) 
-        pool.query(
-            query,
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
-    }
-)
+
 
 /*
 returns locations of all listings
@@ -273,26 +255,6 @@ app.get(
         )
     }
 )
-/*
-Returns specific listing
-*/
-app.get(
-    "/listing/:id",
-    (req,res) => {
-        pool.query(
-            "SELECT * FROM listing WHERE id=$1",
-            [req.params.id],
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
-    })
-
 
 /*
 returns reviews for listing id
@@ -335,31 +297,11 @@ app.get(
         )
     }
 )
-/*
-returns specific review for specific listing
-*/
-app.get(
-    "/listing/:id/review/:review_id",
-    (req,res) => {
-        pool.query(
-            "SELECT * FROM review WHERE listing_id=$1 AND review_id=$2",
-            [req.params.id, req.params.review_id],
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
-    }
-)
+
 
 app.get(
     "/search_address",
     async (req,res) => {
-        var key="zleTvt8GJJlclq1BzheL9nXg05bpodk6"
         await axios({
             method:"GET",
             url:`http://mapquestapi.com/geocoding/v1/address?key=zleTvt8GJJlclq1BzheL9nXg05bpodk6&location=${req.query['location']}`,
