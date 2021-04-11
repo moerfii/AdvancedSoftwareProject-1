@@ -1,4 +1,4 @@
-from Frontend.src.main.python.kivymd.uix.button import MDFlatButton
+from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivy.lang import Builder
 from kivy.properties import StringProperty
