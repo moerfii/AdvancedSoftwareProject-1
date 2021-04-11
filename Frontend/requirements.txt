@@ -17,9 +17,7 @@ pluggy==0.13.1
 py==1.10.0
 pybuilder==0.12.10
 pyparsing==2.4.7
-pypiwin32==223
 pytest==6.2.2
-pywin32==300
 requests==2.25.1
 setuptools==54.2.0
 toml==0.10.2
