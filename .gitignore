@@ -12,3 +12,5 @@ env
 .png
 cache
 .vscode
+.nyc-output
+coverage
