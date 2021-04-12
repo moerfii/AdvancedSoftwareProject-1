@@ -6,7 +6,7 @@ from kivy_garden.mapview import MapMarkerPopup
 
 import requests
 import json
-from airbnbmarker import AirbnbMarker
+from components.airbnbMarker import AirbnbMarker
 
 
 class AirbnbMapView(MapView):
