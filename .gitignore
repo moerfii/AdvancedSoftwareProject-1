@@ -15,3 +15,4 @@ cache
 .nyc-output
 coverage
 bookmarks
+venv
