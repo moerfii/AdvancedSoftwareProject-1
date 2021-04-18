@@ -19,9 +19,12 @@ pybuilder==0.12.10
 pyparsing==2.4.7
 pytest==6.2.2
 requests==2.25.1
-setuptools==54.2.0
+setuptools~=56.0.0
 toml==0.10.2
 typing-extensions==3.7.4.3
 urllib3==1.26.4
 wheel==0.36.2
 zipp==3.4.1
+
+pip~=21.0.1
+packaging~=20.9

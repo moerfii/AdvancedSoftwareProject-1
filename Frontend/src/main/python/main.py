@@ -1,11 +1,16 @@
+from urllib import parse
+
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, Clock
 from kivy.uix.boxlayout import BoxLayout
 
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.app import MDApp
 from airbnbmapview import AirbnbMapView
-from searchpopupmenu import SearchPopupMenu
+
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 
@@ -14,64 +19,62 @@ class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
 
-class MapScreen(Screen):
 
+class Content(BoxLayout):
     pass
 
-class FormScreen(Screen):
-    pass
-
-class CompareScreen(Screen):
-    pass
 
 class MainApp(MDApp):
-
+    dialog = None
     search_menu = None
 
     def on_start(self):
-        # init searchpopup
-        self.search_menu = SearchPopupMenu()
+        self.fps_monitor_start()
 
     def build(self):
 
-        menu_items = [
-            {
-                "viewclass": "OneLineListItem",
-                "text": f"Compare",
-                "on_release": lambda x=1: self.menu_callback(x),
-
-            },
-            {
-                "viewclass": "OneLineListItem",
-                "text": f"Questionaire",
-                "on_release": lambda x=2: self.menu_callback(x),
-
-            }
+        self.theme_cls.primary_palette = "DeepOrange"
+        # self.theme_cls.theme_style = "Dark" #darkmode
+        self.theme_cls.font_styles["JetBrainsMono"] = [
+            "JetBrainsMono",
+            16,
+            False,
+            0.15,
         ]
-        self.menu = MDDropdownMenu(
-            items=menu_items,
-            width_mult=4,
-        )
-        self.sm = ScreenManager(transition=WipeTransition())
-        self.sm.add_widget(MapScreen(name='mapscreen'))
-        self.sm.add_widget(FormScreen(name='formscreen'))
-        self.sm.add_widget((CompareScreen(name='comparescreen')))
-        return self.sm
 
-    def callback(self, button):
-        self.menu.caller = button
-        self.menu.open()
+    def show_confirmation_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Search:",
+                type="custom",
+                content_cls=Content(),
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", text_color=self.theme_cls.primary_color, on_release=self.close_dialog
+                    ),
+                    MDFlatButton(
+                        text="OK", text_color=self.theme_cls.primary_color, on_release=self.grab_text
+                    ),
+                ],
+            )
+        self.dialog.get_normal_height()
+        self.dialog.open()
 
+    def grab_text(self, inst):
+        for obj in self.dialog.content_cls.children:
+            if isinstance(obj, MDTextField):
+                print(obj.text)
+        self.dialog.dismiss()
 
-    def menu_callback(self, screen_nr):
-        print(self.sm.current)
+    def close_dialog(self, inst):
+        self.dialog.dismiss()
 
-        self.menu.dismiss()
-        self.sm.switch_to(self.sm.screens[screen_nr])
-        print(self.sm.current)
-        return
+    def show_filter_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
 
-        #Snackbar(text=text_item).open()
+            )
+
     pass
 
 

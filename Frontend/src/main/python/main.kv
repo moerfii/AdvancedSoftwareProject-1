@@ -1,11 +1,42 @@
 #:include airbnbmapview.kv
 
+Screen:
 
-ScreenManager:
-    id: screen_manager
-    MapScreen:
-    FormScreen:
-    CompareScreen:
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "FairBnb"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        right_action_items: [['magnify', lambda x: app.show_confirmation_dialog()]]
+
+    MDNavigationLayout:
+        x: toolbar.height
+        size_hint_y: 1.0 - toolbar.height/root.height
+
+        ScreenManager:
+            id: screen_manager
+
+            Screen:
+                name: "mapscreen"
+                BoxLayout:
+                    orientation: 'vertical'
+                    AirbnbMapView:
+
+            Screen:
+                name: 'formscreen'
+
+            Screen:
+                name: 'comparescreen'
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+
 
 <Content>
     orientation: "vertical"
@@ -14,42 +45,30 @@ ScreenManager:
     height: "120dp"
 
     MDTextField:
-        id: text_field
         hint_text: "Address"
 
 
-<MapScreen>
-    name: 'mapscreen'
-    BoxLayout:
-        orientation: 'vertical'
-        MDToolbar:
-            title: "Main Menu"
-            left_action_items: [["menu", lambda x: app.callback(x)]]
-            right_action_items: [['magnify', lambda x: app.search_menu.show_confirmation_dialog()]]
-            md_bg_color: app.theme_cls.primary_color
-        MDSlider:
-            id: listing_count
-            min: 0
-            max: 10000
-            color: app.theme_cls.accent_color
-            size_hint: [0.5,0.10]
-        AirbnbMapView:
+<ContentNavigationDrawer>:
 
+    ScrollView:
 
-<FormScreen>
-    name: 'formscreen'
-    BoxLayout:
-        Button:
-            text: 'Go to Map'
-            on_press:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'mapscreen'
+        MDList:
 
-<CompareScreen>
-    name: 'comparescreen'
-    BoxLayout:
-        Button:
-            text: 'Go to Map'
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'mapscreen'
+            OneLineListItem:
+                text: "Map"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "mapscreen"
+
+            OneLineListItem:
+                text: "Form"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "formscreen"
+
+            OneLineListItem:
+                text: "Compare"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "comparescreen"
+
