@@ -4,11 +4,12 @@ dotenv.config();
 const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
+const axios = require("axios")
 
-
-PORT = 8888
+const PORT = process.env.PORT
 
 const app = express();
+app.disable('x-powered-by');
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
 //to check on travis
@@ -62,6 +63,16 @@ function buildQuery(queryString,query,setAND=false) {
      });
      return queryString
 }
+
+function returnDBResults(error, result,res) {
+    if(error) {
+        console.log(error);
+        res.status(500).send();
+    } else {
+
+        res.status(200).send(result.rows);
+    }
+}
 /*
 overview site
 */
@@ -70,26 +81,7 @@ app.get(
     (req,res) => {
         res.sendFile("index.html",{root: __dirname})
     })
-/*
-Returns all listings
-*/
-app.get(
-    "/listings",
-    (req,res) => {
-        var query = buildQuery("SELECT * FROM listing",req.query) 
-        pool.query(
-            query,
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
-    }
-)
+
 
 /*
 returns locations of all listings
@@ -101,15 +93,8 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
+            (error,result) => returnDBResults(error,result,res)
+        );        
     }
 )
 app.get(
@@ -119,14 +104,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -137,14 +115,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -156,14 +127,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -175,14 +139,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -194,14 +151,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -212,14 +162,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -231,14 +174,7 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -249,14 +185,7 @@ app.get(
         query = buildQuery(query,req.query)
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -268,37 +197,10 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error);
-                    res.status(500).send();
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
-/*
-Returns specific listing
-*/
-app.get(
-    "/listing/:id",
-    (req,res) => {
-        pool.query(
-            "SELECT * FROM listing WHERE id=$1",
-            [req.params.id],
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
-        )
-    })
-
 
 /*
 returns reviews for listing id
@@ -310,14 +212,7 @@ app.get(
         
         pool.query(
             query,
-            (error, result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
@@ -330,33 +225,20 @@ app.get(
         pool.query(
             query,
             [req.params.id],
-            (error, result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
-            }
+            (error,result) => returnDBResults(error,result,res)
         )
     }
 )
-/*
-returns specific review for specific listing
-*/
+
+
 app.get(
-    "/listing/:id/review/:review_id",
-    (req,res) => {
-        pool.query(
-            "SELECT * FROM review WHERE listing_id=$1 AND review_id=$2",
-            [req.params.id, req.params.review_id],
-            (error,result) => {
-                if(error) {
-                    console.log(error)
-                    res.status(500).send()
-                } else {
-                    res.status(200).send(result.rows);
-                }
+    "/search_address",
+    async (req,res) => {
+        await axios({
+            method:"GET",
+            url:`http://mapquestapi.com/geocoding/v1/address?key=zleTvt8GJJlclq1BzheL9nXg05bpodk6&location=${req.query['location']}`,
+        }).then((result) => {
+                res.status(200).send(result.data['results'][0]['locations'][0]['latLng'])
             }
         )
     }

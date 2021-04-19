@@ -42,7 +42,7 @@ describe("Checking all requests/responses", () => {
                 expect(res).to.have.status(200);
                 done();
             })
-        }).timeout(10000)
+        }).timeout(20000)
 
         it("returns status 200 for id 2539",(done) => {
             chai.request(app)
@@ -69,7 +69,7 @@ describe("Checking all requests/responses", () => {
                 expect(res).to.have.status(200);
                 done();
             })
-        }).timeout(5000)
+        }).timeout(20000)
         it("returns status 200 for id 2539", (done) => {
             chai.request(app)
             .get("/listing_other/2539")
@@ -95,7 +95,7 @@ describe("Checking all requests/responses", () => {
                 expect(res).to.have.status(200);
                 done();
             })
-        }).timeout(5000)
+        }).timeout(20000)
         it("returns status 200 for id 2539", (done) => {
             chai.request(app)
             .get("/listing_reviews/2539")
@@ -121,7 +121,7 @@ describe("Checking all requests/responses", () => {
                 expect(res).to.have.status(200);
                 done();
             })
-        }).timeout(5000)
+        }).timeout(20000)
         it("returns status 200 for id 2787", (done) => {
             chai.request(app)
             .get("/host/2787")
@@ -140,15 +140,6 @@ describe("Checking all requests/responses", () => {
         }).timeout(5000)
     })
     describe("/reviews", () => {
-        /*
-        it("returns status 200", (done) => {
-            chai.request(app)
-            .get("/reviews")
-            .end(function (err, res) {
-                expect(res).to.have.status(200);
-                done();
-            })
-        }).timeout(10000)*/
         it("returns status 200 for id 17857", (done) => {
             chai.request(app)
             .get("/reviews/17857")
@@ -160,6 +151,17 @@ describe("Checking all requests/responses", () => {
         it("returns status 200 for search params", (done) => {
             chai.request(app)
             .get("/reviews?listing_id.eq=2595")
+            .end(function (err, res) {
+                expect(res).to.have.status(200);
+                done();
+            })
+        }).timeout(5000)
+    })
+    describe("/search_address", () => {
+        
+        it("returns status 200", (done) => {
+            chai.request(app)
+            .get("/search_address?location=300%20Jay%20St,%20Brooklyn,%20NY%2011201,%20United%20States")
             .end(function (err, res) {
                 expect(res).to.have.status(200);
                 done();
