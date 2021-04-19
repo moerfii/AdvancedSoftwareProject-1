@@ -232,7 +232,7 @@ app.get(
             method:"GET",
             url:`http://mapquestapi.com/geocoding/v1/address?key=zleTvt8GJJlclq1BzheL9nXg05bpodk6&location=${req.query['location']}`,
         }).then((result) => {
-                res.status(200).send(result.data['results'][0]['locations'][0]['latLng'])
+            res.status(200).send(result.data['results'][0]['locations'][0]['latLng'])
             }
         )
     }

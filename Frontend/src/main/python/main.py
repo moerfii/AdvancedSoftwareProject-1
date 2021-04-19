@@ -1,5 +1,5 @@
 from urllib import parse
-
+from os.path import join, dirname
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty, Clock
 from kivy.uix.boxlayout import BoxLayout
@@ -16,6 +16,8 @@ from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 import requests
 
+from kivy.core.window import Window
+#Window.fullscreen = 'auto'
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
@@ -85,8 +87,8 @@ class MainApp(MDApp):
 
     pass
 
-
-
+print("boi")
+print(join(dirname(__file__), "icons", "cluster.png"))
 MainApp().run()
 
 
