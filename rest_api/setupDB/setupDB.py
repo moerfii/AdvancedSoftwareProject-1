@@ -5,11 +5,11 @@ import io
 import numpy as np
 
 
-USER="ase_user"
+USER="postgres"
 HOST="localhost"
 PORT=5432
-DB_NAME="ase"
-PASSWORD="boi"
+DB_NAME="postgres"
+PASSWORD="Hsy3480!"
 engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
 
 
@@ -119,8 +119,8 @@ def addListingsAndHost(path):
     engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
     df = pd.read_csv(path)
     
-    listing_location = df[['id','latitude','longitude']]
-    streamData(listing_location,'listing_location')
+    #listing_location = df[['id','latitude','longitude']]
+    #streamData(listing_location,'listing_location')
     
     listing_detail = df[[
         'id',
@@ -210,7 +210,7 @@ def addListingsAndHost(path):
 def addReviews(path):
     df = pd.read_csv(path)
     print(df.columns)
-    df.drop([3225,109556,409474,710670],axis=0,inplace=True)
+    df.drop([3225,109556,162758,409475,624461,710672,822878],axis=0,inplace=True)
     df.reset_index(inplace=True,drop=True)
     print(f"deleting unnecessary chars in {path} in column reviewer_name")
     df = deleteUnnecessaryChars(df,"reviewer_name")
@@ -270,8 +270,8 @@ def deleteUnnecessaryChars(df,column):
 
 if __name__=="__main__":
     
-    createTables()
-    addListingsAndHost("data/listings.csv")
+    #createTables()
+    #addListingsAndHost("data/listings.csv")
     addReviews("data/reviews.csv")
 
 
