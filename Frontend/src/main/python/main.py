@@ -9,11 +9,12 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.app import MDApp
+from kivy.app import App
 from airbnbmapview import AirbnbMapView
-
+import json
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
-
+import requests
 
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
@@ -63,7 +64,14 @@ class MainApp(MDApp):
     def grab_text(self, inst):
         for obj in self.dialog.content_cls.children:
             if isinstance(obj, MDTextField):
-                print(obj.text)
+                query=obj.text
+                query+=' NY United States'
+                response = requests.get("http://localhost:8888/search_address",params={'location':query})
+                app = App.get_running_app()
+                mapview = app.root.ids.mapview
+                locations = json.loads(response.text)
+                mapview.center_on(locations['lat'],locations['lng'])
+                #print(response.text)
         self.dialog.dismiss()
 
     def close_dialog(self, inst):
