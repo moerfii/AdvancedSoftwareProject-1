@@ -10,6 +10,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.app import MDApp
 from airbnbmapview import AirbnbMapView
+from kivymd.uix.picker import MDDatePicker
 
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
@@ -41,6 +42,17 @@ class MainApp(MDApp):
             False,
             0.15,
         ]
+        
+    def show_datepicker(self):
+     	picker = MDDatePicker()
+     	picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
+     	picker.open()
+
+    def on_save(self, instance, value, date_range):
+    	pass
+
+    def on_cancel(Self, value, date_range):
+    	pass
 
     def show_confirmation_dialog(self):
         if not self.dialog:

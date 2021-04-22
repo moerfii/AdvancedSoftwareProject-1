@@ -1,4 +1,7 @@
 #:include airbnbmapview.kv
+#import MDFlatButton kivymd.uix.button.MDFlatButton
+#import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#import MDTextField kivymd.textfields.MDTextField
 
 Screen:
 
@@ -25,6 +28,37 @@ Screen:
 
             Screen:
                 name: 'formscreen'
+                FloatLayout:
+                    MDCard:
+                        padding: [dp(200),]
+                        BoxLayout:
+                            orientation: 'vertical'
+                            BoxLayout:
+                                MDTextField:
+                                    hint_text: "location"
+                                MDFlatButton:
+                                    text: "Date"
+                                    on_release:
+                                        app.show_datepicker()
+                            BoxLayout:
+                                MDTextField:
+                                    hint_text: "Age"
+                                MDTextField:
+                                    padding: "50dp"
+                                    hint_text: "Guest"
+                                MDTextField:
+                                    padding: "50dp"
+                                    hint_text: "Activity"
+                                MDCheckbox:
+                                    size_hint: None, None
+                                    size: dp(40), dp(40)
+                                    on_active:
+                                        print(self.active)
+
+                            BoxLayout:
+                                MDRaisedButton:
+                                    text: "Search"
+                                    pos_hint: {'center_x':0.5,'center_y':0.5}
 
             Screen:
                 name: 'comparescreen'
