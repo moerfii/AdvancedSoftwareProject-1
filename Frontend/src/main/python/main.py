@@ -17,6 +17,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 import requests
 
 from kivy.core.window import Window
+from components.customCluster import CLUSTER_CLICKED
 #Window.fullscreen = 'auto'
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()

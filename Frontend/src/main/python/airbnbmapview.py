@@ -1,7 +1,7 @@
 from kivy_garden.mapview import MapView
 from kivy.clock import Clock
 from kivy.app import App
-from kivy_garden.mapview.clustered_marker_layer import ClusteredMarkerLayer
+from mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
 from kivy_garden.mapview import MapMarkerPopup
 import time
 import requests
@@ -28,7 +28,8 @@ class AirbnbMapView(MapView):
         data = requests.get(f"http://localhost:8888/listing_location?latitude.ge={lat1}&latitude.le={lat2}&longitude.ge={lon1}&longitude.le={lon2}")
         listings = json.loads(data.text)
 
-        layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp")
+        #layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp")
+        layer = ClusteredMarkerLayer(cluster_radius="200dp",cluster_cls_source="icons/cluster.png")
         for listing in listings:
             id = listing['id']
             if id in self.listing_id_list:
