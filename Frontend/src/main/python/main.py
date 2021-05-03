@@ -140,15 +140,15 @@ class MainApp(MDApp):
         ]
         
     def show_datepicker(self):
-     	picker = MDDatePicker()
-     	picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
-     	picker.open()
+        picker = MDDatePicker()
+        picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
+        picker.open()
 
     def on_save(self, instance, value, date_range):
-    	pass
+        pass
 
-    def on_cancel(Self, value, date_range):
-    	pass
+    def on_cancel(self, value, date_range):
+        pass
 
     def show_confirmation_dialog(self):
         if not self.dialog:

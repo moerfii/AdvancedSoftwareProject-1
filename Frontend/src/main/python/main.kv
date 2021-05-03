@@ -195,27 +195,25 @@ Screen:
 
             Screen:
                 name: 'swipescreen'
+
                 MDSwiper:
-                    id: swiper
-                    on_swipe: print("on_swipe")
-                    on_pre_swipe: print("on_pre_swipe")
-                    on_overswipe_right: print("on_overswipe_right")
-                    on_overswipe_left: print("on_overswipe_left")
-                    on_swipe_left: print("on_swipe_left")
-                    on_swipe_right: print("on_swipe_right")
                     size_hint_y: None
                     height: root.height - toolbar.height - dp(40)
                     y: root.height - self.height - toolbar.height - dp(20)
-
                     MySwiper:
-
                     MySwiper:
+                MDIconButton:
+                    icon: 'heart'
+                    user_font_size: "64sp"
+                    pos_hint: {'center_x':0.4,'center_y':0.125}
+                MDIconButton:
+                    icon: 'delete'
+                    user_font_size: "64sp"
+                    pos_hint: {'center_x':0.6,'center_y':0.125}
 
-                    MySwiper:
 
-                    MySwiper:
 
-                    MySwiper:
+
 
         MDNavigationDrawer:
             id: nav_drawer
@@ -224,12 +222,32 @@ Screen:
                 screen_manager: screen_manager
                 nav_drawer: nav_drawer
 
+<MagicButton@MagicBehavior+MDIconButton>
 
 <MySwiper@MDSwiperItem>
 
-    FitImage:
-        source: "marker.png"
-        radius: [20,]
+    RelativeLayout:
+
+        FitImage:
+            source: "logo.png"
+
+        MDBoxLayout:
+            adaptive_height: True
+            spacing: "12dp"
+
+            MagicButton:
+                id: icon
+                icon: "weather-sunny"
+                user_font_size: "56sp"
+                opposite_colors: True
+
+            MDLabel:
+                text: "MDLabel"
+                font_style: "H5"
+                size_hint_y: None
+                height: self.texture_size[1]
+                pos_hint: {"center_y": .5}
+                opposite_colors: True
 
 
 <Content>
