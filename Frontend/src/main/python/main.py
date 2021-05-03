@@ -15,6 +15,7 @@ import json
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 import requests
+from restAPIConnection import RestAPIConnection
 
 from kivy.core.window import Window
 from components.customCluster import CLUSTER_CLICKED
@@ -31,12 +32,12 @@ class Content(BoxLayout):
 class MainApp(MDApp):
     dialog = None
     search_menu = None
+    api=RestAPIConnection()
 
     def on_start(self):
         self.fps_monitor_start()
 
     def build(self):
-
         self.theme_cls.primary_palette = "DeepOrange"
         # self.theme_cls.theme_style = "Dark" #darkmode
         self.theme_cls.font_styles["JetBrainsMono"] = [

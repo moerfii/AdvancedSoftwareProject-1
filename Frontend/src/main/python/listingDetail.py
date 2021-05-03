@@ -7,18 +7,25 @@ from components.ListingSaveButton import ListingSaveButton
 import os
 import requests
 import json
-
-
+from restAPIConnection import RestAPIConnection
+from kivy.app import App
+import time
 
 def listingDetail(listing_id):
     #get Data
-    detail_response = requests.get(f"http://localhost:8888/listing_detail/{listing_id}")
-    detail_data = json.loads(detail_response.text)[0]
-    other_response = requests.get(f"http://localhost:8888/listing_other/{listing_id}")
-    other_data = json.loads(other_response.text)[0]
+    custom_filters = {'id.eq':str(listing_id)}
+    print("listingDetail")
+    start = time.time()
+    app = App.get_running_app()
+    detail_data = [None]
+    other_data = [None]
+    start=time.time()
+    app.api.getListingDetail(detail_data,custom_filters)
+    start=time.time()
+    app.api.getListingOther(other_data,custom_filters)
 
     #merge data
-    data = {**detail_data, **other_data}
+    data = {**detail_data[0][0], **other_data[0][0]}
     box = BoxLayout()
     img = AsyncImage(source=data['picture_url'])
     label = Label(text = f"Price: {data['price']}$/night\nRoomType: {data['room_type']}")

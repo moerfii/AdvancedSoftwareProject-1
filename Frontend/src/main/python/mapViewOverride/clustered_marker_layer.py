@@ -245,9 +245,7 @@ class Cluster:
         # preprocess lon/lat
         self.lon = xLng(x)
         self.lat = yLat(y)
-        print("Cluster init")
-        print(self.lat)
-        print(self.lon)
+
 
 
 class Marker:
@@ -299,13 +297,13 @@ class SuperCluster:
         clusters = points
         for z in range(self.max_zoom, self.min_zoom - 1, -1):
             start = time()
-            print("build tree", z)
+            #print("build tree", z)
             self.trees[z + 1] = KDBush(clusters, self.node_size)
-            print("kdbush", (time() - start) * 1000)
+            #print("kdbush", (time() - start) * 1000)
             start = time()
             clusters = self._cluster(clusters, z)
-            print(len(clusters))
-            print("clustering", (time() - start) * 1000)
+            #print(len(clusters))
+            #print("clustering", (time() - start) * 1000)
         self.trees[self.min_zoom] = KDBush(clusters, self.node_size)
 
     def get_clusters(self, bbox, zoom):
@@ -385,10 +383,15 @@ class ClusterMapMarker(MapMarker):
 
     def on_cluster(self, instance, cluster):
         self.num_points = cluster.num_points
-
+    """
     def on_touch_down(self, touch):
+        print("ClusterMapMarker")
+        print(self.num_points)
         return False
-
+    """
+    def on_release(self,*args):
+        print(self.num_points)
+        return
 
 class ClusteredMarkerLayer(MapLayer):
     cluster_cls = ObjectProperty(ClusterMapMarker)
@@ -399,11 +402,14 @@ class ClusteredMarkerLayer(MapLayer):
     cluster_node_size = NumericProperty(64)
     cluster_cls_source=StringProperty()
     def __init__(self, **kwargs):
+        #print("ClusteredMarkerLayer: init")
         self.cluster = None
         self.cluster_markers = []
         super().__init__(**kwargs)
 
     def add_marker(self, lon, lat, cls=MapMarker, options=None):
+        #print("ClusteredMarkerLayer: add_marker")
+
         if options is None:
             options = {}
         marker = Marker(lon, lat, cls, options)
@@ -411,9 +417,13 @@ class ClusteredMarkerLayer(MapLayer):
         return marker
 
     def remove_marker(self, marker):
+        #print("ClusteredMarkerLayer: remove_marker")
+
         self.cluster_markers.remove(marker)
 
     def reposition(self):
+        #print("ClusteredMarkerLayer: reposition")
+
         if self.cluster is None:
             self.build_cluster()
         margin = dp(48)
@@ -422,14 +432,21 @@ class ClusteredMarkerLayer(MapLayer):
         bbox = mapview.get_bbox(margin)
         bbox = (bbox[1], bbox[0], bbox[3], bbox[2])
         self.clear_widgets()
+        cnt=0
         for point in self.cluster.get_clusters(bbox, mapview.zoom):
+            cnt+=1
             widget = point.widget
             if widget is None:
                 widget = self.create_widget_for(point)
+            #print("DEBUG")
+            #print(f"{widget.lon}\t{widget.lat}")
             set_marker_position(mapview, widget)
             self.add_widget(widget)
+        #print(f"Count: {cnt}")
 
     def build_cluster(self):
+        #print("ClusteredMarkerLayer: build_cluster")
+
         self.cluster = SuperCluster(
             min_zoom=self.cluster_min_zoom,
             max_zoom=self.cluster_max_zoom,
@@ -440,13 +457,17 @@ class ClusteredMarkerLayer(MapLayer):
         self.cluster.load(self.cluster_markers)
 
     def create_widget_for(self, point):
+        #print("ClusteredMarkerLayer: create_widget_for")
+
         if isinstance(point, Marker):
             point.widget = point.cls(lon=point.lon, lat=point.lat, **point.options)
         elif isinstance(point, Cluster):
-            point.widget = self.cluster_cls(lon=point.lon, lat=point.lat, cluster=point,source=self.cluster_cls_source)
+            point.widget = self.cluster_cls(lon=point.lon, lat=point.lat, cluster=point)
         return point.widget
 
     def set_marker_position(self, mapview, marker):
+        #print("ClusteredMarkerLayer: set_marker_position")
+
         x, y = mapview.get_window_xy_from(marker.lat, marker.lon, mapview.zoom)
         marker.x = int(x - marker.width * marker.anchor_x)
         marker.y = int(y - marker.height * marker.anchor_y)
