@@ -7,7 +7,7 @@ from restAPIConnection.restAPIConnection import RestAPIConnection
 @pytest.fixture
 def RAC_empty():
     custom_filter = {'id.eq':-1}
-    return RestAPIConnection()
+    return RestAPIConnection(filters=custom_filter)
 
 
 def test_getListingLocation_empty(RAC_empty):

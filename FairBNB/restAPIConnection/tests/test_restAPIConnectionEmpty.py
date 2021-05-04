@@ -9,12 +9,12 @@ def RAC_empty():
     return RestAPIConnection()
 
 
-def test_getLocation_empty(RAC_empty):
+def test_getListingLocation_empty(RAC_empty):
     l = [None]
     RAC_empty.getListingLocations(l)
     assert (len(l[0])==1)
 
-def test_getLocation_filter(RAC_empty):
+def test_getListingLocation_filter(RAC_empty):
     l = [None]
     custom_filter = {'id.eq':-1}
     RAC_empty.getListingLocations(l,custom_filter)

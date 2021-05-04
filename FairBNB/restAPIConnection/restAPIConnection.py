@@ -18,7 +18,6 @@ class RestAPIConnection:
             for key in custom_filters.keys():
                 filters[key] = custom_filters[key]
         filters = {k: v for k, v in filters.items() if v is not None}
-        print(f"filters: {filters}")
         return filters
 
     def _GET(self,res,url,custom_filters,append):
