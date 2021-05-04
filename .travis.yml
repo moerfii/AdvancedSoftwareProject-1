@@ -1,16 +1,7 @@
 jobs:
   include:        
     - language: python
-      python: 3.7
-      before_script:
-        - cd Frontend
-        - pip install -r requirements.txt
-      script:
-        - cd src/unittest/python
-        - pytest test_test.py
-        
-    - language: node_js
-      node_js: 13 
+      node_js: 3.7 
       addons:
         sonarcloud:
           organization: "flruee" 
@@ -19,8 +10,11 @@ jobs:
          packages:
            - postgresql-12
            - postgresql-client-12
-
+      install:
+        - nvm install node
+        - nvm use node
       before_script:
+        - pip install -r FairBNB/requirements.txt
         - cd rest_api
         - psql -c 'CREATE TABLE host (host_id integer NOT NULL,host_location text COLLATE pg_catalog."default",host_is_superhost character varying(1) COLLATE pg_catalog."default",host_neighbourhood text COLLATE pg_catalog."default",host_listings_count integer,host_total_listings_count integer,host_identity_verified character varying(1) COLLATE pg_catalog."default",calculated_host_listings_count integer,calculated_host_listings_count_entire_homes integer,calculated_host_listings_count_private_rooms integer,calculated_host_listings_count_shared_rooms integer,CONSTRAINT host_pkey PRIMARY KEY (host_id));'
         - psql -c "INSERT INTO host VALUES(1,'New York, New York, United States','f','Gravesend',6,6,'t',6,0,5,1);"
@@ -40,5 +34,9 @@ jobs:
         - PORT=8888 DB_HOST=localhost DB_PORT=5433 DB_NAME='travis' DB_USER=travis PGPORT=5433 PGUSER=travis DB_PASSWORD=travispassword
       script:
         - npm test
+        - nohup npm start &
+        - sleep 3
+        - cd ../FairBNB
+        - python main.py test
         - cd ..
         - sonar-scanner

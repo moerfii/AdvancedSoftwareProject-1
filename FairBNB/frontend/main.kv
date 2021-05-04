@@ -1,0 +1,169 @@
+#:include frontend/airbnbmapview.kv
+#import MDFlatButton kivymd.uix.button.MDFlatButton
+#import MDRaisedButton kivymd.uix.button.MDRaisedButton
+#import MDTextField kivymd.textfields.MDTextField
+
+Screen:
+
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "FairBnb"
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        right_action_items: [['magnify', lambda x: app.show_confirmation_dialog()]]
+
+    MDNavigationLayout:
+        x: toolbar.height
+        size_hint_y: 1.0 - toolbar.height/root.height
+
+        ScreenManager:
+            id: screen_manager
+
+            Screen:
+                name: "mapscreen"
+                BoxLayout:
+                    orientation: 'vertical'
+                    AirbnbMapView:
+                        id: mapview
+
+            Screen:
+                name: 'formscreen'
+                FloatLayout:
+                    MDCard:
+                        padding: [dp(200),]
+                        BoxLayout:
+                            orientation: 'vertical'
+                            BoxLayout:
+                                MDTextField:
+                                    hint_text: "location"
+                                MDFlatButton:
+                                    text: "Date"
+                                    on_release:
+                                        app.show_datepicker()
+                            BoxLayout:
+                                MDTextField:
+                                    hint_text: "Age"
+                                MDTextField:
+                                    padding: "50dp"
+                                    hint_text: "Guest"
+                                MDTextField:
+                                    padding: "50dp"
+                                    hint_text: "Activity"
+                                MDCheckbox:
+                                    size_hint: None, None
+                                    size: dp(40), dp(40)
+                                    on_active:
+                                        print(self.active)
+
+                            BoxLayout:
+                                MDRaisedButton:
+                                    text: "Search"
+                                    pos_hint: {'center_x':0.5,'center_y':0.5}
+
+            Screen:
+                name: 'comparescreen'
+
+            Screen:
+                name: 'swipescreen'
+                MDSwiper:
+                    size_hint_y: None
+                    height: root.height - toolbar.height - dp(40)
+                    y: root.height - self.height - toolbar.height - dp(20)
+                    MySwiper:
+                    MySwiper:
+                MDIconButton:
+                    icon: 'heart'
+                    user_font_size: "64sp"
+                    pos_hint: {'center_x':0.4,'center_y':0.125}
+                MDIconButton:
+                    icon: 'delete'
+                    user_font_size: "64sp"
+                    pos_hint: {'center_x':0.6,'center_y':0.125}
+
+        MDNavigationDrawer:
+            id: nav_drawer
+
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+<MagicButton@MagicBehavior+MDIconButton>
+
+<MySwiper@MDSwiperItem>
+
+    RelativeLayout:
+
+        FitImage:
+            source: "logo.png"
+
+        MDBoxLayout:
+            adaptive_height: True
+            spacing: "12dp"
+
+            MagicButton:
+                id: icon
+                icon: "weather-sunny"
+                user_font_size: "56sp"
+                opposite_colors: True
+
+            MDLabel:
+                text: "MDLabel"
+                font_style: "H5"
+                size_hint_y: None
+                height: self.texture_size[1]
+                pos_hint: {"center_y": .5}
+                opposite_colors: True
+
+
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        hint_text: "Address"
+
+
+<ContentNavigationDrawer>:
+
+    ScrollView:
+
+        MDList:
+
+
+            OneLineIconListItem:
+                text: "Form"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "formscreen"
+                IconLeftWidget:
+                    icon: "file-question-outline"
+
+
+            OneLineIconListItem:
+                text: "Swipe"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "swipescreen"
+                IconLeftWidget:
+                    icon: "gesture-swipe"
+
+
+            OneLineIconListItem:
+                text: "Wishlist"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "comparescreen"
+                IconLeftWidget:
+                    icon: "heart-outline"
+
+
+            OneLineIconListItem:
+                text: "Map"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "mapscreen"
+                IconLeftWidget:
+                    icon: "map-outline"

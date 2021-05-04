@@ -16,4 +16,4 @@ cache
 coverage
 bookmarks
 venv
-kivymd
+.nyc_output.
