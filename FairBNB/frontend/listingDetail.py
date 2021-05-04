@@ -13,14 +13,10 @@ from .components.ListingSaveButton import ListingSaveButton
 def listingDetail(listing_id):
     #get Data
     custom_filters = {'id.eq':str(listing_id)}
-    print("listingDetail")
-    start = time.time()
     app = App.get_running_app()
     detail_data = [None]
     other_data = [None]
-    start=time.time()
     app.api.getListingDetail(detail_data,custom_filters)
-    start=time.time()
     app.api.getListingOther(other_data,custom_filters)
 
     #merge data

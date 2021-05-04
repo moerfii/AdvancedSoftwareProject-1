@@ -43,15 +43,12 @@ class AirbnbMapView(MapView):
         1/0
         """
         layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp",cluster_max_zoom=18)
-        #layer = ClusteredMarkerLayer(cluster_radius="200dp",cluster_cls_source="icons/cluster.png")
         for listing in listings[0]:
-            id = listing['id']
-            if id in self.listing_id_list:
+            listing_id = listing['id']
+            if listing_id in self.listing_id_list:
                 continue
             else:
-                # self.add_listing(listing)
                 layer.add_marker(
-                    # id_listing=listing['id'],
                     lon=float(listing['longitude']),
                     lat=float(listing['latitude']),
                     cls=AirbnbMarker,
@@ -64,19 +61,5 @@ class AirbnbMapView(MapView):
 
         self.add_widget(layer)
 
-        def add_listing(self, listing):
-            # create marker
-            lat = listing['latitude']
-            lon = listing['longitude']
-            marker = AirbnbMarker(id_listing=listing['id'], lat=lat, lon=lon, source='marker.png')
-            marker.listing_data = listing
-
-            # add marker to map
-            self.add_widget(marker)
-
-            # keep track of markers id (avoid adding marker twice and keep it onscreen)
-            id = listing['id']
-            self.listing_id_list.append(id)
-    
 
     

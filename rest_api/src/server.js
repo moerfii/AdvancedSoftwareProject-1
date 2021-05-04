@@ -68,15 +68,6 @@ function returnDBResults(error, result,res) {
         res.status(200).send(result.rows);
     }
 }
-/*
-overview site
-*/
-app.get(
-    "/",
-    (req,res) => {
-        res.sendFile("index.html",{root: __dirname})
-    })
-
 
 /*
 returns locations of all listings

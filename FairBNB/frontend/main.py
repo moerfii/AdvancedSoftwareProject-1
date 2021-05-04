@@ -18,8 +18,6 @@ import requests
 import os
 from restAPIConnection.restAPIConnection import RestAPIConnection
 from kivy.core.window import Window
-from .components.customCluster import CLUSTER_CLICKED
-#Window.fullscreen = 'auto'
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
@@ -39,7 +37,6 @@ class MainApp(MDApp):
 
     def build(self):
         self.theme_cls.primary_palette = "DeepOrange"
-        # self.theme_cls.theme_style = "Dark" #darkmode
         self.theme_cls.font_styles["JetBrainsMono"] = [
             "JetBrainsMono",
             16,
@@ -97,7 +94,6 @@ class MainApp(MDApp):
 
             )
 
-    pass
 
 def run():
     MainApp().run()
