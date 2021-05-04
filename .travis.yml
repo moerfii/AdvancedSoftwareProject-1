@@ -12,6 +12,7 @@ jobs:
            - postgresql-client-12
       install:
         - nvm install 0.12
+        - npm install
       before_script:
         - pip install -r FairBNB/requirements.txt
         - cd rest_api
@@ -36,4 +37,5 @@ jobs:
         - nohup npm start &
         - cd ../FairBNB
         - python main.py test
+        - cd ..
         - sonar-scanner
