@@ -35,6 +35,7 @@ jobs:
       script:
         - npm test
         - nohup npm start &
+        - sleep 3
         - cd ../FairBNB
         - python main.py test
         - cd ..
