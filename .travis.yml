@@ -11,8 +11,8 @@ jobs:
            - postgresql-12
            - postgresql-client-12
       install:
-        - nvm install 0.12
-        - npm install
+        - nvm install node
+        - nvm use node
       before_script:
         - pip install -r FairBNB/requirements.txt
         - cd rest_api
