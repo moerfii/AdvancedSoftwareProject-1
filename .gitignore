@@ -16,4 +16,4 @@ cache
 coverage
 bookmarks
 venv
-.nyc_output.
+.nyc_output

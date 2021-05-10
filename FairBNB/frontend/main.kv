@@ -1,8 +1,9 @@
 #:include frontend/airbnbmapview.kv
+#:include frontend/components/filterMenu.kv
+#import FilterMenu .components.filterMenu.FilterMenu
 #import MDFlatButton kivymd.uix.button.MDFlatButton
 #import MDRaisedButton kivymd.uix.button.MDRaisedButton
 #import MDTextField kivymd.textfields.MDTextField
-
 Screen:
 
     MDToolbar:
@@ -10,7 +11,7 @@ Screen:
         pos_hint: {"top": 1}
         elevation: 10
         title: "FairBnb"
-        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        left_action_items: [["menu", lambda x: nav_drawer.set_state("open")], ["filter",lambda x: filter_drawer.set_state("open")]]
         right_action_items: [['magnify', lambda x: app.show_confirmation_dialog()]]
 
     MDNavigationLayout:
@@ -87,6 +88,14 @@ Screen:
             ContentNavigationDrawer:
                 screen_manager: screen_manager
                 nav_drawer: nav_drawer
+
+        MDNavigationDrawer:
+            enable_swiping: False
+            id: filter_drawer
+            FilterMenu:
+                id: filter_menu
+
+
 
 <MagicButton@MagicBehavior+MDIconButton>
 
@@ -167,3 +176,11 @@ Screen:
                     root.screen_manager.current = "mapscreen"
                 IconLeftWidget:
                     icon: "map-outline"
+
+<ContentFilterDrawer>:
+    ScrollView:
+
+        MDList:
+            RangeSlider:
+                id:"price_slider"
+            

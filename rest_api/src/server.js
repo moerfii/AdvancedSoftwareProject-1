@@ -12,7 +12,6 @@ const app = express();
 app.disable('x-powered-by');
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
-//to check on travis
 
 const pool = new Pool({
     host: process.env.DB_HOST,
@@ -29,6 +28,7 @@ const operators = {
     "le":"<="
 }
 
+// holds column names for each table, only query parameters that are in each specific list will be considered.
 const acceptedParams = {
     "listing_location": [
         "id",
