@@ -438,11 +438,9 @@ class ClusteredMarkerLayer(MapLayer):
             widget = point.widget
             if widget is None:
                 widget = self.create_widget_for(point)
-            #print("DEBUG")
-            #print(f"{widget.lon}\t{widget.lat}")
+
             set_marker_position(mapview, widget)
             self.add_widget(widget)
-        #print(f"Count: {cnt}")
 
     def build_cluster(self):
         #print("ClusteredMarkerLayer: build_cluster")

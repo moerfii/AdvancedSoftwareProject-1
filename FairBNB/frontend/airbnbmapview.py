@@ -31,20 +31,12 @@ class AirbnbMapView(MapView):
         
         listings = [None]
         app.api.getListingLocations(listings,custom_filter)
-        print(time.time()-start)
-        print("size")
-        print(len(listings[0]))
-        """
-        start = time.time()
-        data = requests.get(f"http://localhost:8888/listing_location?latitude.ge={lat1}&latitude.le={lat2}&longitude.ge={lon1}&longitude.le={lon2}")
-        listings = json.loads(data.text)
-        listings = RestAPIConnection().getListingLocations(custom_filter)
-        print(time.time()-start)
-        1/0
-        """
-        self.remove_widget(self.listing_id_list)
+
         layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp",cluster_max_zoom=18)
+        cnt = 0
         for listing in listings[0]:
+            if cnt >=10000:
+                break
             listing_id = listing['id']
             if listing_id in self.listing_id_list:
                 continue
@@ -57,8 +49,13 @@ class AirbnbMapView(MapView):
                         "source": "atlas://frontend/icons/frontendAtlas/marker",
                         "id_listing": listing['id']
                     }
-
                 )
+            cnt+= 1
+        #remove old layers
+        for child in self.children:
+            if(isinstance(child, ClusteredMarkerLayer)):
+                print("hey")
+                self.remove_widget(child)
 
         self.add_widget(layer)
 

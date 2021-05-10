@@ -6,11 +6,4 @@ import inspect
 class CustomCluster(ClusterMapMarker,ButtonBehavior):
     def __init__(self,*args, **kwargs):
         super(CustomCluster,self).__init__(source="atlas://frontend/icons/frontendAtlas/cluster",*args, **kwargs)
-
-
-if __name__== "__main__":
-    import sys
-    sys.setrecursionlimit(10000)
-    
-    print(inspect.getmro(CustomCluster()))
-
+        
