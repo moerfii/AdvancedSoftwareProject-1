@@ -94,7 +94,6 @@ class MainApp(MDApp):
 
             )
 
-
 def run():
     MainApp().run()
 

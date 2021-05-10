@@ -5,7 +5,7 @@ from kivy.uix.button import ButtonBehavior
 import inspect
 class CustomCluster(ClusterMapMarker,ButtonBehavior):
     def __init__(self,*args, **kwargs):
-        super(CustomCluster,self).__init__(source="frontend/icons/cluster.png",*args, **kwargs)
+        super(CustomCluster,self).__init__(source="atlas://frontend/icons/frontendAtlas/cluster",*args, **kwargs)
 
 
 if __name__== "__main__":

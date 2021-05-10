@@ -42,6 +42,7 @@ class AirbnbMapView(MapView):
         print(time.time()-start)
         1/0
         """
+        self.remove_widget(self.listing_id_list)
         layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp",cluster_max_zoom=18)
         for listing in listings[0]:
             listing_id = listing['id']
@@ -53,7 +54,7 @@ class AirbnbMapView(MapView):
                     lat=float(listing['latitude']),
                     cls=AirbnbMarker,
                     options={
-                        "source": "frontend/icons/marker.png",
+                        "source": "atlas://frontend/icons/frontendAtlas/marker",
                         "id_listing": listing['id']
                     }
 
