@@ -1,33 +1,38 @@
 import glob
 from urllib import parse
 from os.path import join, dirname
+
+from kivy.app import App
+from kivy.core.window import Window
+from kivy.factory import Factory
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty, Clock
+from kivy.properties import ObjectProperty, StringProperty, Clock
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import AsyncImage
-from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
+
+
+from kivymd.app import MDApp
+
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
-
-from .airbnbmapview import AirbnbMapView
+from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.menu import MDDropdownMenu
-from kivymd.app import MDApp
-from kivy.app import App
+from kivymd.uix.snackbar import Snackbar
+from kivymd.uix.picker import MDDatePicker
 
-from .airbnbmapview import AirbnbMapView
 from .components.filterMenu import FilterMenu
 import json
-from kivymd.uix.snackbar import Snackbar
-from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 import requests
 import os
-from restAPIConnection.restAPIConnection import RestAPIConnection
-from kivy.core.window import Window
 
-from kivymd.uix.picker import MDDatePicker
+from .airbnbmapview import AirbnbMapView
+from restAPIConnection.restAPIConnection import RestAPIConnection
+
 
 
 class ContentNavigationDrawer(BoxLayout):
@@ -49,6 +54,72 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.fps_monitor_start()
+        neighborhoods = [
+            {"viewclass": "OneLineListItem",
+            "text": "Bronx",
+            "on_release": lambda x=f"Bronx": self.set_item(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Brooklyn",
+            "on_release": lambda x=f"Brooklyn": self.set_item(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Manhanttan",
+            "on_release": lambda x=f"Manhanttan": self.set_item(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Queens",
+            "on_release": lambda x=f"Queens": self.set_item(x),
+            }, {"viewclass": "OneLineListItem",
+            "text": "Staten Island",
+            "on_release": lambda x=f"Staten Island": self.set_item(x),
+            }]
+
+        ages = [
+            {"viewclass": "OneLineListItem",
+            "text": "20 - 35",
+            "on_release": lambda x=f"20 - 35": self.set_age(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "35 - 50",
+            "on_release": lambda x=f"35 - 50": self.set_age(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "50 - 60",
+            "on_release": lambda x=f"50 - 60": self.set_age(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "60 +",
+            "on_release": lambda x=f"60 +": self.set_age(x),
+            }]
+
+        interests = [
+            {"viewclass": "OneLineListItem",
+            "text": "Shopping",
+            "on_release": lambda x=f"Shopping": self.set_interests(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Food",
+            "on_release": lambda x=f"Food": self.set_interests(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Sightseeing",
+            "on_release": lambda x=f"Sightseeing": self.set_interests(x),
+            },{"viewclass": "OneLineListItem",
+            "text": "Local experience",
+            "on_release": lambda x=f"Local experience": self.set_interests(x),
+            }, {"viewclass": "OneLineListItem",
+            "text": "Relaxing",
+            "on_release": lambda x=f"Relaxing": self.set_interests(x),
+            }]
+
+        self.menu_n = MDDropdownMenu(
+            caller=self.root.ids.field_n,
+            items=neighborhoods,
+            position="bottom",
+            width_mult=3,)
+        self.menu_a = MDDropdownMenu(
+            caller=self.root.ids.field_a,
+            items=ages,
+            position="bottom",
+            width_mult=2,)
+        self.menu_i = MDDropdownMenu(
+            caller=self.root.ids.field_i,
+            items=interests,
+            position="bottom",
+            width_mult=2,)
 
     def build(self):
         self.theme_cls.primary_palette = "DeepOrange"
@@ -58,6 +129,23 @@ class MainApp(MDApp):
             False,
             0.15,
         ]
+    def option_callback(self, text_of_the_option):
+        print(text_of_the_option)
+
+    def set_item(self, text__neighbor):
+        self.root.ids.field_n.text = text__neighbor
+        self.menu_n.dismiss()
+        print(text__neighbor)
+
+    def set_age(self, text__age):
+        self.root.ids.field_a.text = text__age
+        self.menu_a.dismiss()
+        print(text__age)
+
+    def set_interests(self, text__interest):
+        self.root.ids.field_i.text = text__interest
+        self.menu_i.dismiss()
+        print(text__interest)        
 
     def show_datepicker(self):
         picker = MDDatePicker()
