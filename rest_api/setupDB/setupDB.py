@@ -5,11 +5,11 @@ import io
 import numpy as np
 
 
-USER="postgres"
+USER=""
 HOST="localhost"
-PORT=5432
-DB_NAME="postgres"
-PASSWORD="Hsy3480!"
+PORT=
+DB_NAME=""
+PASSWORD=""
 engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
 
 
@@ -20,14 +20,30 @@ def createTables():
     cur = conn.cursor()
     debug=False
 
-
+    cur.execute("Drop table listing_location")
     if not debug:
         cur.execute(
             """
             create table if not exists listing_location (
                 id integer primary key,
                 latitude decimal,
-                longitude decimal
+                longitude decimal,
+                price integer,
+                borough varchar(13),
+                village varchar(26),
+                total_listings_count integer,
+                is_superhost boolean,
+                guests_included integer,
+                review_score decimal
+            )
+            """
+        )
+        cur.execute(
+            """
+            create table if not exists village_category(
+                village varchar(26),
+                category varchar(11),
+                primary key (village,category)
             )
             """
         )
@@ -118,10 +134,38 @@ def createTables():
 def addListingsAndHost(path):
     engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
     df = pd.read_csv(path)
+
+    listing_location = df[[
+        'id',
+        'latitude',
+        'longitude',
+        'price',
+        'neighbourhood_group_cleansed', #borough
+        'neighbourhood_cleansed', #village
+        'host_total_listings_count',
+        'host_is_superhost',
+        'guests_included',
+        'review_scores_rating'
+        ]]
     
-    #listing_location = df[['id','latitude','longitude']]
-    #streamData(listing_location,'listing_location')
+    for col in listing_location.columns:
+        print(f"{col}: {listing_location[col].isnull().sum()}")
+        if(col in ['host_total_listings_count','review_scores_rating']):
+            listing_location[col].fillna(0.0,inplace=True)
+        elif(col in ['host_is_superhost']):
+            listing_location[col].fillna('f',inplace=True)
     
+    #change price dtype
+    listing_location['price'] = listing_location['price'].str.replace("$",'').str.replace(",",'').str.replace('.00','')
+    listing_location.loc[listing_location['price']=='','price'] = 0
+    listing_location['price'] = listing_location['price'].astype(np.int32)
+    #change superhost dtype
+    listing_location['host_is_superhost'] = listing_location['host_is_superhost'].map({"f":False,"t":True})
+    listing_location['host_total_listings_count'] = listing_location['host_total_listings_count'].astype(int)
+    for col in listing_location.columns:
+        print(f"{col}: {type(listing_location.at[0,col])}")
+    streamData(listing_location,'listing_location')
+    """
     listing_detail = df[[
         'id',
         'thumbnail_url',
@@ -205,8 +249,9 @@ def addListingsAndHost(path):
 
     
     streamData(host,'host')
+    """
     print("done")
-    
+
 def addReviews(path):
     df = pd.read_csv(path)
     print(df.columns)
@@ -268,12 +313,17 @@ def deleteUnnecessaryChars(df,column):
     
     return df
 
+
+def addNeighborhood():
+    df = pd.read_csv("neighborhood_activity.csv")
+    streamData(df,"village_category")
+    print(df['category'].map(len).max())
 if __name__=="__main__":
     
-    #createTables()
-    #addListingsAndHost("data/listings.csv")
-    addReviews("data/reviews.csv")
-
+    createTables()
+    addListingsAndHost("data/listings.csv")
+    #addReviews("data/reviews.csv")
+    addNeighborhood()
 
 
 
