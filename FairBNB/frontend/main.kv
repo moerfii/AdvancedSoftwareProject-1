@@ -63,6 +63,11 @@ Screen:
 
             Screen:
                 name: 'comparescreen'
+                on_pre_enter: app.load_bookmarked()
+                on_leave: app.remove_wishlist_superboxes()
+                MDBoxLayout:
+                    id: supercomparebox
+                    orientation: 'horizontal'
 
             Screen:
                 name: 'swipescreen'

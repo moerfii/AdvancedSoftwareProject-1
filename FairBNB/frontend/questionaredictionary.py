@@ -65,13 +65,10 @@ print('The dataframe has {} boroughs and {} neighborhoods.'.format(
     )
 )
 
-a_list = ['Astoria','Williamsburg','East Village','Financial District','Brooklyn Heights','Dumbo','Nolita','Bushwick','Crown Heights','Murray Hill']
-b_list = ['Kensington','Sunnyside','Windsor Terrace','Central Harlem','East Harlem','Greenpoint','Prospect Heights', 'Clinton Hill','Long Island City']
-c_list = ['Upper East Side',"Hell's kitchen",'Murray Hill','Park Slope','Battery Park City']
+#a_list = ['Astoria','Williamsburg','East Village','Financial District','Brooklyn Heights','Dumbo','Nolita','Bushwick','Crown Heights','Murray Hill']
+#b_list = ['Kensington','Sunnyside','Windsor Terrace','Central Harlem','East Harlem','Greenpoint','Prospect Heights', 'Clinton Hill','Long Island City']
+#c_list = ['Upper East Side',"Hell's kitchen",'Murray Hill','Park Slope','Battery Park City']
 
-neighborhoods.loc[neighborhoods['Neighborhood'] == 'Astoria', 'age_category'] = 'a'
-
-print(neighborhoods['Neighborhood'])
 
 ## TOP 20 Neighborhoods Manhattan
 neighborhoods.loc[neighborhoods['Neighborhood'] == 'Midtown', 'age_category'] = 'a,b,c'
