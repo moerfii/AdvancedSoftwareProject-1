@@ -33,7 +33,15 @@ const acceptedParams = {
     "listing_location": [
         "id",
         "latitude",
-        "longitude"],
+        "longitude",
+        "price",
+        "borough",
+        "village",
+        "total_listing_count",
+        "is_superhost",
+        "guests_included",
+        "review_score"
+    ],
 
     "listing_detail": [
         "id",
@@ -52,7 +60,8 @@ const acceptedParams = {
         "access",
         "host_id",
         "guests_included",
-        "number_of_reviews"],   
+        "number_of_reviews"
+    ],   
      
     "listing_other" : [
         "id",
@@ -62,7 +71,8 @@ const acceptedParams = {
         "neighbourhood_cleansed",
         "neighbourhood_group_cleansed",
         "minimum_nights",
-        "maximum_nights"],
+        "maximum_nights"
+    ],
 
     "listing_reviews" : [
         "id",
@@ -72,7 +82,8 @@ const acceptedParams = {
         "review_scores_checkin",
         "review_scores_communication",
         "review_scores_location",
-        "review_scores_value"],
+        "review_scores_value"
+    ],
     
     "host" : [
         "host_id",
@@ -85,7 +96,8 @@ const acceptedParams = {
         "calculated_host_listings_count",
         "calculated_host_listings_count_entire_homes",
         "calculated_host_listings_count_private_rooms",
-        "calculated_host_listings_count_shared_rooms"],
+        "calculated_host_listings_count_shared_rooms"
+    ],
     
     "review" : [
         "listing_id",
@@ -93,7 +105,13 @@ const acceptedParams = {
         "date",
         "reviewer_id",
         "reviewer_name",
-        "comments"]
+        "comments"
+    ],
+    
+    "village_category": [
+        "village",
+        "category"
+    ]
 }
 function buildQuery(queryString,query,dbParams,setAND=false) {
     /*  Adds WHERE clauses to input queryString, cleans query params
@@ -162,6 +180,7 @@ app.get(
         )
     }
 )
+
 app.get(
     "/listing_detail",
     (req,res) => {
@@ -282,6 +301,17 @@ app.get(
 
 
 app.get(
+    "/village_category",
+    (req,res) => {
+        var query = buildQuery(`SELECT * FROM village_category`,req.query,acceptedParams['village_category']);
+        pool.query(
+            query,
+            (error,result) => returnDBResults(error,result,res)
+        )
+    }
+)
+
+app.get(
     "/search_address",
     async (req,res) => {
         await axios({
@@ -293,6 +323,9 @@ app.get(
         )
     }
 )
+
+
+
 
 if(require.main === module) {
     app.listen(
