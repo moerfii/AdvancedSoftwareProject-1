@@ -17,6 +17,8 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.app import MDApp
 from kivy.app import App
 
+from .airbnbmapview import AirbnbMapView
+from .components.filterMenu import FilterMenu
 import json
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
@@ -151,7 +153,6 @@ class MainApp(MDApp):
 
 
     pass
-
 
 def run():
     MainApp().run()

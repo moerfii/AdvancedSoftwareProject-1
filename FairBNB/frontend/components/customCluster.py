@@ -5,12 +5,5 @@ from kivy.uix.button import ButtonBehavior
 import inspect
 class CustomCluster(ClusterMapMarker,ButtonBehavior):
     def __init__(self,*args, **kwargs):
-        super(CustomCluster,self).__init__(source="frontend/icons/cluster.png",*args, **kwargs)
-
-
-if __name__== "__main__":
-    import sys
-    sys.setrecursionlimit(10000)
-    
-    print(inspect.getmro(CustomCluster()))
-
+        super(CustomCluster,self).__init__(source="atlas://frontend/icons/frontendAtlas/cluster",*args, **kwargs)
+        

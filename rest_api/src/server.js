@@ -12,7 +12,6 @@ const app = express();
 app.disable('x-powered-by');
 app.use( express.json());   //only needed if we have POST requests
 app.use(cors());            //needed to allow cors
-//to check on travis
 
 const pool = new Pool({
     host: process.env.DB_HOST,
@@ -29,32 +28,100 @@ const operators = {
     "le":"<="
 }
 
+// holds column names for each table, only query parameters that are in each specific list will be considered.
+const acceptedParams = {
+    "listing_location": [
+        "id",
+        "latitude",
+        "longitude"],
 
-function buildQuery(queryString,query,setAND=false) {
+    "listing_detail": [
+        "id",
+        "thumbnail_url",
+        "medium_url",
+        "picture_url",
+        "xl_picture_url",
+        "name",
+        "listing_url",
+        "price",
+        "summary",
+        "space",
+        "description",
+        "neighborhood_overview",
+        "transit",
+        "access",
+        "host_id",
+        "guests_included",
+        "number_of_reviews"],   
+     
+    "listing_other" : [
+        "id",
+        "square_feet",
+        "property_type",
+        "room_type",
+        "neighbourhood_cleansed",
+        "neighbourhood_group_cleansed",
+        "minimum_nights",
+        "maximum_nights"],
+
+    "listing_reviews" : [
+        "id",
+        "review_scores_rating",
+        "review_scores_accuracy",
+        "review_scores_cleanliness",
+        "review_scores_checkin",
+        "review_scores_communication",
+        "review_scores_location",
+        "review_scores_value"],
+    
+    "host" : [
+        "host_id",
+        "host_location",
+        "host_is_superhost",
+        "host_neighbourhood",
+        "host_listings_count",
+        "host_total_listings_count",
+        "host_identity_verified",
+        "calculated_host_listings_count",
+        "calculated_host_listings_count_entire_homes",
+        "calculated_host_listings_count_private_rooms",
+        "calculated_host_listings_count_shared_rooms"],
+    
+    "review" : [
+        "listing_id",
+        "id",
+        "date",
+        "reviewer_id",
+        "reviewer_name",
+        "comments"]
+}
+function buildQuery(queryString,query,dbParams,setAND=false) {
     /*  Adds WHERE clauses to input queryString, cleans query params
         Inputs: - queryString: A string with a query
                 - query: reqest query dict
-                - count: Set to > 0 if there is already a WHERE constraint 
+                - setAND: boolean that should be set to true if there is already a WHERE clause in query
     */
     
     Object.entries(query).forEach(([key, value]) => {
-        if(setAND) queryString += " AND ";
-        else {
-            queryString += " WHERE ";
-            setAND=true;
-        }
         key = key.split(".");
         if(key.length!=2) {
             return;
         }
-
+        
         if(!(key[1] in operators)) {
             return;
         }
         const colName = key[0].replace(/[";]/g,"")
-        const operator = operators[key[1]];
-        const val = value.replace(/[";]/g,"")
-        queryString += `${colName} ${operator} ${val}`
+        if((dbParams.includes(colName))) {
+            if(setAND) queryString += " AND ";
+            else {
+                queryString += " WHERE ";
+                setAND=true;
+            }
+            const operator = operators[key[1]];
+            const val = value.replace(/[";]/g,"")
+            queryString += `${colName} ${operator} ${val}`
+        }
      });
      return queryString
 }
@@ -76,7 +143,8 @@ app.get(
     "/listing_location",
     (req,res) => {
         var query = "SELECT * FROM listing_location"
-        query = buildQuery(query,req.query)
+        query = buildQuery(query,req.query,acceptedParams['listing_location']);
+        console.log(query)
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)
@@ -98,7 +166,7 @@ app.get(
     "/listing_detail",
     (req,res) => {
         var query = "SELECT * FROM listing_detail"
-        query = buildQuery(query,req.query)
+        query = buildQuery(query,req.query,acceptedParams['listing_detail'])
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)
@@ -109,7 +177,6 @@ app.get(
     "/listing_detail/:id",
     (req,res) => {
         var query = "SELECT * FROM listing_detail WHERE id=$1"
-        query = buildQuery(query,req.query)
         pool.query(
             query,
             [req.params.id],
@@ -122,7 +189,7 @@ app.get(
     "/listing_other",
     (req,res) => {
         var query = "SELECT * FROM listing_other"
-        query = buildQuery(query,req.query)
+        query = buildQuery(query,req.query,acceptedParams['listing_other'])
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)
@@ -145,7 +212,7 @@ app.get(
     "/listing_reviews",
     (req,res) => {
         var query = "SELECT * FROM listing_reviews"
-        query = buildQuery(query,req.query)
+        query = buildQuery(query,req.query,acceptedParams['listing_reviews'])
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)
@@ -156,7 +223,6 @@ app.get(
     "/listing_reviews/:id",
     (req,res) => {
         var query = "SELECT * FROM listing_reviews WHERE id=$1"
-        query = buildQuery(query,req.query)
         pool.query(
             query,
             [req.params.id],
@@ -168,7 +234,7 @@ app.get(
     "/host",
     (req,res) => {
         var query = "SELECT * FROM host"
-        query = buildQuery(query,req.query)
+        query = buildQuery(query,req.query,acceptedParams['host'])
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)
@@ -179,7 +245,6 @@ app.get(
     "/host/:id",
     (req,res) => {
         var query = "SELECT * FROM host WHERE host_id=$1"
-        query = buildQuery(query,req.query)
         pool.query(
             query,
             [req.params.id],
@@ -194,8 +259,7 @@ returns reviews for listing id
 app.get(
     "/reviews",
     (req,res) => {
-        var query = buildQuery(`SELECT * FROM review`,req.query)
-        
+        var query = buildQuery(`SELECT * FROM review`,req.query,acceptedParams['review'])
         pool.query(
             query,
             (error,result) => returnDBResults(error,result,res)

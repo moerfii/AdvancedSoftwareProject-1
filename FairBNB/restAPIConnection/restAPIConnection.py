@@ -11,7 +11,10 @@ class RestAPIConnection:
         self.filters = self.overrideFilter(filters)
 
     
+    def setFilters(self,custom_filters):
+        self.filters = self.overrideFilter(custom_filters)
 
+        
     def overrideFilter(self,custom_filters=None):
         filters = self.filters.copy()
         if custom_filters:

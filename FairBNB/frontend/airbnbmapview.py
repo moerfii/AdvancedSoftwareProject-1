@@ -23,7 +23,6 @@ class AirbnbMapView(MapView):
         self.getting_airbnb_timer = Clock.schedule_once(self.get_airbnb_in_fov, 1)
 
     def get_airbnb_in_fov(self, *args):
-        print("get_airbnb")
         start=time.time()
         app = App.get_running_app()
         lat1, lon1, lat2, lon2 = self.get_bbox()
@@ -31,19 +30,13 @@ class AirbnbMapView(MapView):
         
         listings = [None]
         app.api.getListingLocations(listings,custom_filter)
-        print(time.time()-start)
-        print("size")
-        print(len(listings[0]))
-        """
-        start = time.time()
-        data = requests.get(f"http://localhost:8888/listing_location?latitude.ge={lat1}&latitude.le={lat2}&longitude.ge={lon1}&longitude.le={lon2}")
-        listings = json.loads(data.text)
-        listings = RestAPIConnection().getListingLocations(custom_filter)
-        print(time.time()-start)
-        1/0
-        """
+
         layer = ClusteredMarkerLayer(cluster_cls=CustomCluster,cluster_radius="200dp",cluster_max_zoom=18)
+        cnt = 0
+        # add listing to layer, break after 10'000 listings
         for listing in listings[0]:
+            if cnt >=10000:
+                break
             listing_id = listing['id']
             if listing_id in self.listing_id_list:
                 continue
@@ -53,11 +46,15 @@ class AirbnbMapView(MapView):
                     lat=float(listing['latitude']),
                     cls=AirbnbMarker,
                     options={
-                        "source": "frontend/icons/marker.png",
+                        "source": "atlas://frontend/icons/frontendAtlas/marker",
                         "id_listing": listing['id']
                     }
-
                 )
+            cnt+= 1
+        #remove old layers
+        for child in self.children:
+            if(isinstance(child, ClusteredMarkerLayer)):
+                self.remove_widget(child)
 
         self.add_widget(layer)
 
