@@ -10,7 +10,6 @@ from kivy.uix.button import Button
 from .rangeSlider import RangeSlider
 from .filterButtons import ApplyFilterButton, ResetFilterButton
 
-
 kv = '''
 <FilterMenu>:
     BoxLayout:
@@ -33,7 +32,7 @@ kv = '''
             MDLabel:
                 text: 'Maximum Price {}'.format(int(price_filter.value[1]))
 
-        
+
         MDLabel:
             text: 'Age'
             color: 0,0,0,1
@@ -54,16 +53,16 @@ kv = '''
 
 
 class FilterMenu(MDCard):
-    def __init__(self,*args,**kwargs):
-        super(FilterMenu,self).__init__(*args,**kwargs)
+    def __init__(self, *args, **kwargs):
+        super(FilterMenu, self).__init__(*args, **kwargs)
+
     def build(self):
         return Builder.load_string(kv)
-    
-
 
 
 if __name__ == "__main__":
     from kivy.app import App
+
     """
     Builder.load_string('''
 <FilterMenu>:
@@ -86,7 +85,7 @@ if __name__ == "__main__":
             MDLabel:
                 text: 'Maximum Price {}'.format(int(price_filter.value[1]))
 
-        
+
         MDLabel:
             text: 'Age'
         RangeSlider:
@@ -104,11 +103,15 @@ if __name__ == "__main__":
             id: reset_filters
     ''')
     """
+
+
     class FilterMenuApp(BoxLayout):
         pass
+
 
     class SliderApp(MDApp):
         def build(self):
             return FilterMenu()
+
 
     SliderApp().run()

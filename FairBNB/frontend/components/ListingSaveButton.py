@@ -17,14 +17,16 @@ class ListingSaveButton(MDIconButton):
     def __init__(self,data,**kwargs):
         super(MDIconButton,self).__init__(**kwargs)
         self.data=data
-        self.pos_hint = {'center_x': .95, 'center_y': .90}
+        self.pos_hint = {'center_x': .90, 'center_y': .83}
         self.icon = 'heart-outline'
+        self.user_font_size = "36sp"
         self.opposite_colors = True
         if os.path.isfile(f"bookmarks/{data['id']}.json"):
             print("folder found")
             self.isBookmarked=True
             self.halign = 'center'
             self.valign = 'center'
+
 
         else:
             self.isBookmarked=False

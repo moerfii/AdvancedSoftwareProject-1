@@ -9,6 +9,8 @@ import time
 from .components.airbnbMarker import AirbnbMarker
 from .components.customCluster import CustomCluster
 from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
+
+
 class AirbnbMapView(MapView):
     getting_airbnb_timer = None
     listing_id_list = []

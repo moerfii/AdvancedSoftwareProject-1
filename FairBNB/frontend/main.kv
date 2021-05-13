@@ -45,7 +45,7 @@ Screen:
                                 id: field_n
                                 width: "100dp"
                                 hint_text: "Neighborhood"
-                                on_focus: 
+                                on_focus:
                                     if self.focus:app.menu_n.open()
 
                             MDIconButton:
@@ -54,19 +54,19 @@ Screen:
                                     app.show_datepicker()
                             MDLabel:
                                 id: date
-                                text: "Date" 
+                                text: "Date"
                         BoxLayout:
                             spacing: dp(15)
                             MDTextField:
                                 id: field_a
                                 padding: "10dp"
                                 hint_text: "Age"
-                                on_focus: 
+                                on_focus:
                                     if self.focus:app.menu_a.open()
                             MDTextField:
                                 id: field_i
                                 hint_text: "Interests"
-                                on_focus: 
+                                on_focus:
                                     if self.focus:app.menu_i.open()
                             BoxLayout:
                                 orientation: 'vertical'
