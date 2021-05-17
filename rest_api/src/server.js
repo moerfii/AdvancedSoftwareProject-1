@@ -25,7 +25,8 @@ const pool = new Pool({
 const operators = {
     "eq":"=",
     "ge":">=",
-    "le":"<="
+    "le":"<=",
+    "in": "IN"
 }
 
 // holds column names for each table, only query parameters that are in each specific list will be considered.
@@ -137,10 +138,23 @@ function buildQuery(queryString,query,dbParams,setAND=false) {
                 setAND=true;
             }
             const operator = operators[key[1]];
-            const val = value.replace(/[";]/g,"")
+            var val;
+            if (key[1]!="in") {
+                val = value.replace(/[";]/g,"")
+                //queryString += `${colName} ${operator} ${val}`
+            } else {
+                str = '(';
+                for(var i=0;i<value.length-1;i++) {
+                    str+="'"+value[i].replace(/\+/g," ")+"',";
+                }
+                str+="'"+value[value.length-1].replace(/\+/g," ")+"')"
+                console.log(str)
+                val=str
+            }
             queryString += `${colName} ${operator} ${val}`
         }
      });
+     console.log(queryString)
      return queryString
 }
 
@@ -303,13 +317,16 @@ app.get(
 app.get(
     "/village_category",
     (req,res) => {
-        var query = buildQuery(`SELECT * FROM village_category`,req.query,acceptedParams['village_category']);
+        console.log(req.query)
+        var query = buildQuery(`SELECT DISTINCT(village) FROM village_category`,req.query,acceptedParams['village_category']);
         pool.query(
-            query,
+            {text:query, rowMode:'array'},
             (error,result) => returnDBResults(error,result,res)
         )
     }
 )
+
+
 
 app.get(
     "/search_address",

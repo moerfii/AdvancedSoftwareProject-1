@@ -6,8 +6,8 @@ import time
 import requests
 import json
 import time
-from .components.airbnbMarker import AirbnbMarker
-from .components.customCluster import CustomCluster
+from .components.map.airbnbMarker import AirbnbMarker
+from .components.map.customCluster import CustomCluster
 from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
 
 

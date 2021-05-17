@@ -3,6 +3,10 @@ from kivy.app import App
 
 
 class ResetFilterButton(Button):
+    """
+    Creates a "Reset Filters" Button iff some filters are already set (to be precise after the "Apply filters" button was pressed).
+    On click it will reset all filters in the RestAPIConnection class.
+    """
     def __init__(self,*args,**kwargs):
         super(ResetFilterButton,self).__init__(*args,**kwargs)
         self.text = 'Reset Filters'
@@ -37,6 +41,10 @@ class ResetFilterButton(Button):
         self.opacity=0
 
 class ApplyFilterButton(Button):
+    """
+    Creates an "Apply Filter" button.
+    On click it will set the filters on the RestAPIConnection class.
+    """
     def __init__(self,*args,**kwargs):
         super(ApplyFilterButton,self).__init__(*args,**kwargs)
         self.text = 'Apply filters'
@@ -55,8 +63,8 @@ class ApplyFilterButton(Button):
 
 
         filter = {
-            "price.le":int(price_filter.value[0]),
-            "price.ge":int(price_filter.value[1]),
+            "price.ge":int(price_filter.value[0]),
+            "price.le":int(price_filter.value[1]),
             "age.ge":int(age_filter.value[0]),
             "age.le":int(age_filter.value[1])
         }
