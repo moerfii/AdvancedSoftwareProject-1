@@ -16,7 +16,7 @@ def test_getListingLocation_empty(RAC_empty):
 
 def test_getListingLocation_filter(RAC_empty):
     l = [None]
-    custom_filter = {'borough.eq':'Bronx'}
+    custom_filter = {'borough.eq':"'Bronx'"}
     RAC_empty.getListingLocations(l,custom_filter)
     assert (len(l[0])==1)
 
