@@ -19,7 +19,7 @@ def test_getListingLocation_filter(RAC_empty):
     l = [None]
     custom_filter = {'id.eq':None}
     RAC_empty.getListingLocations(l,custom_filter)
-    assert (len(l[0])==1)
+    assert (len(l[0])==2)
 
 def test_getListingDetail_empty(RAC_empty):
     l = [None]

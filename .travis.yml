@@ -32,6 +32,10 @@ jobs:
         - psql -c "CREATE TABLE village_category(village varchar(26), category varchar(11), primary key(village,category));" -U travis
         - psql -c "INSERT INTO village_category VALUES('Astoria','Food');" -U travis
         - psql -c "Insert INTO village_category VALUES('Belmont','Food');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Belmont','Nightlife');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Harlem','Art & Music');" -U travis
+
+
         - psql -c "alter user travis with password 'travispassword'" -U travis
         - npm install
       env:
