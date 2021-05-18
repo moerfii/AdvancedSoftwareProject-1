@@ -16,7 +16,7 @@ def test_getListingLocation_empty(RAC_empty):
 
 def test_getListingLocation_filter(RAC_empty):
     l = [None]
-    custom_filter = {'burough.eq':'Bronx'}
+    custom_filter = {'borough.eq':'Bronx'}
     RAC_empty.getListingLocations(l,custom_filter)
     assert (len(l[0])==1)
 
@@ -45,10 +45,10 @@ def test_getListingOther_filter(RAC_empty):
 def test_getVillageCategory_empty(RAC_empty):
     l = [None]
     RAC_empty.getVillageCategory(l)
-    assert (len(l[0])==4)
+    assert (len(l[0])==3)
 
 def test_getVillageCategory_filter(RAC_empty):
     l = [None]
     custom_filter = {'category.in[]': ['Nightlife','Art & Music']}
-    RAC_empty.getVillageCategory(l)
+    RAC_empty.getVillageCategory(l,custom_filter)
     assert (len(l[0])==2)
