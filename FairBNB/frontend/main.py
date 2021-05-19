@@ -17,6 +17,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
 from kivymd.app import MDApp
 
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.imagelist import SmartTileWithLabel
 from kivymd.uix.label import MDLabel
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import MDTextField
@@ -26,6 +27,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.picker import MDDatePicker
 
+from .components.ListingSaveButton import ListingSaveButton
 from .listingDetail import RoundedCornerLayout
 from .components.filtering.filterMenu import FilterMenu
 from .components.form.form import Form
@@ -61,7 +63,7 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.fps_monitor_start()
-        print(self)
+        #print(self)
         form = self.root.ids.form
         form.on_start()
         """
@@ -141,22 +143,23 @@ class MainApp(MDApp):
             0.15,
         ]
     def option_callback(self, text_of_the_option):
-        print(text_of_the_option)
+        #print(text_of_the_option)
+        pass
 
     def set_item(self, text__neighbor):
         self.root.ids.field_n.text = text__neighbor
         self.menu_n.dismiss()
-        print(text__neighbor)
+        #print(text__neighbor)
 
     def set_age(self, text__age):
         self.root.ids.field_a.text = text__age
         self.menu_a.dismiss()
-        print(text__age)
+        #print(text__age)
 
     def set_interests(self, text__interest):
         self.root.ids.field_i.text = text__interest
         self.menu_i.dismiss()
-        print(text__interest)        
+        #print(text__interest)
 
     def show_datepicker(self):
         picker = MDDatePicker()
@@ -213,9 +216,9 @@ class MainApp(MDApp):
         children = self.root.ids.supercomparebox.children
         children_copy = children.copy()
         for child in children_copy:
-            print(child)
+            #print(child)
             self.root.ids.supercomparebox.remove_widget(child)
-        print(len(children))
+        #print(len(children))
 
     def load_bookmarked(self):
         path = 'bookmarks'
@@ -248,6 +251,28 @@ class MainApp(MDApp):
                 superbox.add_widget(textbox)
                 self.root.ids.supercomparebox.add_widget(superbox)
 
+    def load_results(self):
+        path = 'bookmarks'
+        
+        full_path = os.path.join(os.getcwd(), path)
+        for filenames in os.walk(full_path):
+            for filename in filenames[2]:
+                currentfile = open(os.path.join(full_path, filename), "r")
+                data = json.load(currentfile)
+
+                superbox = SmartTileWithLabel(
+                    size_hint_y= None,
+                    height= "240dp",
+                    source = data['picture_url'],
+                    text=f"Price: {data['price']}$/night"
+                         f"\nRoomType: {data['room_type']}"
+                         f"\nBorough: {data['neighbourhood_group_cleansed']}"
+
+                )
+                print('here')
+                bookmarkbutton = ListingSaveButton(data)
+                superbox.add_widget(bookmarkbutton)
+                self.root.ids.imagelist.add_widget(superbox)
 
 
 

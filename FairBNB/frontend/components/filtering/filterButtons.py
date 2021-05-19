@@ -54,7 +54,6 @@ class ApplyFilterButton(Button):
         # Sets apiConnection filters according to filters
         # TODO add feedback
         app = App.get_running_app()
-        print(app.root.ids)
         filter_menu = app.root.ids.filter_menu
         price_filter = filter_menu.ids.price_filter
 

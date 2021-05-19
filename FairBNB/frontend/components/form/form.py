@@ -16,7 +16,6 @@ class Form(MDCard):
 
     def on_start(self):
         print("ON START")
-        print(self.ids)
         
         neighborhoods = [
             {"viewclass": "OneLineListItem",
@@ -91,7 +90,6 @@ class Form(MDCard):
         self.menu_n.dismiss()
         filter = {"borough.eq":"'"+text__neighbor+"'"}
         self.api.setFilters(filter)
-        print(self.api.filters)
 
         
 
@@ -119,7 +117,6 @@ class Form(MDCard):
             village_list.append(i[0])
         filter = {"village.in[]":village_list}
         self.api.setFilters(filter)
-        print(self.api.filters)
 
     def set_superhost(self,status):
         filter = {"superhost.eq":None}

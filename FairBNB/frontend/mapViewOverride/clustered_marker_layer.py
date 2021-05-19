@@ -390,7 +390,7 @@ class ClusterMapMarker(MapMarker):
         return False
     """
     def on_release(self,*args):
-        print(self.num_points)
+        #print(self.num_points)
         return
 
 class ClusteredMarkerLayer(MapLayer):
