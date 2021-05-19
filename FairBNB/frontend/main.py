@@ -6,6 +6,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.factory import Factory
 from kivy.lang import Builder
+from kivy.metrics import dp
 from kivy.properties import ObjectProperty, StringProperty, Clock
 
 from kivy.uix.boxlayout import BoxLayout
@@ -25,6 +26,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.picker import MDDatePicker
 
+from .listingDetail import RoundedCornerLayout
 from .components.filterMenu import FilterMenu
 import json
 import requests
@@ -32,6 +34,8 @@ import os
 
 from .airbnbmapview import AirbnbMapView
 from restAPIConnection.restAPIConnection import RestAPIConnection
+
+
 
 
 
@@ -44,6 +48,8 @@ class Content(BoxLayout):
     pass
 
 
+class BaseWidget(MDFloatLayout):
+    pass
 
 
 
@@ -213,8 +219,8 @@ class MainApp(MDApp):
             for filename in filenames[2]:
                 currentfile = open(os.path.join(full_path, filename),"r")
                 data = json.load(currentfile)
-                superbox = MDBoxLayout(
-                    orientation='vertical'
+                superbox = RoundedCornerLayout(
+
                 )
                 imagebox = MDFloatLayout(
                 )

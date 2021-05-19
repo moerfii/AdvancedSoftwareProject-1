@@ -1,4 +1,5 @@
 from kivy.core.window import Window
+from kivy.metrics import dp
 from kivy.uix.popup import Popup
 from kivy.uix.image import AsyncImage
 from kivy.uix.boxlayout import BoxLayout
