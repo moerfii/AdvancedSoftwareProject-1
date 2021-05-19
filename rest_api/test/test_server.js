@@ -190,6 +190,15 @@ describe("Checking all requests/responses", () => {
                 done();
             })
         }).timeout(5000)
+
+        it("returns status 200 for IN operator", (done) => {
+            chai.request(app)
+            .get("/village_category?category.in[]=Food&category.in[]=Nightlife")
+            .end(function(err,res) {
+                expect(res).to.have.status(200);
+                done();
+            })
+        }).timeout(5000)
     })
 
 
@@ -211,7 +220,7 @@ describe("Checking all requests/responses", () => {
             chai.request(app)
             .get("/village_category?category.eq='Food'")
             .end(function (err,res) {
-                var param = res.body[0]['village'];
+                var param = res.body[0][0];
                 chai.request(app)
                 .get(`/listing_location?village.eq='${param}'`)
                 .end(function(err,res) {

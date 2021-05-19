@@ -20,14 +20,22 @@ jobs:
         - psql -c "INSERT INTO host VALUES(1,'New York, New York, United States','f','Gravesend',6,6,'t',6,0,5,1);"
         - psql -c 'CREATE TABLE listing_detail(id integer NOT NULL,thumbnail_url character varying(100) COLLATE pg_catalog."default",medium_url character varying(100) COLLATE pg_catalog."default",picture_url character varying(100) COLLATE pg_catalog."default",xl_picture_url character varying(100) COLLATE pg_catalog."default",name character varying(200) COLLATE pg_catalog."default",listing_url character varying(100) COLLATE pg_catalog."default",price integer,summary text COLLATE pg_catalog."default",space text COLLATE pg_catalog."default",description text COLLATE pg_catalog."default",neighborhood_overview text COLLATE pg_catalog."default",transit text COLLATE pg_catalog."default",access text COLLATE pg_catalog."default",host_id integer,guests_included integer,number_of_reviews integer,CONSTRAINT listing_detail_pkey PRIMARY KEY (id));'
         - psql -c "INSERT INTO listing_detail VALUES(1,'','','https://a0.muscache.com/im/pictures/f3a49248-b3e6-4b54-8030-7fb580f0688e.jpg?aki_policy=large','','Magnifique Suite au N de Manhattan - vue Cloitres','https://www.airbnb.com/rooms/8700',80,'Suite de 20 m2 a 5 min des 2 lignes de metro au Nord de Manhattan. Bars, restaurants et un marche bio animent le quartier. Magnifique vue sur les Cloitres medievaux et inonde de lumiere. Parfait pour une escapade a New-York!','', 'Suite de 20 m2 a 5 min des 2 lignes de metro au Nord de Manhattan. Bars, restaurants et un marche bio animent le quartier. Magnifique vue sur les Cloitres medievaux et inonde de lumiere. Parfait pour une escapade a New-York! Metro 1 et A', '', 'Metro 1 et A','',26394,	1,0);"
-        - psql -c "CREATE TABLE listing_location(id integer NOT NULL,latitude numeric,longitude numeric,CONSTRAINT listing_location_pkey PRIMARY KEY (id));"
-        - psql -c 'INSERT INTO listing_location VALUES(1,40.647490000000005,-73.97237);'
+        - psql -c "CREATE TABLE listing_location(id integer primary key,latitude decimal,longitude decimal,price integer,borough varchar(13),village varchar(26),total_listings_count integer,is_superhost boolean,guests_included integer,review_score decimal);"
+        - psql -c "INSERT INTO listing_location VALUES(1,40.85311,-73.88763,29,'Bronx','Belmont',1,false,1,93.0);"
+        - psql -c "INSERT INTO listing_location VALUES(2,40.75961,-73.91117,80,'Queens','Astoria',2,true,2,97.0);" -U travis
         - psql -c 'CREATE TABLE listing_other(id integer NOT NULL,square_feet integer,property_type character varying(50) COLLATE pg_catalog."default",room_type character varying(50) COLLATE pg_catalog."default",neighbourhood_cleansed character varying(50) COLLATE pg_catalog."default",neighbourhood_group_cleansed character varying(50) COLLATE pg_catalog."default",minimum_nights integer,maximum_nights integer,CONSTRAINT listing_other_pkey PRIMARY KEY (id));'
         - psql -c "INSERT INTO listing_other VALUES(1,0,'Apartment','Private room','Kensington','Brooklyn',1,730);"
         - psql -c 'CREATE TABLE listing_reviews(id integer NOT NULL,review_scores_rating numeric,review_scores_accuracy numeric,review_scores_cleanliness numeric,review_scores_checkin numeric,review_scores_communication numeric,review_scores_location numeric,review_scores_value numeric,CONSTRAINT listing_reviews_pkey PRIMARY KEY (id));'
         - psql -c "INSERT INTO listing_reviews VALUES(1,98.0,10.0,10.0,10.0,10.0,10.0,10.0);"
         - psql -c 'CREATE TABLE review (listing_id integer, id integer primary key, date date, reviewer_id integer, reviewer_name varchar(100), comments text);' -U travis
         - psql -c "INSERT INTO review VALUES(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
+        - psql -c "CREATE TABLE village_category(village varchar(26), category varchar(11), primary key(village,category));" -U travis
+        - psql -c "INSERT INTO village_category VALUES('Astoria','Food');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Belmont','Food');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Belmont','Nightlife');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Harlem','Art & Music');" -U travis
+
+
         - psql -c "alter user travis with password 'travispassword'" -U travis
         - npm install
       env:

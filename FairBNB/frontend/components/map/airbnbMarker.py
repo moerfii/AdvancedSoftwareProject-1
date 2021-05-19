@@ -1,6 +1,6 @@
 from kivy_garden.mapview import MapMarkerPopup
 from kivy.properties import NumericProperty
-from ..listingDetail import listingDetail
+from ...listingDetail import listingDetail
 
 class AirbnbMarker(MapMarkerPopup):
     def __init__(self, id_listing, lon, lat, source):

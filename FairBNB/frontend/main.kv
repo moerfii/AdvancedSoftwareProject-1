@@ -1,6 +1,6 @@
 #:include frontend/airbnbmapview.kv
-#:include frontend/components/filterMenu.kv
-#import FilterMenu .components.filterMenu.FilterMenu
+#:include frontend/components/filtering/filterMenu.kv
+#:include frontend/components/form/form.kv
 #import MDIconButton kivymd.uix.button.MDIconButton
 #import MDFlatButton kivymd.uix.button.MDFlatButton
 #import MDRaisedButton kivymd.uix.button.MDRaisedButton
@@ -30,70 +30,12 @@ Screen:
                     orientation: 'vertical'
                     AirbnbMapView:
                         id: mapview
-
+            
             Screen:
-                name: 'formscreen'
-                MDCard:
-                    padding: [dp(200),]
-                    elevation: dp(10)
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: dp(10)
-                        BoxLayout:
-                            spacing: dp(10)
-                            MDTextField:
-                                id: field_n
-                                width: "100dp"
-                                hint_text: "Neighborhood"
-                                on_focus:
-                                    if self.focus:app.menu_n.open()
-
-                            MDIconButton:
-                                icon: "calendar"
-                                on_release:
-                                    app.show_datepicker()
-                            MDLabel:
-                                id: date
-                                text: "Date"
-                        BoxLayout:
-                            spacing: dp(15)
-                            MDTextField:
-                                id: field_a
-                                padding: "10dp"
-                                hint_text: "Age"
-                                on_focus:
-                                    if self.focus:app.menu_a.open()
-                            MDTextField:
-                                id: field_i
-                                hint_text: "Interests"
-                                on_focus:
-                                    if self.focus:app.menu_i.open()
-                            BoxLayout:
-                                orientation: 'vertical'
-                                MDLabel:
-                                    text: "Super host"
-                                    font_style: 'Caption'
-                                MDCheckbox:
-                                    size_hint: None, None
-                                    size: dp(40), dp(40)
-                                    on_active:
-                                        print(self.active)
-                            BoxLayout:
-                                orientation: 'vertical'
-                                MDLabel:
-                                    text: "Fair filter"
-                                    font_style: 'Caption'
-                                MDCheckbox:
-                                    size_hint: None, None
-                                    size: dp(40), dp(40)
-                                    on_active:
-                                        print(self.active)
-                        BoxLayout:
-                            pos_hint: {'center_x':0.5,'center_y':0.5}
-                            MDRectangleFlatIconButton:
-                                icon: 'magnify'
-                                text: "Search"
-
+                name: "formscreen"
+                Form:
+                    id: form
+            
             Screen:
                 name: 'comparescreen'
                 on_pre_enter: app.load_bookmarked()

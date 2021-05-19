@@ -27,7 +27,8 @@ from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.picker import MDDatePicker
 
 from .listingDetail import RoundedCornerLayout
-from .components.filterMenu import FilterMenu
+from .components.filtering.filterMenu import FilterMenu
+from .components.form.form import Form
 import json
 import requests
 import os
@@ -60,6 +61,10 @@ class MainApp(MDApp):
 
     def on_start(self):
         self.fps_monitor_start()
+        print(self)
+        form = self.root.ids.form
+        form.on_start()
+        """
         neighborhoods = [
             {"viewclass": "OneLineListItem",
             "text": "Bronx",
@@ -126,7 +131,7 @@ class MainApp(MDApp):
             items=interests,
             position="bottom",
             width_mult=2,)
-
+        """
     def build(self):
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.font_styles["JetBrainsMono"] = [

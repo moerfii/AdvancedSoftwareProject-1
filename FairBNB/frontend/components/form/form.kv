@@ -1,0 +1,57 @@
+<Form>:
+    id: form
+    padding: [dp(200),]
+    elevation: dp(10)
+    BoxLayout:
+        id:baax
+        orientation: 'vertical'
+        spacing: dp(10)
+        BoxLayout:
+            spacing: dp(10)
+            MDTextField:
+                id: field_n
+                width: "100dp"
+                hint_text: "Neighborhood"
+                on_focus:
+                    if self.focus:form.menu_n.open()
+
+            MDIconButton:
+                icon: "calendar"
+                on_release:
+                    app.show_datepicker()
+            MDLabel:
+                id: date
+                text: "Date"
+        BoxLayout:
+            spacing: dp(15)
+            MDTextField:
+                id: field_a
+                padding: "10dp"
+                hint_text: "Age"
+                on_focus:
+                    if self.focus: form.menu_a.open()
+            MDTextField:
+                id: field_i
+                hint_text: "Interests"
+                on_focus:
+                    if self.focus:form.menu_i.open()
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    text: "Super host"
+                    font_style: 'Caption'
+                MDCheckbox:
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                    on_active:
+                        form.set_superhost(self.active)
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    text: "Fair filter"
+                    font_style: 'Caption'
+                MDCheckbox:
+                    size_hint: None, None
+                    size: dp(40), dp(40)
+                    on_active:
+                        form.set_fairfilter(self.active)
