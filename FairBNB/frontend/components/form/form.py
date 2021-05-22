@@ -84,6 +84,7 @@ class Form(MDCard):
         
         app = App.get_running_app()
         self.api=app.api
+
     def set_neighborhood(self, text__neighbor):
 
         self.ids.field_n.text = text__neighbor
@@ -91,7 +92,6 @@ class Form(MDCard):
         filter = {"borough.eq":"'"+text__neighbor+"'"}
         self.api.setFilters(filter)
 
-        
 
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
