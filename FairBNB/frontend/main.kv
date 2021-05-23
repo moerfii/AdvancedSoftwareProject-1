@@ -1,6 +1,7 @@
 #:include frontend/airbnbmapview.kv
 #:include frontend/components/filtering/filterMenu.kv
 #:include frontend/components/form/form.kv
+#:include frontend/components/compare/compareScreen.kv
 #import MDIconButton kivymd.uix.button.MDIconButton
 #import MDFlatButton kivymd.uix.button.MDFlatButton
 #import MDRaisedButton kivymd.uix.button.MDRaisedButton
@@ -50,12 +51,10 @@ Screen:
             
             Screen:
                 name: 'comparescreen'
-                on_pre_enter: app.load_bookmarked()
-                # on_leave: app.remove_wishlist_superboxes()
-                MDBoxLayout:
-                    id: supercomparebox
-                    orientation: 'horizontal'
-                    padding: dp(30)
+                on_pre_enter: compareScreen.load_bookmarked()
+                on_leave: compareScreen.remove_wishlist_superboxes()
+                CompareScreen:
+                    id: compareScreen
 
             Screen:
                 name: 'swipescreen'
