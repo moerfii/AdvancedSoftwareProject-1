@@ -253,8 +253,10 @@ class MainApp(MDApp):
 
     def load_results(self):
         path = 'bookmarks'
-        
+
         full_path = os.path.join(os.getcwd(), path)
+
+        app = App.get_running_app()
         for filenames in os.walk(full_path):
             for filename in filenames[2]:
                 currentfile = open(os.path.join(full_path, filename), "r")
