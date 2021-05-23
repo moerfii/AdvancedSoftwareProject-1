@@ -30,14 +30,7 @@
                         line_color_normal: app.theme_cls.primary_color
                         on_focus:
                             if self.focus:form.menu_n.open()
-                    MDRectangleFlatIconButton:
-                        pos_hint: {"center_y": 0.4}
-                        icon: "calendar"
-                        text: "Date"
-                        text_color: 1,1,1,.5
-                        line_color: 1,1,1,.5
-                        on_release:
-                            app.show_datepicker()
+
                     
                 BoxLayout:
                     spacing: dp(40)

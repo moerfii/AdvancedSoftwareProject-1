@@ -36,7 +36,7 @@ import os
 
 from .airbnbmapview import AirbnbMapView
 from restAPIConnection.restAPIConnection import RestAPIConnection
-
+from frontend.components.compare.compareScreen import CompareScreen
 
 
 
@@ -74,16 +74,7 @@ class MainApp(MDApp):
             False,
             0.15,
         ]
-    def option_callback(self, text_of_the_option):
-        #print(text_of_the_option)
-        pass
-
-    def on_save(self, instance, value, date_range):
-        pass
-
-    def on_cancel(self, value, date_range):
-        pass
-
+   
     def show_confirmation_dialog(self):
         if not self.dialog:
             self.dialog = MDDialog(
@@ -124,71 +115,6 @@ class MainApp(MDApp):
 
             )
 
-    def remove_wishlist_superboxes(self):
-        children = self.root.ids.supercomparebox.children
-        children_copy = children.copy()
-        for child in children_copy:
-            #print(child)
-            self.root.ids.supercomparebox.remove_widget(child)
-        #print(len(children))
-
-    def load_bookmarked(self):
-        path = 'bookmarks'
-        full_path = os.path.join(os.getcwd(), path)
-        for filenames in os.walk(full_path):
-            for filename in filenames[2]:
-                currentfile = open(os.path.join(full_path, filename),"r")
-                data = json.load(currentfile)
-                superbox = RoundedCornerLayout(
-
-                )
-                imagebox = MDFloatLayout(
-                )
-                textbox = MDFloatLayout(
-                )
-                img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
-                                 pos_hint={'center_x': .5, 'center_y': .5})
-                label = MDLabel(text=f"Price: {data['price']}$/night"
-                                     f"\nRoomType: {data['room_type']}"
-                                     f"\nListing URL: [ref=www.airbnb.com][color=0000ff]{data['listing_url']}[/color][/ref]",
-                                markup=True,
-                                halign='center',
-                                #on_ref_press= print("test"), #open_link(data['listing_url']),
-                                width=250,
-                                size_hint=(None, None),
-                                pos_hint={'center_x': .5, 'center_y': .5})
-                imagebox.add_widget(img)
-                textbox.add_widget(label)
-                superbox.add_widget(imagebox)
-                superbox.add_widget(textbox)
-                self.root.ids.supercomparebox.add_widget(superbox)
-
-    def load_results(self):
-        path = 'bookmarks'
-        
-        full_path = os.path.join(os.getcwd(), path)
-        for filenames in os.walk(full_path):
-            for filename in filenames[2]:
-                currentfile = open(os.path.join(full_path, filename), "r")
-                data = json.load(currentfile)
-
-                superbox = SmartTileWithLabel(
-                    size_hint_y= None,
-                    height= "240dp",
-                    source = data['picture_url'],
-                    text=f"Price: {data['price']}$/night"
-                         f"\nRoomType: {data['room_type']}"
-                         f"\nBorough: {data['neighbourhood_group_cleansed']}"
-
-                )
-                print('here')
-                bookmarkbutton = ListingSaveButton(data)
-                superbox.add_widget(bookmarkbutton)
-                self.root.ids.imagelist.add_widget(superbox)
-
-
-
-    pass
 
 def run():
     MainApp().run()

@@ -25,7 +25,6 @@ class AirbnbMapView(MapView):
         self.getting_airbnb_timer = Clock.schedule_once(self.get_airbnb_in_fov, 1)
 
     def get_airbnb_in_fov(self, *args):
-        start=time.time()
         app = App.get_running_app()
         lat1, lon1, lat2, lon2 = self.get_bbox()
         custom_filter = {'latitude.ge':lat1,'latitude.le':lat2,'longitude.ge':lon1,'longitude.le':lon2}
