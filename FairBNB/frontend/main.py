@@ -115,7 +115,28 @@ class MainApp(MDApp):
 
             )
 
+    def load_results(self):
+        path = 'bookmarks'
+        
+        full_path = os.path.join(os.getcwd(), path)
+        for filenames in os.walk(full_path):
+            for filename in filenames[2]:
+                currentfile = open(os.path.join(full_path, filename), "r")
+                data = json.load(currentfile)
 
+                superbox = SmartTileWithLabel(
+                    size_hint_y= None,
+                    height= "240dp",
+                    source = data['picture_url'],
+                    text=f"Price: {data['price']}$/night"
+                         f"\nRoomType: {data['room_type']}"
+                         f"\nBorough: {data['neighbourhood_group_cleansed']}"
+
+                )
+                print('here')
+                bookmarkbutton = ListingSaveButton(data)
+                superbox.add_widget(bookmarkbutton)
+                self.root.ids.imagelist.add_widget(superbox)
 def run():
     MainApp().run()
 
