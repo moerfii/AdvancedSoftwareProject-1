@@ -65,74 +65,7 @@ class MainApp(MDApp):
         #print(self)
         form = self.root.ids.form
         form.on_start()
-        """
-        neighborhoods = [
-            {"viewclass": "OneLineListItem",
-            "text": "Bronx",
-            "on_release": lambda x=f"Bronx": self.set_item(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Brooklyn",
-            "on_release": lambda x=f"Brooklyn": self.set_item(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Manhanttan",
-            "on_release": lambda x=f"Manhanttan": self.set_item(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Queens",
-            "on_release": lambda x=f"Queens": self.set_item(x),
-            }, {"viewclass": "OneLineListItem",
-            "text": "Staten Island",
-            "on_release": lambda x=f"Staten Island": self.set_item(x),
-            }]
-
-        ages = [
-            {"viewclass": "OneLineListItem",
-            "text": "20 - 35",
-            "on_release": lambda x=f"20 - 35": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "35 - 50",
-            "on_release": lambda x=f"35 - 50": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "50 - 60",
-            "on_release": lambda x=f"50 - 60": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "60 +",
-            "on_release": lambda x=f"60 +": self.set_age(x),
-            }]
-
-        interests = [
-            {"viewclass": "OneLineListItem",
-            "text": "Shopping",
-            "on_release": lambda x=f"Shopping": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Food",
-            "on_release": lambda x=f"Food": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Sightseeing",
-            "on_release": lambda x=f"Sightseeing": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Local experience",
-            "on_release": lambda x=f"Local experience": self.set_interests(x),
-            }, {"viewclass": "OneLineListItem",
-            "text": "Relaxing",
-            "on_release": lambda x=f"Relaxing": self.set_interests(x),
-            }]
-
-        self.menu_n = MDDropdownMenu(
-            caller=self.root.ids.field_n,
-            items=neighborhoods,
-            position="bottom",
-            width_mult=3,)
-        self.menu_a = MDDropdownMenu(
-            caller=self.root.ids.field_a,
-            items=ages,
-            position="bottom",
-            width_mult=2,)
-        self.menu_i = MDDropdownMenu(
-            caller=self.root.ids.field_i,
-            items=interests,
-            position="bottom",
-            width_mult=2,)
-        """
+        
     def build(self):
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.font_styles["JetBrainsMono"] = [
@@ -144,26 +77,6 @@ class MainApp(MDApp):
     def option_callback(self, text_of_the_option):
         #print(text_of_the_option)
         pass
-
-    def set_item(self, text__neighbor):
-        self.root.ids.field_n.text = text__neighbor
-        self.menu_n.dismiss()
-        #print(text__neighbor)
-
-    def set_age(self, text__age):
-        self.root.ids.field_a.text = text__age
-        self.menu_a.dismiss()
-        #print(text__age)
-
-    def set_interests(self, text__interest):
-        self.root.ids.field_i.text = text__interest
-        self.menu_i.dismiss()
-        #print(text__interest)
-
-    def show_datepicker(self):
-        picker = MDDatePicker()
-        picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
-        picker.open()
 
     def on_save(self, instance, value, date_range):
         pass

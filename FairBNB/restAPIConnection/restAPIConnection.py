@@ -32,12 +32,9 @@ class RestAPIConnection:
             filters = self.overrideFilter(custom_filters)
         else:
             filters = custom_filters
-        print(filters)
         resp = requests.get(url,params=filters)
-        print(resp)
-        print(resp.url)
-        print(resp.text)
         res[0] = json.loads(resp.text)
+        print(len(res[0]))
 
     def getListingLocations(self,res,custom_filters=None,append=True):
         url=self.base_url+"/listing_location"
