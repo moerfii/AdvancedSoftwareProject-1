@@ -2,7 +2,7 @@
     id: form
     BoxLayout:
         padding: dp(100)
-        spacing: dp(40)
+        spacing: dp(60)
         canvas:
             Rectangle:
                 size: self.size
@@ -10,6 +10,8 @@
         MDCard:
             pos_hint: {"center_x": 1, "center_y": 0.5}
             elevation: 40
+            border_radius: 20
+            radius: [15]
             size_hint: None, None
             size: 500, 300
             BoxLayout:
@@ -48,6 +50,7 @@
                         #height: "10dp"
                         hint_text: "Age"
                         mode: "rectangle"
+                        line_color_normal: app.theme_cls.accent_color
                         icon_right: "arrow-down-drop-circle-outline"
                         icon_right_color: app.theme_cls.primary_color
                         on_focus:
@@ -122,3 +125,4 @@
             MDLabel:
                 text: "A new way of finding your best neighborhood."
                 font_style: 'H5'
+                bold: True
