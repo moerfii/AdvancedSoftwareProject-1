@@ -5,3 +5,5 @@ services:
       - 8888:8888
   postgres:
     build: ./db/
+    ports:
+      - 8887:5432
