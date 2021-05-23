@@ -1,4 +1,14 @@
 <CompareScreen>:
     id: compareScreen
-    orientation: 'horizontal'
-    padding: dp(30)
+    orientation: 'vertical'
+    BoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            size_hint: 1, 1
+            MDBoxLayout:
+                id: comparebox
+                orientation: 'vertical'
+                size_hint_y: None
+                padding: dp(10)
+                height: self.minimum_height
+

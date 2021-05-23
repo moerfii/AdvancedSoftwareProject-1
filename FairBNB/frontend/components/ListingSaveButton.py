@@ -1,10 +1,12 @@
+import time
+
 from kivy.metrics import dp
 from kivy.uix.button import Button
 import os
 import json
 
 from kivymd.uix.button import MDIconButton
-
+from kivy.app import App
 
 class ListingSaveButton(MDIconButton):
     """
@@ -14,13 +16,41 @@ class ListingSaveButton(MDIconButton):
     background_color = [0, 0, 1, 1]
 
 
-    def __init__(self,data,**kwargs):
+    def __init__(self,data,pos_hint = None,opposite_colors = None,icon = None,**kwargs):
         super(MDIconButton,self).__init__(**kwargs)
         self.data=data
-        self.pos_hint = {'center_x': .90, 'center_y': .83}
-        self.icon = 'heart-outline'
+        if pos_hint is None:
+            self.pos_hint = {'center_x': .90, 'center_y': .83}
+        else:
+            self.pos_hint = pos_hint
+        path = 'bookmarks'
+        full_path = os.path.join(os.getcwd(), path)
+        if not os.listdir(full_path):
+            if icon is None:
+                self.icon = 'heart-outline'
+            else:
+                self.icon = icon
+        else:
+            for filenames in os.walk(full_path):
+                for filename in filenames[2]:
+                    currentfile = open(os.path.join(full_path, filename), "r")
+                    json_data = json.load(currentfile)
+                    if self.data["id"] == json_data['id']:
+                        if icon is None:
+                            self.icon = 'heart'
+                        else:
+                            self.icon = icon
+                        break
+                    else:
+                        if icon is None:
+                            self.icon = 'heart-outline'
+                        else:
+                            self.icon = icon
         self.user_font_size = "36sp"
-        self.opposite_colors = True
+        if opposite_colors is None:
+            self.opposite_colors = True
+        else:
+            self.opposite_colors = opposite_colors
         if os.path.isfile(f"bookmarks/{data['id']}.json"):
             print("folder found")
             self.isBookmarked=True
@@ -35,10 +65,13 @@ class ListingSaveButton(MDIconButton):
 
     
     def on_press(self):
+        print(type(self.icon))
         if not self.isBookmarked:
             self.bookmark()
         else:
-            self.removeBookmark()
+            app = App.get_running_app()
+            self.removeBookmark(self.parent.parent)
+
 
     def bookmark(self):
         print("bookmark")
@@ -50,7 +83,11 @@ class ListingSaveButton(MDIconButton):
         self.icon = 'heart'
 
 
-    def removeBookmark(self):
+    def removeBookmark(self, child):
+        if self.icon == 'delete':
+            print("updateing screenn")
+            print(self.parent.parent.parent)
+            self.parent.parent.parent.remove_widget(child)
         print("remove bookmark")
         os.remove(f"bookmarks/{self.data['id']}.json")
         self.isBookmarked=False

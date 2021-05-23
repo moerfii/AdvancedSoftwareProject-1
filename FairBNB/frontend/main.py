@@ -1,4 +1,5 @@
 import glob
+import time
 from urllib import parse
 from os.path import join, dirname
 
@@ -115,9 +116,14 @@ class MainApp(MDApp):
 
             )
 
+    def update_screen(self):
+        self.root.ids.screen_manager.current = 'swipescreen'
+        time.sleep(2)
+        self.root.ids.screen_manager.current = 'comparescreen'
+
     def load_results(self):
         path = 'bookmarks'
-        
+
         full_path = os.path.join(os.getcwd(), path)
         for filenames in os.walk(full_path):
             for filename in filenames[2]:
@@ -133,7 +139,6 @@ class MainApp(MDApp):
                          f"\nBorough: {data['neighbourhood_group_cleansed']}"
 
                 )
-                print('here')
                 bookmarkbutton = ListingSaveButton(data)
                 superbox.add_widget(bookmarkbutton)
                 self.root.ids.imagelist.add_widget(superbox)
