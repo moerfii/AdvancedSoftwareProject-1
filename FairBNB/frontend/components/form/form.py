@@ -135,6 +135,16 @@ class Form(MDCard):
         picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
         picker.open()
 
+    def switch_to_mapscreen(self):
+        print("search")
+        app=App.get_running_app()
+        screenmanager = app.root.ids['screen_manager']
+        screenmanager.current="mapscreen"
+        mapview = app.root.ids['mapview']
+        mapview.firstCall=True
+        mapview.get_airbnb_in_fov()
+
+
 
 
 if __name__ =="__main__":
