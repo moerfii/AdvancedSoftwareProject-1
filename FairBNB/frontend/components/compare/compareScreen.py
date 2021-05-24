@@ -68,21 +68,32 @@ class CompareScreen(MDBoxLayout):
                     orientation = 'vertical',
 
                 )
-                supervertbox2 = MDBoxLayout(
-                    orientation = 'vertical'
-                )
-                vertbox1 = MDBoxLayout(
-                    orientation = 'vertical'
-
-
-                )
-                vertbox2 = MDBoxLayout(
-                    orientation = 'vertical',
-                    size_hint_x = 0.15
-                )
-                horibox1 = MDBoxLayout(
+                superhoribox = MDBoxLayout(
                     orientation = 'horizontal'
                 )
+
+                vertbox_title_roomtype = MDBoxLayout(
+                    orientation = 'vertical',
+                    size_hint_y = 0.6
+                )
+                vertbox_roomtype = MDBoxLayout(
+                    size_hint_y = 0.3
+                )
+                vertbox_title = MDBoxLayout(
+                    size_hint_y=0.7
+                )
+                vertbox_buttons = MDFloatLayout(
+                    size_hint_x = 0.1
+                )
+
+                horibox_rating = MDBoxLayout(
+                    orientation = 'horizontal'
+                )
+                horibox_star = MDBoxLayout(
+                    orientation = 'horizontal',
+                    size_hint_x = 0.3
+                )
+
 
                 img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
                                     pos_hint={'center_x': .5, 'center_y': .5},
@@ -94,7 +105,7 @@ class CompareScreen(MDBoxLayout):
                                 f"[color=808080]{data['room_type']} in {data['village']} ({data['borough']})[/color]",
                                 markup=True,
                                 halign='left',
-                                pos_hint={'center_x': .5, 'center_y': .95})
+                                pos_hint={'center_x': .5, 'center_y': .75})
 
                 title_label = MDLabel(text=
                                          f"[size=25]{data['name']}[/size]",
@@ -112,8 +123,9 @@ class CompareScreen(MDBoxLayout):
 
                 # add textbox/price to dicitonary for 'best' label
                 if not data['price'] == 0:
-                    best_price_box[supervertbox2] = data['price']
-                best_rating_box[textbox] = float(data['review_score'])/20
+                    best_price_box[imagebox] = data['price']
+                if data['number_of_reviews'] >=10:
+                    best_rating_box[imagebox] = float(data['review_score'])/20
 
 
 
@@ -126,44 +138,57 @@ class CompareScreen(MDBoxLayout):
 
                 staricon = MDIcon(
                     icon='star',
-                    pos_hint={'center_x': .50, 'center_y': .08}
+                    pos_hint={'left_x': .50, 'center_y': .08}
                 )
                 starlabel = MDLabel(
                     text=f"[b]{float(data['review_score']) / 20}[/b] ({data['number_of_reviews']})", markup=True,
-                    pos_hint={'center_x': .54, 'center_y': .07}
+                    pos_hint={'left_x': .50, 'center_y': .07}
                 )
 
                 webbutton = MDIconButton(
                     icon='search-web',
                     on_press=lambda x: open_link(data['listing_url']),
                     user_font_size="36sp",
-                    pos_hint={'center_x': 0.9, 'center_y': .1}
+                    pos_hint={'center_x': .9, 'center_y': .4}
                 )
 
                 bookmarkbutton = ListingSaveButton(
                     data,
-                    pos_hint={'center_x': .9, 'center_y': .9},
+                    pos_hint={'center_x': .9, 'center_y': .6},
                     opposite_colors= False,
                     icon = 'delete'
                 )
+
+
+                ##### ADD WIDGETS
+
                 imagebox.add_widget(img)
                 if data['is_superhost']:
                     imagebox.add_widget(superhost_chip)
 
-                vertbox1.add_widget(roomtype_label)
-                vertbox1.add_widget(title_label)
-
-                horibox1.add_widget(staricon)
-                horibox1.add_widget(price_label)
-
-                vertbox2.add_widget(bookmarkbutton)
-                vertbox2.add_widget(webbutton)
+                vertbox_title.add_widget(title_label)
+                vertbox_roomtype.add_widget(roomtype_label)
+                vertbox_title_roomtype.add_widget(vertbox_roomtype)
+                vertbox_title_roomtype.add_widget(vertbox_title)
 
 
-                supervertbox.add_widget(vertbox1)
-                supervertbox.add_widget(horibox1)
+                vertbox_buttons.add_widget(bookmarkbutton)
+                vertbox_buttons.add_widget(webbutton)
+
+
+                horibox_star.add_widget(staricon)
+                horibox_star.add_widget(starlabel)
+                horibox_rating.add_widget(horibox_star)
+                horibox_rating.add_widget(price_label)
+                superhoribox.add_widget(horibox_rating)
+
+                supervertbox.add_widget(vertbox_title_roomtype)
+                supervertbox.add_widget(superhoribox)
+
                 textbox.add_widget(supervertbox)
-                textbox.add_widget(vertbox2)
+                textbox.add_widget(vertbox_buttons)
+
+
                 superbox.add_widget(imagebox)
                 superbox.add_widget(textbox)
                 self.ids.comparebox.add_widget(superbox)
@@ -172,18 +197,21 @@ class CompareScreen(MDBoxLayout):
 
         best_price_chip = MDChip(
             text='BEST PRICE',
-            pos_hint={'center_x': .20, 'center_y': .90},
+            pos_hint={'center_x': .8, 'center_y': .9},
             icon='',
             color=[1, 0.8, 0.06, 1],
+            spacing = dp(4)
         )
         min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
 
         best_rating_chip = MDChip(
             text='BEST RATING',
-            pos_hint={'center_x': .50, 'center_y': .90},
+            pos_hint={'center_x': .8, 'center_y': 0.1},
             icon='',
             color=[1, 0.8, 0.06, 1],
+            spacing = dp(4)
         )
         # needs 10 ratings
-        max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
+        if len(best_rating_box) is not 0:
+            max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
 
