@@ -25,7 +25,7 @@ class Form(MDCard):
             "text": "Brooklyn",
             "on_release": lambda x=f"Brooklyn": self.set_neighborhood(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Manhanttan",
+            "text": "Manhattan",
             "on_release": lambda x=f"Manhattan": self.set_neighborhood(x),
             },{"viewclass": "OneLineListItem",
             "text": "Queens",

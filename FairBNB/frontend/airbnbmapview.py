@@ -14,7 +14,7 @@ from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
 class AirbnbMapView(MapView):
     getting_airbnb_timer = None
     listing_id_list = []
-
+    firstCall=True
     def start_getting_airbnb_in_fov(self):
         # After one second, get listings in field of view
         try:
@@ -25,10 +25,21 @@ class AirbnbMapView(MapView):
         self.getting_airbnb_timer = Clock.schedule_once(self.get_airbnb_in_fov, 1)
 
     def get_airbnb_in_fov(self, *args):
-        app = App.get_running_app()
         lat1, lon1, lat2, lon2 = self.get_bbox()
+        if(self.firstCall):
+            lat1+=(lat1-lat2)*2
+            lat2-=(lat1-lat2)*2
+            lon1+=(lon1-lon2)*2
+            lon2-=(lon1-lon2)*2
+            self.firstCall=False
+
+    
+        app = App.get_running_app()
+        print(lat1, lat2, lon1, lon2)
+        print(lat1-lat2,lon1-lon2)
         custom_filter = {'latitude.ge':lat1,'latitude.le':lat2,'longitude.ge':lon1,'longitude.le':lon2}
         
+        #seems to be more efficient to exploit the pointer ability of list elements
         listings = [None]
         app.api.getListingLocations(listings,custom_filter)
 
