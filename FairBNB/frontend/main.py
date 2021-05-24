@@ -7,6 +7,7 @@ from kivy.app import App
 from kivy.core.window import Window
 from kivy.factory import Factory
 from kivy.lang import Builder
+from kivy.loader import Loader
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, StringProperty, Clock
 
@@ -68,6 +69,7 @@ class MainApp(MDApp):
         form.on_start()
         
     def build(self):
+        Loader.loading_image = 'loading.gif'
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.font_styles["JetBrainsMono"] = [
             "JetBrainsMono",
