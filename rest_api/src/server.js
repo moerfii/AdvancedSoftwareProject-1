@@ -317,7 +317,6 @@ app.get(
 app.get(
     "/village_category",
     (req,res) => {
-        console.log(req.query)
         var query = buildQuery(`SELECT DISTINCT(village) FROM village_category`,req.query,acceptedParams['village_category']);
         pool.query(
             {text:query, rowMode:'array'},
