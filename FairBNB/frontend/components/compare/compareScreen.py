@@ -13,6 +13,7 @@ from kivymd.uix.card import MDSeparator
 from kivymd.uix.chip import MDChip
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton, MDIconButton
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel, MDIcon
@@ -25,6 +26,10 @@ from frontend.components.ListingSaveButton import ListingSaveButton
 
 def open_link(url):
     webbrowser.open(url)
+
+
+class ContentReviews(MDBoxLayout):
+    pass
 
 
 class CompareScreen(MDBoxLayout):
@@ -49,14 +54,12 @@ class CompareScreen(MDBoxLayout):
                 currentfile = open(os.path.join(full_path, filename),"r")
                 data = json.load(currentfile)
 
-
                 superbox = MDBoxLayout(
                     size_hint_y=None,
                     height="240dp",
                     orientation = "horizontal",
                     padding = [dp(4), dp(4)],
                     spacing = dp(4)
-
                 )
                 imagebox = MDFloatLayout(
                 size_hint = [0.4,1]
@@ -74,7 +77,7 @@ class CompareScreen(MDBoxLayout):
 
                 vertbox_title_roomtype = MDBoxLayout(
                     orientation = 'vertical',
-                    size_hint_y = 0.6
+                    size_hint_y = 0.7
                 )
                 vertbox_roomtype = MDBoxLayout(
                     size_hint_y = 0.3
@@ -85,7 +88,10 @@ class CompareScreen(MDBoxLayout):
                 vertbox_buttons = MDFloatLayout(
                     size_hint_x = 0.1
                 )
+                vertbox_guests_included = MDBoxLayout(
+                    orientation = 'horizontal'
 
+                )
                 horibox_rating = MDBoxLayout(
                     orientation = 'horizontal'
                 )
@@ -93,6 +99,7 @@ class CompareScreen(MDBoxLayout):
                     orientation = 'horizontal',
                     size_hint_x = 0.3
                 )
+
 
 
                 img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
@@ -112,6 +119,25 @@ class CompareScreen(MDBoxLayout):
                                          markup=True,
                                          halign='left',
                                          pos_hint={'center_x': .5, 'center_y': .85})
+
+
+                reviews_expansion = MDExpansionPanel(
+                                        icon="",  # panel icon
+                                        content=ContentReviews(),  # panel content
+                                        panel_cls=MDExpansionPanelOneLine(text="Reviews"),  # panel class
+    )
+
+
+                if data['guests_included'] == 1:
+                    guest_text = f"{data['guests_included']} guest"
+                else:
+                    guest_text = f"{data['guests_included']} guests"
+
+                guests_inclueded_label = MDLabel(
+                    text= guest_text,
+                    halign='left',
+                    pos_hint={'center_x': .5, 'center_y': .35}
+                )
 
                 price_label = MDLabel(text=f"[size=25][b]{data['price']}$[/b]/night[/size]",
                                 markup=True,
@@ -182,7 +208,11 @@ class CompareScreen(MDBoxLayout):
                 horibox_rating.add_widget(price_label)
                 superhoribox.add_widget(horibox_rating)
 
+                vertbox_guests_included.add_widget(guests_inclueded_label)
+                vertbox_guests_included.add_widget(reviews_expansion)
+
                 supervertbox.add_widget(vertbox_title_roomtype)
+                supervertbox.add_widget(vertbox_guests_included)
                 supervertbox.add_widget(superhoribox)
 
                 textbox.add_widget(supervertbox)
