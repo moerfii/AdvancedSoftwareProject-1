@@ -96,7 +96,7 @@ class Form(MDCard):
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
         self.menu_a.dismiss()
-        filter = {"category.eg": [text__age]}
+        filter = {"category.eq": f"'{text__age}'"}
         res = [None]
         self.api.getVillageCategory(res,filter)
         village_list = []
@@ -119,13 +119,13 @@ class Form(MDCard):
         self.api.setFilters(filter)
 
     def set_superhost(self,status):
-        filter = {"superhost.eq":None}
+        filter = {"is_superhost.eq":None}
         if status:
-            filter['superhost.eq'] = True
+            filter['is_superhost.eq'] = True
         self.api.setFilters(filter)
 
     def set_fairfilter(self,status):
-        filter = {"fairfilter.eq":None}
+        filter = {"total_listings_count.le":None}
         if status:
             filter['total_listings_count.le'] = 3
         self.api.setFilters(filter)
