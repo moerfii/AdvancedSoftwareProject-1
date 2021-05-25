@@ -49,6 +49,6 @@ def test_getVillageCategory_empty(RAC_empty):
 
 def test_getVillageCategory_filter(RAC_empty):
     l = [None]
-    custom_filter = {'category.in[]': ['Nightlife','Art & Music']}
+    custom_filter = {'interest.in[]': ['Nightlife','Art & Music']}
     RAC_empty.getVillageCategory(l,custom_filter)
     assert (len(l[0])==2)

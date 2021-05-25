@@ -38,7 +38,7 @@ const acceptedParams = {
         "price",
         "borough",
         "village",
-        "total_listing_count",
+        "total_listings_count",
         "is_superhost",
         "guests_included",
         "review_score"
@@ -111,7 +111,8 @@ const acceptedParams = {
     
     "village_category": [
         "village",
-        "category"
+        "age",
+        "interest"
     ]
 }
 function buildQuery(queryString,query,dbParams,setAND=false) {
