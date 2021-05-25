@@ -42,7 +42,6 @@ from frontend.components.compare.compareScreen import CompareScreen
 
 
 
-
 class ContentNavigationDrawer(BoxLayout):
     screen_manager = ObjectProperty()
     nav_drawer = ObjectProperty()
@@ -56,10 +55,9 @@ class BaseWidget(MDFloatLayout):
     pass
 
 
-
 class MainApp(MDApp):
     """
-    MainApp: Application is built here. Inherits from MDApp
+    MainApp: Inherits from MDApp
     """
     dialog = None
     search_menu = None
@@ -68,7 +66,6 @@ class MainApp(MDApp):
     def on_start(self):
         """
         called on start, inits form
-        :param: self
         """
         self.fps_monitor_start()
         #print(self)
@@ -76,6 +73,9 @@ class MainApp(MDApp):
         form.on_start()
         
     def build(self):
+        """
+        changes loading gif for asyncimage, changes color palette and builds main structure of application
+        """
         Loader.loading_image = 'loading.gif'
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.font_styles["JetBrainsMono"] = [
@@ -86,6 +86,9 @@ class MainApp(MDApp):
         ]
    
     def show_confirmation_dialog(self):
+        """
+        defines content of searchpopupmenu and action of each button
+        """
         if not self.dialog:
             self.dialog = MDDialog(
                 title="Search:",
@@ -104,6 +107,9 @@ class MainApp(MDApp):
         self.dialog.open()
 
     def grab_text(self, inst):
+        """
+        takes userinput and centers the mapview on defined location
+        """
         for obj in self.dialog.content_cls.children:
             if isinstance(obj, MDTextField):
                 query = obj.text
@@ -112,23 +118,25 @@ class MainApp(MDApp):
                 app = App.get_running_app()
                 mapview = app.root.ids.mapview
                 locations = json.loads(response.text)
+                print(locations)
                 mapview.center_on(locations['lat'], locations['lng'])
                 #print(response.text)
         self.dialog.dismiss()
 
     def close_dialog(self, inst):
+        """
+        close searchpopupmenu
+        """
         self.dialog.dismiss()
 
     def show_filter_dialog(self):
+        """
+        open filtermenu
+        """
         if not self.dialog:
             self.dialog = MDDialog(
 
             )
-
-    def update_screen(self):
-        self.root.ids.screen_manager.current = 'swipescreen'
-        time.sleep(2)
-        self.root.ids.screen_manager.current = 'comparescreen'
 
     def load_results(self):
         path = 'bookmarks'
