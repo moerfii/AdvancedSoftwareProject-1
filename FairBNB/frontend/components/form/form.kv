@@ -13,34 +13,50 @@
             border_radius: 20
             radius: [15]
             size_hint: None, None
-            size: 500, 300
+            size: 550, 480
+
             BoxLayout:
                 id:baax
                 orientation: 'vertical'
-                padding: dp(50)
-                spacing: dp(10)
-                size: 500, 300
+                padding: "40dp", "10dp"
+                spacing: dp(50)
+                size: 550, 460
                 size_hint: None, None
+                pos_hint: {"center_y": 0.55}
                 
                 BoxLayout:
-                    spacing: dp(20)
+                	padding: "10dp", 0
+                    spacing: dp(40)
+                    size_hint: None, None
+                    size: 450, 15
                     MDTextField:
                         id: field_n
                         size_hint: None, None
+                        pos_hint: {"center_y": 0.5}
                         width: "200dp"
                         hint_text: "Neighborhood"
                         line_color_normal: app.theme_cls.primary_color
                         on_focus:
                             if self.focus:form.menu_n.open()
 
-                    
+                    MDTextField:
+                    	id: field_g
+                    	size_hint: None, None
+                    	width: "100dp"
+                    	pos_hint: {"center_y": 0.5}
+                    	hint_text: "Guests"
+                    	line_color_normal: app.theme_cls.primary_color
+                   
                 BoxLayout:
                     spacing: dp(40)
+                    size_hint: None, None
+                    size: 450, 40
+                    padding: "20dp", "10dp"
                     MDTextField:
                         id: field_a
                         size_hint: None, None
                         width: "85dp"
-                        #height: "10dp"
+                        pos_hint: {"center_y": 1}
                         hint_text: "Age"
                         mode: "rectangle"
                         line_color_normal: app.theme_cls.accent_color
@@ -52,7 +68,8 @@
                         id: field_i
                         size_hint: None, None
                         width: "120dp"
-                        hint_text: "Interests"
+                        pos_hint: {"center_y": 1}
+                        hint_text: "Reviews"
                         mode: "rectangle"
                         icon_right: "arrow-down-drop-circle-outline"
                         icon_right_color: app.theme_cls.primary_color
@@ -61,40 +78,107 @@
 
                     BoxLayout:
                         spacing: "10dp"
-                        pos_hint: {"center_y": 0.6}
+                        pos_hint: {"center_y": 1}
                         BoxLayout:
                             orientation: 'vertical'
                             size_hint: None, None
-                            pos_hint: {"center_y": 0.2}
-                            size: 70, 40
+                            pos_hint: {"center_y": 0}
+                            size: 70, 50
                             MDLabel:
                                 text: "Super host"
                                 font_style: 'Caption'
+                                bold: True
                             MDCheckbox:
                                 size_hint: None, None
                                 size: dp(40), dp(40)
-                                pos_hint: {"center_x": 0.45, "center_y": 0}
+                                pos_hint: {"center_x": 0.45, "center_y": 0.2}
                                 on_active:
                                     form.set_superhost(self.active)
                         BoxLayout:
                             orientation: 'vertical'
                             size_hint: None, None
-                            pos_hint: {"center_x":1, "center_y": 0.2}
+                            pos_hint: {"center_x":1, "center_y": 0}
                             padding: dp(0)
                             spacing: dp(0)
-                            size: 70, 40
+                            size: 70, 50
                             MDLabel:
                                 text: "Fair filter"
                                 font_style: 'Caption'
+                                bold: True
                             MDCheckbox:
                                 size_hint: None, None
                                 size: dp(40), dp(40)
                                 pos_hint: {"center_x": 0.35, "center_y": 0}
                                 on_active:
                                     form.set_fairfilter(self.active)
-                
+
                 BoxLayout:
-                    pos_hint: {"center_x": 0.85, "center_y": 0}
+                	orientation: 'vertical'
+                	spacing: "35dp"
+                	size_hint: None, None
+                	size: 400, 50
+
+                	MDLabel:
+                		pos_hint: {"center_y": 1}
+                		text: "Interests"
+                		bold: True
+                	BoxLayout:
+                		padding: "10dp", "5dp"
+                		spacing: "10dp"
+                		MDChip:
+                			pos_hint: {"center_y": 1}
+        					text: 'shopping'
+        					icon: 'earth'
+        					color: 0,0,0,0.1
+        					selected_chip_color: app.theme_cls.primary_color
+        				MDChip:
+        					pos_hint: {"center_y": 1}
+        					text: 'Food'
+        					icon: 'earth'
+        					color: 0,0,0,0.1
+        					selected_chip_color: app.theme_cls.primary_color
+        				MDChip:
+        					pos_hint: {"center_y": 1}
+        					text: 'Sightseeing'
+        					icon: 'earth'
+        					color: 0,0,0,0.1
+        					selected_chip_color: app.theme_cls.primary_color
+        			BoxLayout:
+                		padding: "10dp", "5dp"
+                		spacing: "10dp"
+                		MDChip:
+                			pos_hint: {"center_y": 1}
+        					text: 'Art & Music'
+        					icon: 'earth'
+        					color: 0,0,0,0.1
+        					selected_chip_color: app.theme_cls.primary_color
+        				MDChip:
+        					pos_hint: {"center_y": 1}
+        					text: 'Nightlife'
+        					icon: 'earth'
+        					color: 0,0,0,0.1
+        					selected_chip_color: app.theme_cls.primary_color
+
+        		BoxLayout:
+        			size_hint: None, None
+                    size: 450, 40
+                    BoxLayout: 
+                    	orientation: 'vertical'
+                    	spacing: '30dp'
+        				MDLabel:
+        					pos_hint: {"center_y": 1.5}
+                			text: "Price"
+                			bold: True
+                		RangeSlider:
+            				id: field_p
+            				value: 0,9999
+            				min:0
+            				max:9999
+
+                BoxLayout:
+                	size_hint: None, None
+                    size: 450, 30
+                    pos_hint: {"center_x": 0.85, "center_y": 2}
                     padding: dp(20)
                     MDFillRoundFlatIconButton:
                         pos_hint: {"center_y": 0}
@@ -109,7 +193,7 @@
             orientation: 'vertical'
             size_hint: None, None
             size: 300, 100
-            pos_hint: {"center_y": 0.6}
+            pos_hint: {"center_y": 0.7}
             spacing: dp(30)
             MDLabel:
                 text: "FairBnB"

@@ -15,6 +15,11 @@ class AirbnbMapView(MapView):
     getting_airbnb_timer = None
     listing_id_list = []
     firstCall=True
+
+    def __init__(self, *args, **kwargs):
+        super(AirbnbMapView,self).__init__(*args,**kwargs)
+        print('INIT Bruv')
+
     def start_getting_airbnb_in_fov(self):
         # After one second, get listings in field of view
         try:

@@ -50,20 +50,20 @@ class Form(MDCard):
 
         interests = [
             {"viewclass": "OneLineListItem",
-            "text": "Shopping",
-            "on_release": lambda x=f"Shopping": self.set_interests(x),
+            "text": "5 stars",
+            "on_release": lambda x=f"5stars": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Food",
-            "on_release": lambda x=f"Food": self.set_interests(x),
+            "text": "4 stars",
+            "on_release": lambda x=f"4starts": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Sightseeing",
-            "on_release": lambda x=f"Sightseeing": self.set_interests(x),
+            "text": "3 stars",
+            "on_release": lambda x=f"3stars": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Art & Music",
-            "on_release": lambda x=f"Art & Music": self.set_interests(x),
+            "text": "2 stars",
+            "on_release": lambda x=f"2stars": self.set_interests(x),
             }, {"viewclass": "OneLineListItem",
-            "text": "Nightlife",
-            "on_release": lambda x=f"Nightlife": self.set_interests(x),}
+            "text": "1 star",
+            "on_release": lambda x=f"1star": self.set_interests(x),}
         ]
 
         self.menu_n = MDDropdownMenu(
@@ -96,7 +96,7 @@ class Form(MDCard):
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
         self.menu_a.dismiss()
-        filter = {"category.eg": [text__age]}
+        filter = {"category.eq": f"'{text__age}'"}
         res = [None]
         self.api.getVillageCategory(res,filter)
         village_list = []
@@ -119,13 +119,13 @@ class Form(MDCard):
         self.api.setFilters(filter)
 
     def set_superhost(self,status):
-        filter = {"superhost.eq":None}
+        filter = {"is_superhost.eq":None}
         if status:
-            filter['superhost.eq'] = True
+            filter['is_superhost.eq'] = True
         self.api.setFilters(filter)
 
     def set_fairfilter(self,status):
-        filter = {"fairfilter.eq":None}
+        filter = {"total_listings_count.le":None}
         if status:
             filter['total_listings_count.le'] = 3
         self.api.setFilters(filter)
