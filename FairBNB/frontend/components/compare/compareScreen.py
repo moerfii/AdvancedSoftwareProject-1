@@ -199,16 +199,20 @@ class CompareScreen(MDBoxLayout):
             text='BEST PRICE',
             pos_hint={'center_x': .8, 'center_y': .9},
             icon='',
-            color=[1, 0.8, 0.06, 1],
+            color=[0.2, 0.65, 0.92, 1],
             spacing = dp(4)
         )
         min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
 
+        if min(best_price_box, key=best_price_box.get) == max(best_rating_box, key=best_rating_box.get):
+            pos = {'center_x': .8, 'center_y': 0.77}
+        else:
+            pos = {'center_x': .8, 'center_y': .9}
         best_rating_chip = MDChip(
             text='BEST RATING',
-            pos_hint={'center_x': .8, 'center_y': 0.1},
+            pos_hint=pos,
             icon='',
-            color=[1, 0.8, 0.06, 1],
+            color=[0.2, 0.65, 0.92, 1],
             spacing = dp(4)
         )
         # needs 10 ratings
