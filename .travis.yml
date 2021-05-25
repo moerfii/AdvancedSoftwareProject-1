@@ -31,8 +31,8 @@ jobs:
         - psql -c "INSERT INTO review VALUES(1,1,'2016-08-27', 91513326, 'Liz','Nice room for the price. Great neighborhood. John was very accommodating. Bottles of water in the room were a nice touch and very much appreciated.');" -U travis
         - psql -c "CREATE TABLE village_category(village varchar(26), age varchar(10),interest varchar(11), primary key(village,age,interest));" -U travis
         - psql -c "INSERT INTO village_category VALUES('Astoria','18-30','Food');" -U travis
-        - psql -c "Insert INTO village_category VALUES('Belmont','30-50''Food');" -U travis
-        - psql -c "Insert INTO village_category VALUES('Belmont','30-40''Nightlife');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Belmont','30-50','Food');" -U travis
+        - psql -c "Insert INTO village_category VALUES('Belmont','30-40','Nightlife');" -U travis
         - psql -c "Insert INTO village_category VALUES('Harlem','18-30','Art & Music');" -U travis
 
 

@@ -293,6 +293,13 @@ returns reviews for listing id
 app.get(
     "/reviews",
     (req,res) => {
+        console.log(req.query)
+        if("id.eq" in req.query)
+        {
+            console.log("gotcha")
+            req.query["listing_id.eq"] = req.query["id.eq"]
+            delete req.query["id.eq"]   
+        }
         var query = buildQuery(`SELECT * FROM review`,req.query,acceptedParams['review'])
         pool.query(
             query,
