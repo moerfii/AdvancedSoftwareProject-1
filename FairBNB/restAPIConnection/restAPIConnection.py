@@ -51,3 +51,7 @@ class RestAPIConnection:
     def getVillageCategory(self,res,custom_filters=None,append=True):
         url = self.base_url+'/village_category'
         return self._GET(res,url,custom_filters,append)
+
+    def getReviews(self,res,custom_filters=None,append=True):
+        url = self.base_url+'/reviews'
+        return self._GET(res,url,custom_filters,append)

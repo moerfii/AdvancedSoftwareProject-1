@@ -6,7 +6,7 @@
     double_tap_zoom: True
     lat: 40.754
     lon: -73.984
-    zoom: 11
+    zoom: 16    #11 is good production startup, 16 good dev startup
     on_zoom:
         self.zoom = 10 if self.zoom < 10 else self.zoom
     on_lat:

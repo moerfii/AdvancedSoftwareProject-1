@@ -67,12 +67,15 @@ def listingDetail(listing_id):
     detail_data = [None]
     other_data = [None]
     location_data = [None]
+    review_data = [None]
+    print(review_data)
     app.api.getListingDetail(detail_data,custom_filters)
     app.api.getListingOther(other_data,custom_filters)
     app.api.getListingLocations(location_data, custom_filters)
+    app.api.getReviews(review_data, custom_filters)
 
     #merge data
-    data = {**detail_data[0][0], **other_data[0][0], **location_data[0][0]}
+    data = {**detail_data[0][0], **other_data[0][0], **location_data[0][0], **review_data[0][0]}
     superbox = RoundedCornerLayout(
     )
     imagebox = MDFloatLayout(
