@@ -56,8 +56,6 @@ Screen:
                 CompareScreen:
                     id: compareScreen
 
-            Screen:
-                name: 'swipescreen'
 
 
         MDNavigationDrawer:
@@ -128,13 +126,12 @@ Screen:
 
 
             OneLineIconListItem:
-                text: "Swipe"
+                text: "Map"
                 on_press:
                     root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "swipescreen"
+                    root.screen_manager.current = "mapscreen"
                 IconLeftWidget:
-                    icon: "gesture-swipe"
-
+                    icon: "map-outline"
 
             OneLineIconListItem:
                 text: "Wishlist"
@@ -145,13 +142,7 @@ Screen:
                     icon: "heart-outline"
 
 
-            OneLineIconListItem:
-                text: "Map"
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "mapscreen"
-                IconLeftWidget:
-                    icon: "map-outline"
+
 
 <ContentFilterDrawer>:
     ScrollView:
