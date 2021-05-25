@@ -50,20 +50,20 @@ class Form(MDCard):
 
         interests = [
             {"viewclass": "OneLineListItem",
-            "text": "Shopping",
-            "on_release": lambda x=f"Shopping": self.set_interests(x),
+            "text": "5 stars",
+            "on_release": lambda x=f"5stars": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Food",
-            "on_release": lambda x=f"Food": self.set_interests(x),
+            "text": "4 stars",
+            "on_release": lambda x=f"4starts": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Sightseeing",
-            "on_release": lambda x=f"Sightseeing": self.set_interests(x),
+            "text": "3 stars",
+            "on_release": lambda x=f"3stars": self.set_interests(x),
             },{"viewclass": "OneLineListItem",
-            "text": "Art & Music",
-            "on_release": lambda x=f"Art & Music": self.set_interests(x),
+            "text": "2 stars",
+            "on_release": lambda x=f"2stars": self.set_interests(x),
             }, {"viewclass": "OneLineListItem",
-            "text": "Nightlife",
-            "on_release": lambda x=f"Nightlife": self.set_interests(x),}
+            "text": "1 star",
+            "on_release": lambda x=f"1star": self.set_interests(x),}
         ]
 
         self.menu_n = MDDropdownMenu(
