@@ -20,7 +20,7 @@ def createTables():
     cur = conn.cursor()
     debug=False
 
-    cur.execute("Drop table listing_location")
+    cur.execute("Drop table village_category")
     if not debug:
         cur.execute(
             """
@@ -42,8 +42,9 @@ def createTables():
             """
             create table if not exists village_category(
                 village varchar(26),
-                category varchar(11),
-                primary key (village,category)
+                age varchar(10),
+                interest varchar(11),
+                primary key (village,age,interest)
             )
             """
         )
@@ -317,11 +318,11 @@ def deleteUnnecessaryChars(df,column):
 def addNeighborhood():
     df = pd.read_csv("neighborhood_activity.csv")
     streamData(df,"village_category")
-    print(df['category'].map(len).max())
+    
 if __name__=="__main__":
     
     createTables()
-    addListingsAndHost("data/listings.csv")
+    #addListingsAndHost("data/listings.csv")
     #addReviews("data/reviews.csv")
     addNeighborhood()
 
