@@ -75,7 +75,11 @@ def listingDetail(listing_id):
     app.api.getReviews(review_data, custom_filters)
 
     #merge data
-    data = {**detail_data[0][0], **other_data[0][0], **location_data[0][0], **review_data[0][0]}
+    data = {**detail_data[0][0], **other_data[0][0], **location_data[0][0]}
+    try:
+        data = {**data **review_data[0][0]}
+    except:
+        pass
     superbox = RoundedCornerLayout(
     )
     imagebox = MDFloatLayout(

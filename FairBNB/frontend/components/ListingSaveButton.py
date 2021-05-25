@@ -23,8 +23,11 @@ class ListingSaveButton(MDIconButton):
             self.pos_hint = {'center_x': .90, 'center_y': .83}
         else:
             self.pos_hint = pos_hint
+        if not os.path.isdir("bookmarks"):
+            os.mkdir("bookmarks")
         path = 'bookmarks'
         full_path = os.path.join(os.getcwd(), path)
+        print(full_path)
         if not os.listdir(full_path):
             if icon is None:
                 self.icon = 'heart-outline'
