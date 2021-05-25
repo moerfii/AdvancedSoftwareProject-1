@@ -58,11 +58,18 @@ class BaseWidget(MDFloatLayout):
 
 
 class MainApp(MDApp):
+    """
+    MainApp: Application is built here. Inherits from MDApp
+    """
     dialog = None
     search_menu = None
     api=RestAPIConnection()
 
     def on_start(self):
+        """
+        called on start, inits form
+        :param: self
+        """
         self.fps_monitor_start()
         #print(self)
         form = self.root.ids.form
