@@ -1,3 +1,4 @@
+10073995	40.68984	-73.91507	37	Brooklyn	Bushwick	1	f	1	0.0
 10074308	40.6965	-73.98377	75	Brooklyn	Downtown Brooklyn	1	f	1	0.0
 10076836	40.7863	-73.97658	150	Manhattan	Upper West Side	1	f	1	100.0
 10078736	40.68886	-73.93084	225	Brooklyn	Bedford-Stuyvesant	3	t	4	95.0
@@ -49997,4 +49998,3 @@ COPY public.listing_other (id, square_feet, property_type, room_type, neighbourh
 11461331	0	Apartment	Private room	Crown Heights	Brooklyn	3	1125
 11461524	0	Apartment	Private room	Greenpoint	Brooklyn	2	30
 11461798	0	Apartment	Private room	Upper West Side	Manhattan	2	30
-11462440	0	Apartment	Private room	Upper West Side	Manhattan	12	1125

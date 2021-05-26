@@ -1,3 +1,4 @@
+11462440	0	Apartment	Private room	Upper West Side	Manhattan	12	1125
 11462944	0	Apartment	Entire home/apt	Harlem	Manhattan	4	4
 11465084	0	Apartment	Entire home/apt	East Village	Manhattan	4	1125
 11470210	0	Apartment	Private room	Bedford-Stuyvesant	Brooklyn	1	1124
@@ -49997,4 +49998,3 @@ COPY public.listing_reviews (id, review_scores_rating, review_scores_accuracy, r
 12592427	98.0	10.0	10.0	10.0	10.0	10.0	10.0
 12593389	93.0	10.0	9.0	10.0	10.0	9.0	9.0
 12594614	95.0	10.0	9.0	9.0	9.0	10.0	10.0
-12598128	85.0	10.0	9.0	10.0	10.0	10.0	9.0

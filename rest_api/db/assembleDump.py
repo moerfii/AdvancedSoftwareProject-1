@@ -12,6 +12,6 @@ with open('pg_dump.sql',"w+",encoding="utf8") as bigfile:
                     bigfile.write(line)
             lines_per_file+=50000
         except Exception as e:
-            #print(e)
+            print(e)
             break
         
