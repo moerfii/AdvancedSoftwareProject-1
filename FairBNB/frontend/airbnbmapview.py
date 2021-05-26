@@ -9,26 +9,20 @@ import time
 from .components.map.airbnbMarker import AirbnbMarker
 from .components.map.customCluster import CustomCluster
 from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
+from kivy.input.providers.mouse import MouseMotionEvent
 
 
 class AirbnbMapView(MapView):
-    getting_airbnb_timer = None
     listing_id_list = []
     firstCall=True
 
     def __init__(self, *args, **kwargs):
         super(AirbnbMapView,self).__init__(*args,**kwargs)
 
-    def start_getting_airbnb_in_fov(self):
-        # After one second, get listings in field of view
-        try:
-            self.getting_airbnb_timer.cancel()
-        except:
-            pass
-
-        self.getting_airbnb_timer = Clock.schedule_once(self.get_airbnb_in_fov, 1)
-
     def get_airbnb_in_fov(self, *args):
+        if(len(args)>0 and args[0]=="on_enter"):
+            print("enter")
+            self.firstCall=True
         lat1, lon1, lat2, lon2 = self.get_bbox()
         if(self.firstCall):
             lat1+=(lat1-lat2)*2
@@ -73,6 +67,4 @@ class AirbnbMapView(MapView):
                 self.remove_widget(child)
 
         self.add_widget(layer)
-
-
     
