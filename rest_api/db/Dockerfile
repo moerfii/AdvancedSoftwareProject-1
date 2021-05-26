@@ -13,5 +13,4 @@ RUN ["/usr/local/bin/docker-entrypoint.sh", "postgres"]
 
 # run postgres
 FROM postgres:13
-
 COPY --from=dumper /data $PGDATA

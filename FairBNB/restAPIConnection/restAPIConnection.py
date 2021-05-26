@@ -32,9 +32,12 @@ class RestAPIConnection:
             filters = self.overrideFilter(custom_filters)
         else:
             filters = custom_filters
+        for key in filters:
+            if ".in" in key and filters[key]==[]:
+                filters[key]=['']
+
         resp = requests.get(url,params=filters)
         res[0] = json.loads(resp.text)
-        print(len(res[0]))
 
     def getListingLocations(self,res,custom_filters=None,append=True):
         url=self.base_url+"/listing_location"
