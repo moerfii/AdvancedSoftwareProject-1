@@ -5,18 +5,18 @@ import io
 import numpy as np
 
 
-USER=""
+USER="postgres"
 HOST="localhost"
-PORT=
-DB_NAME=""
-PASSWORD=""
+PORT= '5433'
+DB_NAME="ase"
+PASSWORD="turmturm"
 engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
 
 
 
 def createTables():
     print("Creating tables")
-    conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD}")
+    conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD} port={PORT}")
     cur = conn.cursor()
     debug=False
 

@@ -24,8 +24,36 @@ from frontend.listingDetail import RoundedCornerLayout
 from frontend.components.ListingSaveButton import ListingSaveButton
 
 
-def open_link(url):
-    webbrowser.open(url)
+class web_button(MDIconButton):
+    def __init__(self,*args,urldict=None, **kwargs):
+        super(MDIconButton, self).__init__(*args, **kwargs)
+        self.urldict = urldict
+
+    def on_press(self):
+        webbrowser.open(self.urldict[self])
+
+
+class location_button(MDIconButton):
+    def __init__(self,*args,locdict=None, **kwargs):
+        super(MDIconButton, self).__init__(*args, **kwargs)
+        self.locdict = locdict
+
+    def on_press(self):
+        """
+        takes lat,long and switches to mapscreen focused on given coordinates
+        :param: latitude
+        :param: longitude
+        """
+
+        app = App.get_running_app()
+        mapview = app.root.ids.mapview
+        mapview.zoom = 19
+        mapview.center_on(self.locdict[self][0], self.locdict[self][1])
+        screenmanager = app.root.ids['screen_manager']
+        screenmanager.current = "mapscreen"
+
+
+
 
 
 class ContentReviews(MDBoxLayout):
@@ -46,6 +74,8 @@ class CompareScreen(MDBoxLayout):
     def load_bookmarked(self):
         best_price_box = {}
         best_rating_box = {}
+        webbutton_data = {}
+        location_data = {}
 
         path = 'bookmarks'
         full_path = os.path.join(os.getcwd(), path)
@@ -53,7 +83,6 @@ class CompareScreen(MDBoxLayout):
             for filename in filenames[2]:
                 currentfile = open(os.path.join(full_path, filename),"r")
                 data = json.load(currentfile)
-
                 superbox = MDBoxLayout(
                     size_hint_y=None,
                     height="240dp",
@@ -72,7 +101,8 @@ class CompareScreen(MDBoxLayout):
 
                 )
                 superhoribox = MDBoxLayout(
-                    orientation = 'horizontal'
+                    orientation = 'horizontal',
+                    padding= dp(10)
                 )
 
                 vertbox_title_roomtype = MDBoxLayout(
@@ -129,9 +159,10 @@ class CompareScreen(MDBoxLayout):
 
 
                 if data['guests_included'] == 1:
-                    guest_text = f"{data['guests_included']} guest"
+
+                    guest_text = f"{data['guests_included']} guest · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
                 else:
-                    guest_text = f"{data['guests_included']} guests"
+                    guest_text = f"{data['guests_included']} guests · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
 
                 guests_inclueded_label = MDLabel(
                     text= guest_text,
@@ -139,7 +170,10 @@ class CompareScreen(MDBoxLayout):
                     pos_hint={'center_x': .5, 'center_y': .35}
                 )
 
-                price_label = MDLabel(text=f"[size=25][b]{data['price']}$[/b]/night[/size]",
+
+
+
+                price_label = MDLabel(text=f"[size=35][b]{data['price']}$[/b]/night[/size]",
                                 markup=True,
                                 halign='right',
                                 pos_hint={'center_x': 0.3, 'center_y': .1})
@@ -171,20 +205,29 @@ class CompareScreen(MDBoxLayout):
                     pos_hint={'left_x': .50, 'center_y': .07}
                 )
 
-                webbutton = MDIconButton(
+                webbutton = web_button(
                     icon='search-web',
-                    on_press=lambda x: open_link(data['listing_url']),
                     user_font_size="36sp",
-                    pos_hint={'center_x': .9, 'center_y': .4}
+                    pos_hint={'center_x': .9, 'center_y': .3},
+                    urldict=webbutton_data
                 )
+
+                webbutton_data[webbutton] = data['listing_url']
 
                 bookmarkbutton = ListingSaveButton(
                     data,
-                    pos_hint={'center_x': .9, 'center_y': .6},
+                    pos_hint={'center_x': .9, 'center_y': .7},
                     opposite_colors= False,
                     icon = 'delete'
                 )
 
+                loc_button = location_button(
+                    icon= 'map-outline',
+                    pos_hint = {'center_x': .9, 'center_y': .5},
+                    locdict = location_data
+                )
+
+                location_data[loc_button] = [float(data['latitude']), float(data['longitude'])]
 
                 ##### ADD WIDGETS
 
@@ -199,6 +242,7 @@ class CompareScreen(MDBoxLayout):
 
 
                 vertbox_buttons.add_widget(bookmarkbutton)
+                vertbox_buttons.add_widget(loc_button)
                 vertbox_buttons.add_widget(webbutton)
 
 
@@ -229,7 +273,8 @@ class CompareScreen(MDBoxLayout):
             text='BEST PRICE',
             pos_hint={'center_x': .8, 'center_y': .9},
             icon='',
-            color=[0.2, 0.65, 0.92, 1],
+            text_color = [1, 1, 1, 1],
+            color=[0.01, 0.28, 0.99, 1],
             spacing = dp(4)
         )
         min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
@@ -242,10 +287,11 @@ class CompareScreen(MDBoxLayout):
             text='BEST RATING',
             pos_hint=pos,
             icon='',
-            color=[0.2, 0.65, 0.92, 1],
+            color=[0.98, 0.92, 0.01, 1],
             spacing = dp(4)
         )
         # needs 10 ratings
         if len(best_rating_box) is not 0:
             max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
+
 
