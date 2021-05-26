@@ -23,6 +23,8 @@ class ListingSaveButton(MDIconButton):
             self.pos_hint = {'center_x': .90, 'center_y': .83}
         else:
             self.pos_hint = pos_hint
+        if not os.path.isdir("bookmarks"):
+            os.mkdir("bookmarks")
         path = 'bookmarks'
         full_path = os.path.join(os.getcwd(), path)
         if not os.listdir(full_path):
@@ -70,7 +72,7 @@ class ListingSaveButton(MDIconButton):
             self.bookmark()
         else:
             app = App.get_running_app()
-            self.removeBookmark(self.parent.parent)
+            self.removeBookmark(self.parent.parent.parent)
 
 
     def bookmark(self):
@@ -87,7 +89,7 @@ class ListingSaveButton(MDIconButton):
         if self.icon == 'delete':
             print("updateing screenn")
             print(self.parent.parent.parent)
-            self.parent.parent.parent.remove_widget(child)
+            self.parent.parent.parent.parent.remove_widget(child)
         print("remove bookmark")
         os.remove(f"bookmarks/{self.data['id']}.json")
         self.isBookmarked=False

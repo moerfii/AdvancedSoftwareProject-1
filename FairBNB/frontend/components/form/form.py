@@ -1,9 +1,11 @@
+import time
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.card import MDCard
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.picker import MDDatePicker
 from kivy.app import App
 from kivymd.app import MDApp
+from kivy.clock import Clock
 
 from kivy.lang import Builder
 
@@ -114,7 +116,7 @@ class Form(MDCard):
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
         self.menu_a.dismiss()
-        filter = {"category.eg": [text__age]}
+        filter = {"age.eq": f"'{text__age}'"}
         res = [None]
         self.api.getVillageCategory(res,filter)
         village_list = []
@@ -137,7 +139,7 @@ class Form(MDCard):
     def set_interests(self, text__interest):
         self.ids.field_i.text = text__interest
         self.menu_i.dismiss()
-        filter = {"category.in[]": [text__interest]}
+        filter = {"interest.in[]": [text__interest]}
         res = [None]
         self.api.getVillageCategory(res,filter)
         village_list = []
@@ -150,13 +152,13 @@ class Form(MDCard):
         pass
 
     def set_superhost(self,status):
-        filter = {"superhost.eq":None}
+        filter = {"is_superhost.eq":None}
         if status:
-            filter['superhost.eq'] = True
+            filter['is_superhost.eq'] = True
         self.api.setFilters(filter)
 
     def set_fairfilter(self,status):
-        filter = {"fairfilter.eq":None}
+        filter = {"total_listings_count.le":None}
         if status:
             filter['total_listings_count.le'] = 3
         self.api.setFilters(filter)
@@ -169,12 +171,18 @@ class Form(MDCard):
     def switch_to_mapscreen(self):
         print("search")
         app=App.get_running_app()
+        mapview = app.root.ids['mapview']
+        #mapview.firstCall=True
         screenmanager = app.root.ids['screen_manager']
         screenmanager.current="mapscreen"
-        mapview = app.root.ids['mapview']
-        mapview.firstCall=True
-        mapview.get_airbnb_in_fov()
+        #mapview.get_airbnb_in_fov()
+        #mapview._need_redraw_all = True
+        #Clock.schedule_once(mapview.fakeClick,0.5)
+        #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
+        #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
 
+
+        
 
 
 

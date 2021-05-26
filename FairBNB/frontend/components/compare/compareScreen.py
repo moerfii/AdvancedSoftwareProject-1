@@ -13,6 +13,7 @@ from kivymd.uix.card import MDSeparator
 from kivymd.uix.chip import MDChip
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton, MDIconButton
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel, MDIcon
@@ -23,8 +24,40 @@ from frontend.listingDetail import RoundedCornerLayout
 from frontend.components.ListingSaveButton import ListingSaveButton
 
 
-def open_link(url):
-    webbrowser.open(url)
+class web_button(MDIconButton):
+    def __init__(self,*args,urldict=None, **kwargs):
+        super(MDIconButton, self).__init__(*args, **kwargs)
+        self.urldict = urldict
+
+    def on_press(self):
+        webbrowser.open(self.urldict[self])
+
+
+class location_button(MDIconButton):
+    def __init__(self,*args,locdict=None, **kwargs):
+        super(MDIconButton, self).__init__(*args, **kwargs)
+        self.locdict = locdict
+
+    def on_press(self):
+        """
+        takes lat,long and switches to mapscreen focused on given coordinates
+        :param: latitude
+        :param: longitude
+        """
+
+        app = App.get_running_app()
+        mapview = app.root.ids.mapview
+        mapview.zoom = 19
+        mapview.center_on(self.locdict[self][0], self.locdict[self][1])
+        screenmanager = app.root.ids['screen_manager']
+        screenmanager.current = "mapscreen"
+
+
+
+
+
+class ContentReviews(MDBoxLayout):
+    pass
 
 
 class CompareScreen(MDBoxLayout):
@@ -41,6 +74,8 @@ class CompareScreen(MDBoxLayout):
     def load_bookmarked(self):
         best_price_box = {}
         best_rating_box = {}
+        webbutton_data = {}
+        location_data = {}
 
         path = 'bookmarks'
         full_path = os.path.join(os.getcwd(), path)
@@ -48,15 +83,12 @@ class CompareScreen(MDBoxLayout):
             for filename in filenames[2]:
                 currentfile = open(os.path.join(full_path, filename),"r")
                 data = json.load(currentfile)
-
-
                 superbox = MDBoxLayout(
                     size_hint_y=None,
                     height="240dp",
                     orientation = "horizontal",
                     padding = [dp(4), dp(4)],
                     spacing = dp(4)
-
                 )
                 imagebox = MDFloatLayout(
                 size_hint = [0.4,1]
@@ -68,21 +100,37 @@ class CompareScreen(MDBoxLayout):
                     orientation = 'vertical',
 
                 )
-                supervertbox2 = MDBoxLayout(
-                    orientation = 'vertical'
+                superhoribox = MDBoxLayout(
+                    orientation = 'horizontal',
+                    padding= dp(10)
                 )
-                vertbox1 = MDBoxLayout(
-                    orientation = 'vertical'
 
-
-                )
-                vertbox2 = MDBoxLayout(
+                vertbox_title_roomtype = MDBoxLayout(
                     orientation = 'vertical',
-                    size_hint_x = 0.15
+                    size_hint_y = 0.7
                 )
-                horibox1 = MDBoxLayout(
+                vertbox_roomtype = MDBoxLayout(
+                    size_hint_y = 0.3
+                )
+                vertbox_title = MDBoxLayout(
+                    size_hint_y=0.7
+                )
+                vertbox_buttons = MDFloatLayout(
+                    size_hint_x = 0.1
+                )
+                vertbox_guests_included = MDBoxLayout(
+                    orientation = 'horizontal'
+
+                )
+                horibox_rating = MDBoxLayout(
                     orientation = 'horizontal'
                 )
+                horibox_star = MDBoxLayout(
+                    orientation = 'horizontal',
+                    size_hint_x = 0.3
+                )
+
+
 
                 img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
                                     pos_hint={'center_x': .5, 'center_y': .5},
@@ -94,7 +142,7 @@ class CompareScreen(MDBoxLayout):
                                 f"[color=808080]{data['room_type']} in {data['village']} ({data['borough']})[/color]",
                                 markup=True,
                                 halign='left',
-                                pos_hint={'center_x': .5, 'center_y': .95})
+                                pos_hint={'center_x': .5, 'center_y': .75})
 
                 title_label = MDLabel(text=
                                          f"[size=25]{data['name']}[/size]",
@@ -102,7 +150,30 @@ class CompareScreen(MDBoxLayout):
                                          halign='left',
                                          pos_hint={'center_x': .5, 'center_y': .85})
 
-                price_label = MDLabel(text=f"[size=25][b]{data['price']}$[/b]/night[/size]",
+
+                reviews_expansion = MDExpansionPanel(
+                                        icon="",  # panel icon
+                                        content=ContentReviews(),  # panel content
+                                        panel_cls=MDExpansionPanelOneLine(text="Reviews"),  # panel class
+    )
+
+
+                if data['guests_included'] == 1:
+
+                    guest_text = f"{data['guests_included']} guest · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
+                else:
+                    guest_text = f"{data['guests_included']} guests · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
+
+                guests_inclueded_label = MDLabel(
+                    text= guest_text,
+                    halign='left',
+                    pos_hint={'center_x': .5, 'center_y': .35}
+                )
+
+
+
+
+                price_label = MDLabel(text=f"[size=35][b]{data['price']}$[/b]/night[/size]",
                                 markup=True,
                                 halign='right',
                                 pos_hint={'center_x': 0.3, 'center_y': .1})
@@ -112,8 +183,9 @@ class CompareScreen(MDBoxLayout):
 
                 # add textbox/price to dicitonary for 'best' label
                 if not data['price'] == 0:
-                    best_price_box[supervertbox2] = data['price']
-                best_rating_box[textbox] = float(data['review_score'])/20
+                    best_price_box[imagebox] = data['price']
+                if data['number_of_reviews'] >=10:
+                    best_rating_box[imagebox] = float(data['review_score'])/20
 
 
 
@@ -126,44 +198,71 @@ class CompareScreen(MDBoxLayout):
 
                 staricon = MDIcon(
                     icon='star',
-                    pos_hint={'center_x': .50, 'center_y': .08}
+                    pos_hint={'left_x': .50, 'center_y': .08}
                 )
                 starlabel = MDLabel(
                     text=f"[b]{float(data['review_score']) / 20}[/b] ({data['number_of_reviews']})", markup=True,
-                    pos_hint={'center_x': .54, 'center_y': .07}
+                    pos_hint={'left_x': .50, 'center_y': .07}
                 )
 
-                webbutton = MDIconButton(
+                webbutton = web_button(
                     icon='search-web',
-                    on_press=lambda x: open_link(data['listing_url']),
                     user_font_size="36sp",
-                    pos_hint={'center_x': 0.9, 'center_y': .1}
+                    pos_hint={'center_x': .9, 'center_y': .3},
+                    urldict=webbutton_data
                 )
+
+                webbutton_data[webbutton] = data['listing_url']
 
                 bookmarkbutton = ListingSaveButton(
                     data,
-                    pos_hint={'center_x': .9, 'center_y': .9},
+                    pos_hint={'center_x': .9, 'center_y': .7},
                     opposite_colors= False,
                     icon = 'delete'
                 )
+
+                loc_button = location_button(
+                    icon= 'map-outline',
+                    pos_hint = {'center_x': .9, 'center_y': .5},
+                    locdict = location_data
+                )
+
+                location_data[loc_button] = [float(data['latitude']), float(data['longitude'])]
+
+                ##### ADD WIDGETS
+
                 imagebox.add_widget(img)
                 if data['is_superhost']:
                     imagebox.add_widget(superhost_chip)
 
-                vertbox1.add_widget(roomtype_label)
-                vertbox1.add_widget(title_label)
-
-                horibox1.add_widget(staricon)
-                horibox1.add_widget(price_label)
-
-                vertbox2.add_widget(bookmarkbutton)
-                vertbox2.add_widget(webbutton)
+                vertbox_title.add_widget(title_label)
+                vertbox_roomtype.add_widget(roomtype_label)
+                vertbox_title_roomtype.add_widget(vertbox_roomtype)
+                vertbox_title_roomtype.add_widget(vertbox_title)
 
 
-                supervertbox.add_widget(vertbox1)
-                supervertbox.add_widget(horibox1)
+                vertbox_buttons.add_widget(bookmarkbutton)
+                vertbox_buttons.add_widget(loc_button)
+                vertbox_buttons.add_widget(webbutton)
+
+
+                horibox_star.add_widget(staricon)
+                horibox_star.add_widget(starlabel)
+                horibox_rating.add_widget(horibox_star)
+                horibox_rating.add_widget(price_label)
+                superhoribox.add_widget(horibox_rating)
+
+                vertbox_guests_included.add_widget(guests_inclueded_label)
+                vertbox_guests_included.add_widget(reviews_expansion)
+
+                supervertbox.add_widget(vertbox_title_roomtype)
+                supervertbox.add_widget(vertbox_guests_included)
+                supervertbox.add_widget(superhoribox)
+
                 textbox.add_widget(supervertbox)
-                textbox.add_widget(vertbox2)
+                textbox.add_widget(vertbox_buttons)
+
+
                 superbox.add_widget(imagebox)
                 superbox.add_widget(textbox)
                 self.ids.comparebox.add_widget(superbox)
@@ -172,18 +271,27 @@ class CompareScreen(MDBoxLayout):
 
         best_price_chip = MDChip(
             text='BEST PRICE',
-            pos_hint={'center_x': .20, 'center_y': .90},
+            pos_hint={'center_x': .8, 'center_y': .9},
             icon='',
-            color=[1, 0.8, 0.06, 1],
+            text_color = [1, 1, 1, 1],
+            color=[0.01, 0.28, 0.99, 1],
+            spacing = dp(4)
         )
         min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
 
+        if min(best_price_box, key=best_price_box.get) == max(best_rating_box, key=best_rating_box.get):
+            pos = {'center_x': .8, 'center_y': 0.77}
+        else:
+            pos = {'center_x': .8, 'center_y': .9}
         best_rating_chip = MDChip(
             text='BEST RATING',
-            pos_hint={'center_x': .50, 'center_y': .90},
+            pos_hint=pos,
             icon='',
-            color=[1, 0.8, 0.06, 1],
+            color=[0.98, 0.92, 0.01, 1],
+            spacing = dp(4)
         )
         # needs 10 ratings
-        max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
+        if len(best_rating_box) is not 0:
+            max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
+
 

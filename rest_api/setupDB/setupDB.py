@@ -5,22 +5,22 @@ import io
 import numpy as np
 
 
-USER=""
+USER="postgres"
 HOST="localhost"
-PORT=
-DB_NAME=""
-PASSWORD=""
+PORT= '5433'
+DB_NAME="ase"
+PASSWORD="turmturm"
 engine = create_engine(f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}")
 
 
 
 def createTables():
     print("Creating tables")
-    conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD}")
+    conn = pg.connect(f"user={USER} dbname={DB_NAME} password={PASSWORD} port={PORT}")
     cur = conn.cursor()
     debug=False
 
-    cur.execute("Drop table listing_location")
+    cur.execute("Drop table village_category")
     if not debug:
         cur.execute(
             """
@@ -42,8 +42,9 @@ def createTables():
             """
             create table if not exists village_category(
                 village varchar(26),
-                category varchar(11),
-                primary key (village,category)
+                age varchar(10),
+                interest varchar(11),
+                primary key (village,age,interest)
             )
             """
         )
@@ -317,11 +318,11 @@ def deleteUnnecessaryChars(df,column):
 def addNeighborhood():
     df = pd.read_csv("neighborhood_activity.csv")
     streamData(df,"village_category")
-    print(df['category'].map(len).max())
+    
 if __name__=="__main__":
     
     createTables()
-    addListingsAndHost("data/listings.csv")
+    #addListingsAndHost("data/listings.csv")
     #addReviews("data/reviews.csv")
     addNeighborhood()
 

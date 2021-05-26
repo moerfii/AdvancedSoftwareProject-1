@@ -184,7 +184,7 @@ describe("Checking all requests/responses", () => {
 
         it("returns status 200 for search params", (done) => {
             chai.request(app)
-            .get("/village_category?category.eq='Food'")
+            .get("/village_category?interest.eq='Food'")
             .end(function (err, res) {
                 expect(res).to.have.status(200);
                 done();
@@ -193,7 +193,7 @@ describe("Checking all requests/responses", () => {
 
         it("returns status 200 for IN operator", (done) => {
             chai.request(app)
-            .get("/village_category?category.in[]=Food&category.in[]=Nightlife")
+            .get("/village_category?interest.in[]=Food&interest.in[]=Nightlife")
             .end(function(err,res) {
                 expect(res).to.have.status(200);
                 done();
@@ -218,11 +218,12 @@ describe("Checking all requests/responses", () => {
     describe("/village_category as input for /listing_location", ()=>{
         it("returns status 200", (done) => {
             chai.request(app)
-            .get("/village_category?category.eq='Food'")
+            .get("/village_category?interest.eq='Food'")
             .end(function (err,res) {
-                var param = res.body[0][0];
+                var param = res.body;
+                console.log(param)
                 chai.request(app)
-                .get(`/listing_location?village.eq='${param}'`)
+                .get(`/listing_location?village.in[]=${param}`)
                 .end(function(err,res) {
                     expect(res).to.have.status(200);
                     done();

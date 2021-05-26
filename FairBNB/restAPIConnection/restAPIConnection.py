@@ -32,9 +32,12 @@ class RestAPIConnection:
             filters = self.overrideFilter(custom_filters)
         else:
             filters = custom_filters
+        for key in filters:
+            if ".in" in key and filters[key]==[]:
+                filters[key]=['']
+
         resp = requests.get(url,params=filters)
         res[0] = json.loads(resp.text)
-        print(len(res[0]))
 
     def getListingLocations(self,res,custom_filters=None,append=True):
         url=self.base_url+"/listing_location"
@@ -50,4 +53,8 @@ class RestAPIConnection:
     
     def getVillageCategory(self,res,custom_filters=None,append=True):
         url = self.base_url+'/village_category'
+        return self._GET(res,url,custom_filters,append)
+
+    def getReviews(self,res,custom_filters=None,append=True):
+        url = self.base_url+'/reviews'
         return self._GET(res,url,custom_filters,append)

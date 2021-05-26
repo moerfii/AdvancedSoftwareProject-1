@@ -12,7 +12,7 @@ boroughs = [
 
 Interest = [
     'Food',
-    'Art & Music'
+    'Art & Music',
     'Sightseeing',
     'Shopping',
     'Sports',
@@ -25,6 +25,7 @@ age_range = {
     'c': '51-120'
 }
 
+age_range2 = ['18-30','31-50','51-120']
 import json
 import wget
 import os
@@ -302,7 +303,23 @@ for village in villages:
 
 
 df['category'] = df['category'].replace(age_range)
-df.to_csv("neighborhood_activity.csv",index=False)
+df['village'] = df['village'].astype(str)
+df['category'] = df['category'].astype(str)
+
+df1 = df[df['category'].isin(age_range2)].copy()
+df1.columns = ['village',"age"]
+df1['village'] = df1['village'].astype(str)
+df1['age'] = df1['age'].astype(str)
+
+
+
+df2 = df[df['category'].isin(Interest)].copy()
+df2.columns = ['village','interest']
+df2['village'] = df2['village'].astype(str)
+df2['interest'] = df2['interest'].astype(str)
+df3 = df1.merge(df2,on="village",how="outer")
+
+df3.to_csv("neighborhood_activity.csv",index=False)
 
 
 

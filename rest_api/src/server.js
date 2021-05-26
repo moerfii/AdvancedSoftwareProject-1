@@ -38,7 +38,7 @@ const acceptedParams = {
         "price",
         "borough",
         "village",
-        "total_listing_count",
+        "total_listings_count",
         "is_superhost",
         "guests_included",
         "review_score"
@@ -111,7 +111,8 @@ const acceptedParams = {
     
     "village_category": [
         "village",
-        "category"
+        "age",
+        "interest"
     ]
 }
 function buildQuery(queryString,query,dbParams,setAND=false) {
@@ -292,6 +293,13 @@ returns reviews for listing id
 app.get(
     "/reviews",
     (req,res) => {
+        console.log(req.query)
+        if("id.eq" in req.query)
+        {
+            console.log("gotcha")
+            req.query["listing_id.eq"] = req.query["id.eq"]
+            delete req.query["id.eq"]   
+        }
         var query = buildQuery(`SELECT * FROM review`,req.query,acceptedParams['review'])
         pool.query(
             query,
