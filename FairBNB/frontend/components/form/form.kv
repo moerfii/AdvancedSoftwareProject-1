@@ -13,19 +13,19 @@
             border_radius: 20
             radius: [15]
             size_hint: None, None
-            size: 550, 480
+            size: 490, 480
 
             BoxLayout:
                 id:baax
                 orientation: 'vertical'
                 padding: "40dp", "10dp"
                 spacing: dp(50)
-                size: 550, 460
+                size: 500, 460
                 size_hint: None, None
                 pos_hint: {"center_y": 0.55}
                 
                 BoxLayout:
-                	padding: "10dp", 0
+                	padding: "20dp", 0
                     spacing: dp(40)
                     size_hint: None, None
                     size: 450, 15
@@ -33,19 +33,22 @@
                         id: field_n
                         size_hint: None, None
                         pos_hint: {"center_y": 0.5}
-                        width: "200dp"
+                        width: "180dp"
                         hint_text: "Neighborhood"
+                        mode: "rectangle"
                         line_color_normal: app.theme_cls.primary_color
+                        icon_right: "arrow-down-drop-circle-outline"
                         on_focus:
                             if self.focus:form.menu_n.open()
 
                     MDTextField:
                     	id: field_g
                     	size_hint: None, None
-                    	width: "100dp"
+                    	width: "110dp"
                     	pos_hint: {"center_y": 0.5}
                     	hint_text: "Guests"
-                    	line_color_normal: app.theme_cls.primary_color
+                    	helper_text: "you can enter 1 to 16"
+                    	helper_text_mode: "on_error"
                    
                 BoxLayout:
                     spacing: dp(40)
@@ -64,21 +67,25 @@
                         icon_right_color: app.theme_cls.primary_color
                         on_focus:
                             if self.focus: form.menu_a.open()
-                    MDTextField:
-                        id: field_i
-                        size_hint: None, None
-                        width: "120dp"
-                        pos_hint: {"center_y": 1}
-                        hint_text: "Reviews"
-                        mode: "rectangle"
-                        icon_right: "arrow-down-drop-circle-outline"
-                        icon_right_color: app.theme_cls.primary_color
-                        on_focus:
-                            if self.focus:form.menu_i.open()
-
+                   
                     BoxLayout:
                         spacing: "10dp"
                         pos_hint: {"center_y": 1}
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size_hint: None, None
+                            pos_hint: {"center_y": 0}
+                            size: 70, 50
+                            MDLabel:
+                                text: "High rating"
+                                font_style: 'Caption'
+                                bold: True
+                            MDCheckbox:
+                                size_hint: None, None
+                                size: dp(40), dp(40)
+                                pos_hint: {"center_x": 0.45, "center_y": 0.2}
+                                on_active:
+                                    form.set_highrating(self.active)
                         BoxLayout:
                             orientation: 'vertical'
                             size_hint: None, None
@@ -130,19 +137,21 @@
         					text: 'shopping'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					selected_chip_color: app.theme_cls.primary_color
+        					#selected_chip_color: app.them_cls.primary_color
+        					on_release: form.set_chips(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Food'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					selected_chip_color: app.theme_cls.primary_color
+        					on_release: form.set_chips(self)
+        					
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Sightseeing'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					selected_chip_color: app.theme_cls.primary_color
+        					on_release: form.set_chips(self)
         			BoxLayout:
                 		padding: "10dp", "5dp"
                 		spacing: "10dp"
@@ -151,26 +160,29 @@
         					text: 'Art & Music'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					selected_chip_color: app.theme_cls.primary_color
+        					on_release: form.set_chips(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Nightlife'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					selected_chip_color: app.theme_cls.primary_color
+        					on_release: form.set_chips(self)
 
         		BoxLayout:
         			size_hint: None, None
                     size: 450, 60
                     BoxLayout: 
                     	orientation: 'vertical'
-                    	spacing: '30dp'
+                    	spacing: '10dp'
         				MDLabel:
-        					pos_hint: {"center_y": 1.5}
+        					pos_hint: {"center_y": 1}
                 			text: "Price"
                 			bold: True
                 		RangeSlider:
             				id: field_p
+            				size_hint: None, None
+            				size: 320, 30
+            				pos_hint: {"center_x": 0.45}
             				value: 0,9999
             				min:0
             				max:9999
