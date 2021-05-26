@@ -1,77 +1,64 @@
-import time
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.card import MDCard
-from kivy.uix.screenmanager import Screen
 from kivymd.uix.picker import MDDatePicker
 from kivy.app import App
 from kivymd.app import MDApp
-from kivy.clock import Clock
-
-from kivy.lang import Builder
 
 
 class Form(MDCard):
-    def __init__(self,**kwargs):
-        super(Form,self).__init__(**kwargs)
-        #self.screen = Builder.load_string(KV)
-
+    """
+    Questionnaire Screen: here all the widgets seen on the questionnaire are initialised. Once an option is modified, it
+    directly sets the filter for the REST-API get request. The search button is simply to switch the screen to the map.
+    """
+    def __init__(self, **kwargs):
+        super(Form, self).__init__(**kwargs)
 
     def on_start(self):
-        print("ON START")
         
         neighborhoods = [
             {"viewclass": "OneLineListItem",
-            "text": "---",
-            "on_release": lambda x=f"---": self.set_neighborhood(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Bronx",
-            "on_release": lambda x=f"Bronx": self.set_neighborhood(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Brooklyn",
-            "on_release": lambda x=f"Brooklyn": self.set_neighborhood(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Manhattan",
-            "on_release": lambda x=f"Manhattan": self.set_neighborhood(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "Queens",
-            "on_release": lambda x=f"Queens": self.set_neighborhood(x),
-            }, {"viewclass": "OneLineListItem",
-            "text": "Staten Island",
-            "on_release": lambda x=f"Staten Island": self.set_neighborhood(x),}
+             "text": "---",
+             "on_release": lambda x=f"---": self.set_neighborhood(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "Bronx",
+             "on_release": lambda x=f"Bronx": self.set_neighborhood(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "Brooklyn",
+             "on_release": lambda x=f"Brooklyn": self.set_neighborhood(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "Manhattan",
+             "on_release": lambda x=f"Manhattan": self.set_neighborhood(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "Queens",
+             "on_release": lambda x=f"Queens": self.set_neighborhood(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "Staten Island",
+             "on_release": lambda x=f"Staten Island": self.set_neighborhood(x)
+             }
         ]
 
         ages = [
             {"viewclass": "OneLineListItem",
-            "text": "---",
-            "on_release": lambda x=f"---": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "18 - 30",
-            "on_release": lambda x=f"18-30": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "31 - 50",
-            "on_release": lambda x=f"31-50": self.set_age(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "50+",
-            "on_release": lambda x=f"51-120": self.set_age(x),
-            }
-        ]
-
-        interests = [
+             "text": "---",
+             "on_release": lambda x=f"---": self.set_age(x),
+             },
             {"viewclass": "OneLineListItem",
-            "text": "5 stars",
-            "on_release": lambda x=f"5stars": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "4 stars",
-            "on_release": lambda x=f"4starts": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "3 stars",
-            "on_release": lambda x=f"3stars": self.set_interests(x),
-            },{"viewclass": "OneLineListItem",
-            "text": "2 stars",
-            "on_release": lambda x=f"2stars": self.set_interests(x),
-            }, {"viewclass": "OneLineListItem",
-            "text": "1 star",
-            "on_release": lambda x=f"1star": self.set_interests(x),}
+             "text": "18 - 30",
+             "on_release": lambda x=f"18-30": self.set_age(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "31 - 50",
+             "on_release": lambda x=f"31-50": self.set_age(x),
+             },
+            {"viewclass": "OneLineListItem",
+             "text": "50+",
+             "on_release": lambda x=f"51-120": self.set_age(x),
+             }
         ]
 
         self.menu_n = MDDropdownMenu(
@@ -89,17 +76,14 @@ class Form(MDCard):
             on_text_validate=self.set_error_message,
             on_focus=self.set_error_message)
 
-
-
         app = App.get_running_app()
-        self.api=app.api
+        self.api = app.api
 
     def set_neighborhood(self, text__neighbor):
-
         self.ids.field_n.text = text__neighbor
         self.menu_n.dismiss()
-        filter = {"borough.eq":"'"+text__neighbor+"'"}
-        self.api.setFilters(filter)
+        neighborhood_filter = {"borough.eq": "'"+text__neighbor+"'"}
+        self.api.set_filters(neighborhood_filter)
 
     def set_guest(self, text__guest):
         pass
@@ -108,60 +92,57 @@ class Form(MDCard):
         g_num = instance_textfield.text
         if g_num.isdigit():
             g_num = int(g_num)
-            if g_num not in list(range(1,17)):
+            if g_num not in list(range(1, 17)):
                 self.ids.field_g.error = True
-        else :
+        else:
             self.ids.field_g.error = True
         
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
         self.menu_a.dismiss()
-        filter = {"age.eq": f"'{text__age}'"}
+        age_filter = {"age.eq": f"'{text__age}'"}
         res = [None]
-        self.api.getVillageCategory(res,filter)
+        self.api.get_village_category(res, age_filter)
         village_list = []
         for i in res[0]:
             village_list.append(i[0])
             
-        filter = {"village.in[]":village_list}
-        self.api.setFilters(filter)
+        age_filter = {"village.in[]": village_list}
+        self.api.set_filters(age_filter)
 
     def set_chips(self, instance_chips):
-        print(instance_chips.color)
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
-            print(instance_chips.color)
-            # call set_interests 
+            # call set_interests
         else:
             instance_chips.color = [0, 0, 0, 0.1]
-            
 
     def set_interests(self, text__interest):
         self.ids.field_i.text = text__interest
         self.menu_i.dismiss()
-        filter = {"interest.in[]": [text__interest]}
+        interests_filter = {"interest.in[]": [text__interest]}
         res = [None]
-        self.api.getVillageCategory(res,filter)
+        self.api.get_village_category(res, interests_filter)
         village_list = []
         for i in res[0]:
             village_list.append(i[0])
-        filter = {"village.in[]":village_list}
-        self.api.setFilters(filter)
+        interests_filter = {"village.in[]": village_list}
+        self.api.set_filters(interests_filter)
 
-    def set_highrating(self,status):
+    def set_highrating(self, status):
         pass
 
-    def set_superhost(self,status):
-        filter = {"is_superhost.eq":None}
+    def set_superhost(self, status):
+        superhost_filter = {"is_superhost.eq": None}
         if status:
-            filter['is_superhost.eq'] = True
-        self.api.setFilters(filter)
+            superhost_filter['is_superhost.eq'] = True
+        self.api.set_filters(superhost_filter)
 
-    def set_fairfilter(self,status):
-        filter = {"total_listings_count.le":None}
+    def set_fairfilter(self, status):
+        fair_filter = {"total_listings_count.le": None}
         if status:
-            filter['total_listings_count.le'] = 3
-        self.api.setFilters(filter)
+            fair_filter['total_listings_count.le'] = 3
+        self.api.set_filters(fair_filter)
 
     def show_datepicker(self):
         picker = MDDatePicker()
@@ -169,12 +150,11 @@ class Form(MDCard):
         picker.open()
 
     def switch_to_mapscreen(self):
-        print("search")
-        app=App.get_running_app()
+        app = App.get_running_app()
         mapview = app.root.ids['mapview']
-        #mapview.firstCall=True
+        # mapview.firstCall=True
         screenmanager = app.root.ids['screen_manager']
-        screenmanager.current="mapscreen"
+        screenmanager.current = "mapscreen"
         #mapview.get_airbnb_in_fov()
         #mapview._need_redraw_all = True
         #Clock.schedule_once(mapview.fakeClick,0.5)
@@ -182,11 +162,7 @@ class Form(MDCard):
         #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
 
 
-        
-
-
-
-if __name__ =="__main__":
+if __name__ == "__main__":
 
     class SliderApp(MDApp):
         def build(self):

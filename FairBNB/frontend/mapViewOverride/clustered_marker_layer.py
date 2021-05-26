@@ -6,7 +6,6 @@ Layer that support point clustering
 
 from math import atan, exp, floor, log, pi, sin, sqrt
 from os.path import dirname, join
-import os
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.properties import (

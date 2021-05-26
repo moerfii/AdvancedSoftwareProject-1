@@ -1,24 +1,21 @@
-import time
-
-from kivy.metrics import dp
-from kivy.uix.button import Button
 import os
 import json
-
 from kivymd.uix.button import MDIconButton
-from kivy.app import App
+
 
 class ListingSaveButton(MDIconButton):
     """
-    This is a button that saves the listing information or removes it
+    Customised Button for adding/removing listings to wishlist. Also adjusts icon from heart-outline to heart depending
+    which state it is in. It is also used on the comparescreen where the icon is displayed as a trash icon and used to
+    remove listings from the wishlist. The listings are added/removed by saving the listing details to a json file in
+    the /bookmarks directory.
     """
     size_hint = None, None
     background_color = [0, 0, 1, 1]
 
-
-    def __init__(self,data,pos_hint = None,opposite_colors = None,icon = None,**kwargs):
-        super(MDIconButton,self).__init__(**kwargs)
-        self.data=data
+    def __init__(self, data, pos_hint=None, opposite_colors=None, icon=None, **kwargs):
+        super(MDIconButton, self).__init__(**kwargs)
+        self.data = data
         if pos_hint is None:
             self.pos_hint = {'center_x': .90, 'center_y': .83}
         else:
@@ -54,43 +51,31 @@ class ListingSaveButton(MDIconButton):
         else:
             self.opposite_colors = opposite_colors
         if os.path.isfile(f"bookmarks/{data['id']}.json"):
-            print("folder found")
-            self.isBookmarked=True
+            self.isBookmarked = True
             self.halign = 'center'
             self.valign = 'center'
-
-
         else:
-            self.isBookmarked=False
+            self.isBookmarked = False
             self.halign = 'center'
             self.valign = 'center'
 
-    
     def on_press(self):
-        print(type(self.icon))
         if not self.isBookmarked:
             self.bookmark()
         else:
-            app = App.get_running_app()
-            self.removeBookmark(self.parent.parent.parent)
-
+            self.remove_bookmark(self.parent.parent.parent)
 
     def bookmark(self):
-        print("bookmark")
         if not os.path.isdir("bookmarks"):
             os.mkdir("bookmarks")
-        with open(f"bookmarks/{self.data['id']}.json","w+") as f:
+        with open(f"bookmarks/{self.data['id']}.json", "w+") as f:
             f.write(json.dumps(self.data))
-        self.isBookmarked=True
+        self.isBookmarked = True
         self.icon = 'heart'
 
-
-    def removeBookmark(self, child):
+    def remove_bookmark(self, child):
         if self.icon == 'delete':
-            print("updateing screenn")
-            print(self.parent.parent.parent)
             self.parent.parent.parent.parent.remove_widget(child)
-        print("remove bookmark")
         os.remove(f"bookmarks/{self.data['id']}.json")
-        self.isBookmarked=False
+        self.isBookmarked = False
         self.icon = 'heart-outline'

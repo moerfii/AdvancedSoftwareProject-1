@@ -1,37 +1,24 @@
-from kivy.core.window import Window
-from kivy.metrics import dp
 from kivy.uix.popup import Popup
 from kivy.uix.image import AsyncImage
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-import os
-import requests
-import json
 from kivy.app import App
-import time
-
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel, MDIcon
-from kivymd.utils.fitimage import FitImage
-
 from .components.ListingSaveButton import ListingSaveButton
 import webbrowser
-
-
 from kivy.config import Config
 from kivy.graphics import Color, RoundedRectangle
-from kivy.uix.floatlayout import FloatLayout
 
 Config.set("graphics", "width", "500")
 Config.set("graphics", "height", "300")
 
 
 class RoundedCornerLayout(MDBoxLayout):
-
+    """
+    Customised layout for rounded corners on listing-popup when clicking on marker
+    """
     orientation = 'vertical'
 
     def __init__(self):
@@ -54,31 +41,41 @@ class RoundedCornerLayout(MDBoxLayout):
 
 
 def open_link(url):
+    """
+    opens the url in browser
+    :param url: url of listing
+    :type url: string
+    :return: None
+    """
     webbrowser.open(url)
 
 
+def listing_detail(listing_id):
+    """
+    Fetches listing details when clicking on marker on map. First makes API get request then continues to arrange data
+    in widgets which is added to the Mapview Screen as popup.
+    :param listing_id: id of clicked on listing
+    :type listing_id: int
+    :return: popup
+    """
 
-
-
-def listingDetail(listing_id):
-    #get Data
-    custom_filters = {'id.eq':str(listing_id)}
+    # get Data
+    custom_filters = {'id.eq': str(listing_id)}
     app = App.get_running_app()
     detail_data = [None]
     other_data = [None]
     location_data = [None]
     review_data = [None]
-    print(review_data)
-    app.api.getListingDetail(detail_data,custom_filters)
-    app.api.getListingOther(other_data,custom_filters)
-    app.api.getListingLocations(location_data, custom_filters)
-    app.api.getReviews(review_data, custom_filters)
+    app.api.get_listing_detail(detail_data, custom_filters)
+    app.api.get_listing_other(other_data, custom_filters)
+    app.api.get_listing_location(location_data, custom_filters)
+    app.api.get_reviews(review_data, custom_filters)
 
-    #merge data
+    # merge data
     data = {**detail_data[0][0], **other_data[0][0], **location_data[0][0]}
     try:
-        data = {**data **review_data[0][0]}
-    except:
+        data = {**data, **review_data[0][0]}
+    except IndexError:
         pass
     superbox = RoundedCornerLayout(
     )
@@ -87,42 +84,37 @@ def listingDetail(listing_id):
     textbox = MDFloatLayout(
     )
     img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
-                     pos_hint = {'center_x': .5, 'center_y': .5})
-    #fittedimg = FitImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
-    #                 pos_hint = {'center_x': .5, 'center_y': .5})
+                     pos_hint={'center_x': .5, 'center_y': .5})
+
     superhost_chip = MDChip(
         text='SUPERHOST',
         pos_hint={'center_x': .24, 'center_y': .83},
-        icon= '',
-        color = [1,1,1,1],
+        icon='',
+        color=[1, 1, 1, 1],
 
     )
     staricon = MDIcon(
-        icon = 'star',
-        pos_hint = {'center_x': .53, 'center_y': .76}
+        icon='star',
+        pos_hint={'center_x': .53, 'center_y': .76}
     )
     starlabel = MDLabel(
-        text= f"[b]{float(data['review_score'])/20}[/b] ({data['number_of_reviews']})", markup=True,
+        text=f"[b]{float(data['review_score'])/20}[/b] ({data['number_of_reviews']})", markup=True,
         pos_hint={'center_x': .63, 'center_y': .75}
     )
 
-    label = MDLabel(text =
-                         f"{data['room_type']}"
+    label = MDLabel(text=f"{data['room_type']}"
                          f"\n[b]{data['price']}$[/b]/night",
                     markup=True,
                     halign='left',
-                    # TODO: make url button
-                    #on_ref_press= print("test"), #open_link(data['listing_url']),
-                    width= 250,
+                    width=250,
                     size_hint=(None, None),
-                    pos_hint = {'center_x': .5, 'center_y': .5})
-
-
+                    pos_hint={'center_x': .5, 'center_y': .5})
 
     bookmarkbutton = ListingSaveButton(data)
+
     webbutton = MDIconButton(
-        icon = 'search-web',
-        on_press= lambda x: open_link(data['listing_url']),
+        icon='search-web',
+        on_press=lambda x: open_link(data['listing_url']),
         user_font_size="36sp",
         pos_hint={'center_x': .90, 'center_y': .15}
     )
@@ -140,14 +132,13 @@ def listingDetail(listing_id):
 
     popup = Popup(
         content=superbox,
-        background = 'background.jpg',
-        size_hint=(None,None),
-        size=(300,350),
-        pos_hint={'left':0.9},
+        background='background.jpg',
+        size_hint=(None, None),
+        size=(300, 350),
+        pos_hint={'left': 0.9},
         auto_dismiss=True,
-        separator_color = [.9, .4, .2, 1],
-        background_color = [0, 0, 0, 0]
+        separator_color=[.9, .4, .2, 1],
+        background_color=[0, 0, 0, 0]
         )
     
     return popup
-    

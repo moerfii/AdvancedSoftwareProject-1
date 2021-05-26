@@ -70,12 +70,9 @@ class CompareScreen(MDBoxLayout):
         stored in json file will be added to comparescreen - ultimately avoiding duplicates.
         """
         children = self.ids.comparebox.children
-        print(children)
         children_copy = children.copy()
         for child in children_copy:
-            print(child)
             self.ids.comparebox.remove_widget(child)
-        print(len(children))
 
     def load_bookmarked(self):
         """
@@ -124,7 +121,7 @@ class CompareScreen(MDBoxLayout):
                     size_hint_y=0.7
                 )
                 vertical_box_buttons = MDFloatLayout(
-                    size_hint_x = 0.1
+                    size_hint_x=0.1
                 )
                 vertical_box_nr_of_guests = MDBoxLayout(
                     orientation='horizontal'
@@ -140,56 +137,48 @@ class CompareScreen(MDBoxLayout):
                                  pos_hint={'center_x': .5, 'center_y': .5},
                                  size_hint_y=1, width=100)
 
-                roomtype_label = MDLabel(text=
-                                f"[color=808080]{data['room_type']} in {data['village']} ({data['borough']})[/color]",
-                                markup=True,
-                                halign='left',
-                                pos_hint={'center_x': .5, 'center_y': .75})
-
-                title_label = MDLabel(text=
-                                         f"[size=25]{data['name']}[/size]",
+                roomtype_label = MDLabel(text=f"[color=808080]{data['room_type']} in {data['village']}"
+                                              f" ({data['borough']})[/color]",
                                          markup=True,
                                          halign='left',
-                                         pos_hint={'center_x': .5, 'center_y': .85})
+                                         pos_hint={'center_x': .5, 'center_y': .75})
 
+                title_label = MDLabel(text=f"[size=25]{data['name']}[/size]",
+                                      markup=True,
+                                      halign='left',
+                                      pos_hint={'center_x': .5, 'center_y': .85})
 
                 reviews_expansion = MDExpansionPanel(
                                         icon="",  # panel icon
                                         content=ContentReviews(),  # panel content
                                         panel_cls=MDExpansionPanelOneLine(text="Reviews"),  # panel class
-    )
-
+                )
 
                 if data['guests_included'] == 1:
 
-                    guest_text = f"{data['guests_included']} guest · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
+                    guest_text = f"{data['guests_included']} guest · {data['minimum_nights']} minimum nights · " \
+                                 f"{data['maximum_nights']} maximum nights"
                 else:
-                    guest_text = f"{data['guests_included']} guests · {data['minimum_nights']} minimum nights · {data['maximum_nights']} maximum nights"
+                    guest_text = f"{data['guests_included']} guests · {data['minimum_nights']} minimum nights · " \
+                                 f"{data['maximum_nights']} maximum nights"
 
-                guests_inclueded_label = MDLabel(
-                    text= guest_text,
+                guests_included_label = MDLabel(
+                    text=guest_text,
                     halign='left',
                     pos_hint={'center_x': .5, 'center_y': .35}
                 )
 
-
-
-
                 price_label = MDLabel(text=f"[size=35][b]{data['price']}$[/b]/night[/size]",
-                                markup=True,
-                                halign='right',
-                                pos_hint={'center_x': 0.3, 'center_y': .1})
+                                      markup=True,
+                                      halign='right',
+                                      pos_hint={'center_x': 0.3, 'center_y': .1})
 
+                line = MDSeparator(height=dp(1))
 
-                line = MDSeparator(height = dp(1))
-
-                # add textbox/price to dicitonary for 'best' label
                 if not data['price'] == 0:
                     best_price_box[image_box] = data['price']
-                if data['number_of_reviews'] >=10:
+                if data['number_of_reviews'] >= 10:
                     best_rating_box[image_box] = float(data['review_score'])/20
-
-
 
                 superhost_chip = MDChip(
                     text='SUPERHOST',
@@ -206,32 +195,28 @@ class CompareScreen(MDBoxLayout):
                     text=f"[b]{float(data['review_score']) / 20}[/b] ({data['number_of_reviews']})", markup=True,
                     pos_hint={'left_x': .50, 'center_y': .07}
                 )
-
                 webbutton = WebButton(
                     icon='search-web',
                     user_font_size="36sp",
                     pos_hint={'center_x': .9, 'center_y': .3},
                     url_dictionary=web_button_data
                 )
-
                 web_button_data[webbutton] = data['listing_url']
 
                 bookmarkbutton = ListingSaveButton(
                     data,
                     pos_hint={'center_x': .9, 'center_y': .7},
-                    opposite_colors= False,
-                    icon = 'delete'
+                    opposite_colors=False,
+                    icon='delete'
                 )
-
                 loc_button = LocationButton(
-                    icon= 'map-outline',
-                    pos_hint = {'center_x': .9, 'center_y': .5},
-                    location_dictionary= location_data
+                    icon='map-outline',
+                    pos_hint={'center_x': .9, 'center_y': .5},
+                    location_dictionary=location_data
                 )
-
                 location_data[loc_button] = [float(data['latitude']), float(data['longitude'])]
 
-                ##### ADD WIDGETS
+                # ADD WIDGETS
 
                 image_box.add_widget(img)
                 if data['is_superhost']:
@@ -241,12 +226,9 @@ class CompareScreen(MDBoxLayout):
                 vertical_box_room_type.add_widget(roomtype_label)
                 vertical_box_tile_and_room_type.add_widget(vertical_box_room_type)
                 vertical_box_tile_and_room_type.add_widget(vertical_box_title)
-
-
                 vertical_box_buttons.add_widget(bookmarkbutton)
                 vertical_box_buttons.add_widget(loc_button)
                 vertical_box_buttons.add_widget(webbutton)
-
 
                 horizontal_box_star.add_widget(staricon)
                 horizontal_box_star.add_widget(starlabel)
@@ -254,7 +236,7 @@ class CompareScreen(MDBoxLayout):
                 horizontal_box_rating.add_widget(price_label)
                 super_horizontal_box.add_widget(horizontal_box_rating)
 
-                vertical_box_nr_of_guests.add_widget(guests_inclueded_label)
+                vertical_box_nr_of_guests.add_widget(guests_included_label)
                 vertical_box_nr_of_guests.add_widget(reviews_expansion)
 
                 super_vertical_box.add_widget(vertical_box_tile_and_room_type)
@@ -264,20 +246,18 @@ class CompareScreen(MDBoxLayout):
                 text_box.add_widget(super_vertical_box)
                 text_box.add_widget(vertical_box_buttons)
 
-
                 main_box_per_listing.add_widget(image_box)
                 main_box_per_listing.add_widget(text_box)
                 self.ids.comparebox.add_widget(main_box_per_listing)
-                print("added")
                 self.ids.comparebox.add_widget(line)
 
         best_price_chip = MDChip(
             text='BEST PRICE',
             pos_hint={'center_x': .8, 'center_y': .9},
             icon='',
-            text_color = [1, 1, 1, 1],
+            text_color=[1, 1, 1, 1],
             color=[0.01, 0.28, 0.99, 1],
-            spacing = dp(4)
+            spacing=dp(4)
         )
         min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
 
@@ -290,10 +270,8 @@ class CompareScreen(MDBoxLayout):
             pos_hint=pos,
             icon='',
             color=[0.98, 0.92, 0.01, 1],
-            spacing = dp(4)
+            spacing=dp(4)
         )
         # needs 10 ratings
         if len(best_rating_box) is not 0:
             max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
-
-
