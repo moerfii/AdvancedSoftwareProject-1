@@ -1,42 +1,42 @@
-
 import os
 import webbrowser
-
-import requests
 import json
 from kivy.app import App
 from kivy.metrics import dp
-from kivy.properties import ListProperty
 from kivy.uix.image import AsyncImage
-from kivy.uix.widget import Widget
 from kivymd.uix.card import MDSeparator
 from kivymd.uix.chip import MDChip
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton, MDIconButton
+from kivymd.uix.button import MDIconButton
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
-from kivymd.uix.textfield import MDTextField
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel, MDIcon
-from kivymd.uix.imagelist import SmartTileWithLabel
 from kivymd.uix.boxlayout import MDBoxLayout
-from frontend.listingDetail import RoundedCornerLayout
-
 from frontend.components.ListingSaveButton import ListingSaveButton
 
 
-class web_button(MDIconButton):
-    def __init__(self,*args,urldict=None, **kwargs):
+class WebButton(MDIconButton):
+    """
+    Class defined in order to dynamically define the on_press functionality
+    :param: url_dictionary
+    :returns: None
+    """
+    def __init__(self, *args, url_dictionary=None, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
-        self.urldict = urldict
+        self.url_dictionary = url_dictionary
 
     def on_press(self):
-        webbrowser.open(self.urldict[self])
+        webbrowser.open(self.url_dictionary[self])
 
 
-class location_button(MDIconButton):
-    def __init__(self,*args,locdict=None, **kwargs):
+class LocationButton(MDIconButton):
+    """
+        Class defined in order to dynamically define the on_press functionality
+        :param: location_dictionary
+        :returns: None
+        """
+    def __init__(self, *args, location_dictionary=None, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
-        self.locdict = locdict
+        self.location_dictionary = location_dictionary
 
     def on_press(self):
         """
@@ -44,25 +44,31 @@ class location_button(MDIconButton):
         :param: latitude
         :param: longitude
         """
-
         app = App.get_running_app()
         mapview = app.root.ids.mapview
         mapview.zoom = 19
-        mapview.center_on(self.locdict[self][0], self.locdict[self][1])
-        screenmanager = app.root.ids['screen_manager']
-        screenmanager.current = "mapscreen"
-
-
-
+        mapview.center_on(self.location_dictionary[self][0], self.location_dictionary[self][1])
+        screen_manager = app.root.ids['screen_manager']
+        screen_manager.current = "mapscreen"
 
 
 class ContentReviews(MDBoxLayout):
+    """
+    required for .kv file
+    """
     pass
 
 
 class CompareScreen(MDBoxLayout):
+    """
+    This Screen is designed to compare the listings saved to wishlist. It consists of boxlayouts, one for each listing
+    """
 
     def remove_wishlist_superboxes(self):
+        """
+        This function removes all the widgets added to the comparescreen. This is necessary since on entry all listings
+        stored in json file will be added to comparescreen - ultimately avoiding duplicates.
+        """
         children = self.ids.comparebox.children
         print(children)
         children_copy = children.copy()
@@ -72,71 +78,67 @@ class CompareScreen(MDBoxLayout):
         print(len(children))
 
     def load_bookmarked(self):
+        """
+        This function reads the json's stored in /bookmarks. It then proceeds to initialize the widgets for each listing
+        It adds all the widget to the boxlayout. Finally, it checks which listing has the lowest price/highest rating
+        and add tags accordingly. The lowest price cannot be 0 and the best rated listing must have at least 10 ratings.
+        """
         best_price_box = {}
         best_rating_box = {}
-        webbutton_data = {}
+        web_button_data = {}
         location_data = {}
-
         path = 'bookmarks'
         full_path = os.path.join(os.getcwd(), path)
         for filenames in os.walk(full_path):
             for filename in filenames[2]:
-                currentfile = open(os.path.join(full_path, filename),"r")
-                data = json.load(currentfile)
-                superbox = MDBoxLayout(
+                current_file = open(os.path.join(full_path, filename), "r")
+                data = json.load(current_file)
+                main_box_per_listing = MDBoxLayout(
                     size_hint_y=None,
                     height="240dp",
-                    orientation = "horizontal",
-                    padding = [dp(4), dp(4)],
-                    spacing = dp(4)
+                    orientation="horizontal",
+                    padding=[dp(4), dp(4)],
+                    spacing=dp(4)
                 )
-                imagebox = MDFloatLayout(
-                size_hint = [0.4,1]
+                image_box = MDFloatLayout(
+                    size_hint=[0.4, 1]
                 )
-                textbox = MDBoxLayout(
-                    orientation = 'horizontal'
+                text_box = MDBoxLayout(
+                    orientation='horizontal'
                 )
-                supervertbox = MDBoxLayout(
-                    orientation = 'vertical',
-
+                super_vertical_box = MDBoxLayout(
+                    orientation='vertical',
                 )
-                superhoribox = MDBoxLayout(
-                    orientation = 'horizontal',
-                    padding= dp(10)
+                super_horizontal_box = MDBoxLayout(
+                    orientation='horizontal',
+                    padding=dp(10)
                 )
-
-                vertbox_title_roomtype = MDBoxLayout(
-                    orientation = 'vertical',
-                    size_hint_y = 0.7
-                )
-                vertbox_roomtype = MDBoxLayout(
-                    size_hint_y = 0.3
-                )
-                vertbox_title = MDBoxLayout(
+                vertical_box_tile_and_room_type = MDBoxLayout(
+                    orientation='vertical',
                     size_hint_y=0.7
                 )
-                vertbox_buttons = MDFloatLayout(
+                vertical_box_room_type = MDBoxLayout(
+                    size_hint_y=0.3
+                )
+                vertical_box_title = MDBoxLayout(
+                    size_hint_y=0.7
+                )
+                vertical_box_buttons = MDFloatLayout(
                     size_hint_x = 0.1
                 )
-                vertbox_guests_included = MDBoxLayout(
-                    orientation = 'horizontal'
-
+                vertical_box_nr_of_guests = MDBoxLayout(
+                    orientation='horizontal'
                 )
-                horibox_rating = MDBoxLayout(
-                    orientation = 'horizontal'
+                horizontal_box_rating = MDBoxLayout(
+                    orientation='horizontal'
                 )
-                horibox_star = MDBoxLayout(
-                    orientation = 'horizontal',
-                    size_hint_x = 0.3
+                horizontal_box_star = MDBoxLayout(
+                    orientation='horizontal',
+                    size_hint_x=0.3
                 )
-
-
-
                 img = AsyncImage(source=data['picture_url'], allow_stretch=True, keep_ratio=False,
-                                    pos_hint={'center_x': .5, 'center_y': .5},
-                                 size_hint_y= 1, width = 100)
-
-
+                                 pos_hint={'center_x': .5, 'center_y': .5},
+                                 size_hint_y=1, width=100)
 
                 roomtype_label = MDLabel(text=
                                 f"[color=808080]{data['room_type']} in {data['village']} ({data['borough']})[/color]",
@@ -183,9 +185,9 @@ class CompareScreen(MDBoxLayout):
 
                 # add textbox/price to dicitonary for 'best' label
                 if not data['price'] == 0:
-                    best_price_box[imagebox] = data['price']
+                    best_price_box[image_box] = data['price']
                 if data['number_of_reviews'] >=10:
-                    best_rating_box[imagebox] = float(data['review_score'])/20
+                    best_rating_box[image_box] = float(data['review_score'])/20
 
 
 
@@ -205,14 +207,14 @@ class CompareScreen(MDBoxLayout):
                     pos_hint={'left_x': .50, 'center_y': .07}
                 )
 
-                webbutton = web_button(
+                webbutton = WebButton(
                     icon='search-web',
                     user_font_size="36sp",
                     pos_hint={'center_x': .9, 'center_y': .3},
-                    urldict=webbutton_data
+                    url_dictionary=web_button_data
                 )
 
-                webbutton_data[webbutton] = data['listing_url']
+                web_button_data[webbutton] = data['listing_url']
 
                 bookmarkbutton = ListingSaveButton(
                     data,
@@ -221,51 +223,51 @@ class CompareScreen(MDBoxLayout):
                     icon = 'delete'
                 )
 
-                loc_button = location_button(
+                loc_button = LocationButton(
                     icon= 'map-outline',
                     pos_hint = {'center_x': .9, 'center_y': .5},
-                    locdict = location_data
+                    location_dictionary= location_data
                 )
 
                 location_data[loc_button] = [float(data['latitude']), float(data['longitude'])]
 
                 ##### ADD WIDGETS
 
-                imagebox.add_widget(img)
+                image_box.add_widget(img)
                 if data['is_superhost']:
-                    imagebox.add_widget(superhost_chip)
+                    image_box.add_widget(superhost_chip)
 
-                vertbox_title.add_widget(title_label)
-                vertbox_roomtype.add_widget(roomtype_label)
-                vertbox_title_roomtype.add_widget(vertbox_roomtype)
-                vertbox_title_roomtype.add_widget(vertbox_title)
-
-
-                vertbox_buttons.add_widget(bookmarkbutton)
-                vertbox_buttons.add_widget(loc_button)
-                vertbox_buttons.add_widget(webbutton)
+                vertical_box_title.add_widget(title_label)
+                vertical_box_room_type.add_widget(roomtype_label)
+                vertical_box_tile_and_room_type.add_widget(vertical_box_room_type)
+                vertical_box_tile_and_room_type.add_widget(vertical_box_title)
 
 
-                horibox_star.add_widget(staricon)
-                horibox_star.add_widget(starlabel)
-                horibox_rating.add_widget(horibox_star)
-                horibox_rating.add_widget(price_label)
-                superhoribox.add_widget(horibox_rating)
-
-                vertbox_guests_included.add_widget(guests_inclueded_label)
-                vertbox_guests_included.add_widget(reviews_expansion)
-
-                supervertbox.add_widget(vertbox_title_roomtype)
-                supervertbox.add_widget(vertbox_guests_included)
-                supervertbox.add_widget(superhoribox)
-
-                textbox.add_widget(supervertbox)
-                textbox.add_widget(vertbox_buttons)
+                vertical_box_buttons.add_widget(bookmarkbutton)
+                vertical_box_buttons.add_widget(loc_button)
+                vertical_box_buttons.add_widget(webbutton)
 
 
-                superbox.add_widget(imagebox)
-                superbox.add_widget(textbox)
-                self.ids.comparebox.add_widget(superbox)
+                horizontal_box_star.add_widget(staricon)
+                horizontal_box_star.add_widget(starlabel)
+                horizontal_box_rating.add_widget(horizontal_box_star)
+                horizontal_box_rating.add_widget(price_label)
+                super_horizontal_box.add_widget(horizontal_box_rating)
+
+                vertical_box_nr_of_guests.add_widget(guests_inclueded_label)
+                vertical_box_nr_of_guests.add_widget(reviews_expansion)
+
+                super_vertical_box.add_widget(vertical_box_tile_and_room_type)
+                super_vertical_box.add_widget(vertical_box_nr_of_guests)
+                super_vertical_box.add_widget(super_horizontal_box)
+
+                text_box.add_widget(super_vertical_box)
+                text_box.add_widget(vertical_box_buttons)
+
+
+                main_box_per_listing.add_widget(image_box)
+                main_box_per_listing.add_widget(text_box)
+                self.ids.comparebox.add_widget(main_box_per_listing)
                 print("added")
                 self.ids.comparebox.add_widget(line)
 

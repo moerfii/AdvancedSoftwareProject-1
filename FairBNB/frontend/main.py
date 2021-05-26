@@ -129,8 +129,8 @@ class MainApp(MDApp):
         full_path = os.path.join(os.getcwd(), path)
         for filenames in os.walk(full_path):
             for filename in filenames[2]:
-                currentfile = open(os.path.join(full_path, filename), "r")
-                data = json.load(currentfile)
+                current_file = open(os.path.join(full_path, filename), "r")
+                data = json.load(current_file)
 
                 superbox = SmartTileWithLabel(
                     size_hint_y= None,
