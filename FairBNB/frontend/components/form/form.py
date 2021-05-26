@@ -19,6 +19,9 @@ class Form(MDCard):
         
         neighborhoods = [
             {"viewclass": "OneLineListItem",
+            "text": "---",
+            "on_release": lambda x=f"---": self.set_neighborhood(x),
+            },{"viewclass": "OneLineListItem",
             "text": "Bronx",
             "on_release": lambda x=f"Bronx": self.set_neighborhood(x),
             },{"viewclass": "OneLineListItem",
@@ -37,6 +40,9 @@ class Form(MDCard):
 
         ages = [
             {"viewclass": "OneLineListItem",
+            "text": "---",
+            "on_release": lambda x=f"---": self.set_age(x),
+            },{"viewclass": "OneLineListItem",
             "text": "18 - 30",
             "on_release": lambda x=f"18-30": self.set_age(x),
             },{"viewclass": "OneLineListItem",
@@ -69,19 +75,20 @@ class Form(MDCard):
         self.menu_n = MDDropdownMenu(
             caller=self.ids.field_n,
             items=neighborhoods,
-            position="bottom",
+            position="auto",
             width_mult=3,)
         self.menu_a = MDDropdownMenu(
             caller=self.ids.field_a,
             items=ages,
-            position="bottom",
+            position="auto",
             width_mult=2,)
-        self.menu_i = MDDropdownMenu(
-            caller=self.ids.field_i,
-            items=interests,
-            position="bottom",
-            width_mult=2,)
-        
+
+        self.ids.field_g.bind(
+            on_text_validate=self.set_error_message,
+            on_focus=self.set_error_message)
+
+
+
         app = App.get_running_app()
         self.api=app.api
 
@@ -92,7 +99,18 @@ class Form(MDCard):
         filter = {"borough.eq":"'"+text__neighbor+"'"}
         self.api.setFilters(filter)
 
+    def set_guest(self, text__guest):
+        pass
 
+    def set_error_message(self, instance_textfield):
+        g_num = instance_textfield.text
+        if g_num.isdigit():
+            g_num = int(g_num)
+            if g_num not in list(range(1,17)):
+                self.ids.field_g.error = True
+        else :
+            self.ids.field_g.error = True
+        
     def set_age(self, text__age):
         self.ids.field_a.text = text__age
         self.menu_a.dismiss()
@@ -106,6 +124,16 @@ class Form(MDCard):
         filter = {"village.in[]":village_list}
         self.api.setFilters(filter)
 
+    def set_chips(self, instance_chips):
+        print(instance_chips.color)
+        if instance_chips.color == [0, 0, 0, 0.1]:
+            instance_chips.color = [252/255, 186/255, 3/255, 1]
+            print(instance_chips.color)
+            # call set_interests 
+        else:
+            instance_chips.color = [0, 0, 0, 0.1]
+            
+
     def set_interests(self, text__interest):
         self.ids.field_i.text = text__interest
         self.menu_i.dismiss()
@@ -117,6 +145,9 @@ class Form(MDCard):
             village_list.append(i[0])
         filter = {"village.in[]":village_list}
         self.api.setFilters(filter)
+
+    def set_highrating(self,status):
+        pass
 
     def set_superhost(self,status):
         filter = {"superhost.eq":None}
