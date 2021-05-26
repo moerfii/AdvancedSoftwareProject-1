@@ -32,7 +32,8 @@ Screen:
             Screen:
                 name: "mapscreen"
                 on_pre_enter: mapview.get_airbnb_in_fov("on_enter")
-                BoxLayout:
+                MDBoxLayout:
+                    id: mapbox
                     orientation: 'horizontal'
                     ScrollView:
                         size_hint: 0.3,1
@@ -44,6 +45,8 @@ Screen:
                             spacing: dp(4)
                     AirbnbMapView:
                         id: mapview
+
+
 
             Screen:
                 name: 'comparescreen'
