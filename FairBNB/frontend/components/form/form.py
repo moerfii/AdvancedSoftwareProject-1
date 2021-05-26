@@ -95,10 +95,17 @@ class Form(MDCard):
         self.api=app.api
 
     def set_neighborhood(self, text__neighbor):
+        print(text__neighbor)
+        print(text__neighbor=="---")
+        if text__neighbor=='---':
+            self.ids.field_n.text = text__neighbor
+            filter = {"borough.eq":None}
+        else:
+            self.ids.field_n.text = text__neighbor
+            filter = {"borough.eq":"'"+text__neighbor+"'"}
 
-        self.ids.field_n.text = text__neighbor
+
         self.menu_n.dismiss()
-        filter = {"borough.eq":"'"+text__neighbor+"'"}
         self.api.setFilters(filter)
 
     def set_guest(self, text__guest):
@@ -114,9 +121,14 @@ class Form(MDCard):
             self.ids.field_g.error = True
         
     def set_age(self, text__age):
-        self.ids.field_a.text = text__age
+        if text__age=="---":
+            self.ids.field_a.text = ""
+            filter = {"age.eq":None}
+        else:
+            self.ids.field_a.text = text__age
+            filter = {"age.eq": f"'{text__age}'"}
+
         self.menu_a.dismiss()
-        filter = {"age.eq": f"'{text__age}'"}
         res = [None]
         self.api.getVillageCategory(res,filter)
         village_list = []
@@ -125,16 +137,25 @@ class Form(MDCard):
             
         filter = {"village.in[]":village_list}
         self.api.setFilters(filter)
-
+    """
+    For the interests
+    """
     def set_chips(self, instance_chips):
         print(instance_chips.color)
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
+            print(instance_chips.text)
+            filters = self.api.filters
+            filter={"interest.in[]": [instance_chips.text]}
+
             print(instance_chips.color)
             # call set_interests 
         else:
             instance_chips.color = [0, 0, 0, 0.1]
-            
+            filter = self.api.filters
+        res = [None]    
+        self.api.getVillageCategory(res,filter)
+        print(res)
 
     def set_interests(self, text__interest):
         self.ids.field_i.text = text__interest

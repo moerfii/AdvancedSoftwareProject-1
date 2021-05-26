@@ -23,6 +23,13 @@ class RestAPIConnection:
         filters = self.filters.copy()
         if custom_filters:
             for key in custom_filters.keys():
+                print(key)
+                """
+                if(".in" in key): 
+                    print("hola")
+                    if(isinstance(filters[key],list)):
+                        print("heya")
+                """
                 filters[key] = custom_filters[key]
         filters = {k: v for k, v in filters.items() if v is not None}
         return filters
@@ -35,7 +42,8 @@ class RestAPIConnection:
         for key in filters:
             if ".in" in key and filters[key]==[]:
                 filters[key]=['']
-
+        print("Current filters:")
+        print(filters)
         resp = requests.get(url,params=filters)
         res[0] = json.loads(resp.text)
 
