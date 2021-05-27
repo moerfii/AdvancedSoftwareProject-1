@@ -12,6 +12,7 @@ class Form(MDCard):
     """
     def __init__(self, **kwargs):
         super(Form, self).__init__(**kwargs)
+        self.interests = set()
 
     def on_start(self):
         
@@ -80,95 +81,86 @@ class Form(MDCard):
         self.api = app.api
 
     def set_neighborhood(self, text__neighbor):
-        print(text__neighbor)
-        print(text__neighbor=="---")
         if text__neighbor=='---':
             self.ids.field_n.text = text__neighbor
-            filter = {"borough.eq":None}
+            borough_filter = {"borough.eq":None}
         else:
             self.ids.field_n.text = text__neighbor
-            filter = {"borough.eq":"'"+text__neighbor+"'"}
-
-
+            borough_filter = {"borough.eq":"'"+text__neighbor+"'"}
         self.menu_n.dismiss()
-        self.api.setFilters(filter)
-        self.ids.field_n.text = text__neighbor
-        self.menu_n.dismiss()
-        neighborhood_filter = {"borough.eq": "'"+text__neighbor+"'"}
-        self.api.set_filters(neighborhood_filter)
+        self.api.set_filters(borough_filter)
 
-    def set_guest(self, text__guest):
-        print(text__guest.text)
+    def set_guest(self, n_guests):
+        guest_filter = {"guests_inclueded.ge":n_guests}
+        self.api.set_filters(guest_filter)
+
 
     def set_error_message(self, instance_textfield):
+        print(instance_textfield.text)
         g_num = instance_textfield.text
         if g_num.isdigit():
             g_num = int(g_num)
             if g_num not in list(range(1, 17)):
                 self.ids.field_g.error = True
                 return
+            self.set_guest(g_num)
             self.ids.field_g.error = False
-        else :
+        else:
             self.ids.field_g.error = True
         
+
     def set_age(self, text__age):
         if text__age=="---":
             self.ids.field_a.text = ""
-            filter = {"age.eq":None}
+            age_filter = {"age.eq":None}
         else:
             self.ids.field_a.text = text__age
-            filter = {"age.eq": f"'{text__age}'"}
-
+            age_filter = {"age.eq": f"'{text__age}'"}
+        self.api.set_filters(age_filter)
         self.menu_a.dismiss()
-        age_filter = {"age.eq": f"'{text__age}'"}
         res = [None]
         self.api.get_village_category(res, age_filter)
         village_list = []
         for i in res[0]:
             village_list.append(i[0])
             
-        filter = {"village.in[]":village_list}
-        self.api.setFilters(filter)
-    """
-    For the interests
-    """
-        age_filter = {"village.in[]": village_list}
-        self.api.set_filters(age_filter)
+        village_filter = {"village.in[]":village_list}
+        self.api.set_filters(village_filter)
 
-    def set_chips(self, instance_chips):
+
+    def set_interest(self, instance_chips):
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
-            print(instance_chips.text)
-            filters = self.api.filters
-            filter={"interest.in[]": [instance_chips.text]}
-
+            self.interests.add(instance_chips.text)
             print(instance_chips.color)
-            # call set_interests 
         else:
             instance_chips.color = [0, 0, 0, 0.1]
-            filter = self.api.filters
+            self.interests.discard(instance_chips.text)
+        interest_filter = {"interest.in[]":self.interests}
+        self.api.set_filters(interest_filter)
         res = [None]    
-        self.api.getVillageCategory(res,filter)
-        print(res)
-
-        else:
-            instance_chips.color = [0, 0, 0, 0.1]
-
-
-    def set_interests(self, text__interest):
-        self.ids.field_i.text = text__interest
-        self.menu_i.dismiss()
-        interests_filter = {"interest.in[]": [text__interest]}
-        res = [None]
-        self.api.get_village_category(res, interests_filter)
+        self.api.get_village_category(res,interest_filter)
         village_list = []
         for i in res[0]:
             village_list.append(i[0])
-        interests_filter = {"village.in[]": village_list}
-        self.api.set_filters(interests_filter)
+        village_filter = {"village.in[]": village_list}
+        self.api.set_filters(village_filter)
+        interest_filter = {"interest.in[]":self.interests}
+        self.api.set_filters(interest_filter)
+        res = [None]    
+        self.api.get_village_category(res,interest_filter)
+        village_list = []
+        for i in res[0]:
+            village_list.append(i[0])
+        village_filter = {"village.in[]": village_list}
+        self.api.set_filters(village_filter)
+
 
     def set_highrating(self, status):
-        pass
+        rating_filter = {"review_score.ge":None}
+        if(status):
+            rating_filter["review_score.ge"] = 90
+        self.api.set_filters(rating_filter)
 
     def set_superhost(self, status):
         superhost_filter = {"is_superhost.eq": None}
@@ -188,17 +180,29 @@ class Form(MDCard):
         picker.open()
 
     def switch_to_mapscreen(self):
+        price_range=self.ids.price_filter.value
+        print(price_range)
+        if(price_range[0]==0):
+            price_range[0]=None
+        if(price_range[1]==9999):
+            price_range[1]=None
+        price_filter = {"price.ge":price_range[0],"price.le":price_range[1]}
+        
+        self.api.set_filters(price_filter)
         app = App.get_running_app()
-        mapview = app.root.ids['mapview']
+
         # mapview.firstCall=True
         screenmanager = app.root.ids['screen_manager']
         screenmanager.current = "mapscreen"
+        mapview = app.root.ids['mapview']
         #mapview.get_airbnb_in_fov()
         #mapview._need_redraw_all = True
         #Clock.schedule_once(mapview.fakeClick,0.5)
         #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
         #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
 
+    def set_price(self, price):
+        print(price)
 
 if __name__ == "__main__":
 
