@@ -58,7 +58,7 @@ class Form(MDCard):
              },
             {"viewclass": "OneLineListItem",
              "text": "50+",
-             "on_release": lambda x=f"51-120": self.set_age(x),
+             "on_release": lambda x=f"50+": self.set_age(x),
              }
         ]
 
@@ -81,21 +81,19 @@ class Form(MDCard):
         self.api = app.api
 
     def set_neighborhood(self, text__neighbor):
-
         if text__neighbor=='---':
             self.ids.field_n.text = text__neighbor
             borough_filter = {"borough.eq":None}
         else:
             self.ids.field_n.text = text__neighbor
             borough_filter = {"borough.eq":"'"+text__neighbor+"'"}
-
-
         self.menu_n.dismiss()
         self.api.set_filters(borough_filter)
 
     def set_guest(self, n_guests):
         guest_filter = {"guests_inclueded.ge":n_guests}
         self.api.set_filters(guest_filter)
+
 
     def set_error_message(self, instance_textfield):
         print(instance_textfield.text)
@@ -110,6 +108,7 @@ class Form(MDCard):
         else:
             self.ids.field_g.error = True
         
+
     def set_age(self, text__age):
         if text__age=="---":
             self.ids.field_a.text = ""
@@ -129,9 +128,6 @@ class Form(MDCard):
         self.api.set_filters(village_filter)
 
 
-    """
-    For the interests
-    """
     def set_interest(self, instance_chips):
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
@@ -140,7 +136,6 @@ class Form(MDCard):
         else:
             instance_chips.color = [0, 0, 0, 0.1]
             self.interests.discard(instance_chips.text)
-
         interest_filter = {"interest.in[]":self.interests}
         self.api.set_filters(interest_filter)
         res = [None]    
@@ -150,7 +145,15 @@ class Form(MDCard):
             village_list.append(i[0])
         village_filter = {"village.in[]": village_list}
         self.api.set_filters(village_filter)
-
+        interest_filter = {"interest.in[]":self.interests}
+        self.api.set_filters(interest_filter)
+        res = [None]    
+        self.api.get_village_category(res,interest_filter)
+        village_list = []
+        for i in res[0]:
+            village_list.append(i[0])
+        village_filter = {"village.in[]": village_list}
+        self.api.set_filters(village_filter)
 
 
     def set_highrating(self, status):
@@ -171,10 +174,13 @@ class Form(MDCard):
             fair_filter['total_listings_count.le'] = 3
         self.api.set_filters(fair_filter)
 
-    def show_datepicker(self):
-        picker = MDDatePicker()
-        picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
-        picker.open()
+    def set_price(self, instance_price):
+        print(self.ids, instance_price.text)
+        if instance_price.text.isdigit():
+            price = int(instance_price.text)
+            self.ids.price_filter.value[0] = price
+        #if instance_pri
+
 
     def switch_to_mapscreen(self):
         price_range=self.ids.price_filter.value
@@ -191,6 +197,14 @@ class Form(MDCard):
         screenmanager = app.root.ids['screen_manager']
         screenmanager.current = "mapscreen"
         mapview = app.root.ids['mapview']
+<<<<<<< HEAD
+        #mapview.get_airbnb_in_fov()
+        #mapview._need_redraw_all = True
+        #Clock.schedule_once(mapview.fakeClick,0.5)
+        #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
+        #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
+=======
+>>>>>>> 01180d958b4c09ff500dd4151903e09df29f4fd6
 
 
 if __name__ == "__main__":
