@@ -197,14 +197,6 @@ class Form(MDCard):
         screenmanager = app.root.ids['screen_manager']
         screenmanager.current = "mapscreen"
         mapview = app.root.ids['mapview']
-<<<<<<< HEAD
-        #mapview.get_airbnb_in_fov()
-        #mapview._need_redraw_all = True
-        #Clock.schedule_once(mapview.fakeClick,0.5)
-        #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
-        #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
-=======
->>>>>>> 01180d958b4c09ff500dd4151903e09df29f4fd6
 
 
 if __name__ == "__main__":

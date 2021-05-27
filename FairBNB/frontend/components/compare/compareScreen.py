@@ -18,7 +18,7 @@ class WebButton(MDIconButton):
     """
     Class defined in order to dynamically define the on_press functionality
     :param: url_dictionary
-    :returns: None
+    :return: None
     """
     def __init__(self, *args, url_dictionary=None, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
@@ -32,7 +32,7 @@ class LocationButton(MDIconButton):
     """
         Class defined in order to dynamically define the on_press functionality
         :param: location_dictionary
-        :returns: None
+        :return: None
     """
     def __init__(self, *args, location_dictionary=None,listing_id, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
