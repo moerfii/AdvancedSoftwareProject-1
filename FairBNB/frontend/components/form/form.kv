@@ -134,24 +134,24 @@
                 		spacing: "10dp"
                 		MDChip:
                 			pos_hint: {"center_y": 1}
-        					text: 'shopping'
+        					text: 'Shopping'
         					icon: 'earth'
         					color: 0,0,0,0.1
         					#selected_chip_color: app.them_cls.primary_color
-        					on_release: form.set_chips(self)
+        					on_release: form.set_interest(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Food'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					on_release: form.set_chips(self)
+        					on_release: form.set_interest(self)
         					
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Sightseeing'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					on_release: form.set_chips(self)
+        					on_release: form.set_interest(self)
         			BoxLayout:
                 		padding: "10dp", "5dp"
                 		spacing: "10dp"
@@ -160,13 +160,13 @@
         					text: 'Art & Music'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					on_release: form.set_chips(self)
+        					on_release: form.set_interest(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Nightlife'
         					icon: 'earth'
         					color: 0,0,0,0.1
-        					on_release: form.set_chips(self)
+        					on_release: form.set_interest(self)
 
         		BoxLayout:
         			size_hint: None, None
