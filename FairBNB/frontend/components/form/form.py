@@ -102,7 +102,7 @@ class Form(MDCard):
         self.api.setFilters(filter)
 
     def set_guest(self, text__guest):
-        pass
+        print(text__guest.text)
 
     def set_error_message(self, instance_textfield):
         g_num = instance_textfield.text
@@ -110,6 +110,8 @@ class Form(MDCard):
             g_num = int(g_num)
             if g_num not in list(range(1,17)):
                 self.ids.field_g.error = True
+                return
+            self.ids.field_g.error = False
         else :
             self.ids.field_g.error = True
         
