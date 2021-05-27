@@ -57,7 +57,7 @@ class Form(MDCard):
              },
             {"viewclass": "OneLineListItem",
              "text": "50+",
-             "on_release": lambda x=f"51-120": self.set_age(x),
+             "on_release": lambda x=f"50+": self.set_age(x),
              }
         ]
 
@@ -80,7 +80,6 @@ class Form(MDCard):
         self.api = app.api
 
     def set_neighborhood(self, text__neighbor):
-<<<<<<< HEAD
         print(text__neighbor)
         print(text__neighbor=="---")
         if text__neighbor=='---':
@@ -93,12 +92,10 @@ class Form(MDCard):
 
         self.menu_n.dismiss()
         self.api.setFilters(filter)
-=======
         self.ids.field_n.text = text__neighbor
         self.menu_n.dismiss()
         neighborhood_filter = {"borough.eq": "'"+text__neighbor+"'"}
         self.api.set_filters(neighborhood_filter)
->>>>>>> 67d42751ac15b73338b41012b17871b925d23e29
 
     def set_guest(self, text__guest):
         print(text__guest.text)
@@ -109,13 +106,9 @@ class Form(MDCard):
             g_num = int(g_num)
             if g_num not in list(range(1, 17)):
                 self.ids.field_g.error = True
-<<<<<<< HEAD
                 return
             self.ids.field_g.error = False
         else :
-=======
-        else:
->>>>>>> 1e034ec727cb1e274c8c71b44f0af0d9b2c45862
             self.ids.field_g.error = True
         
     def set_age(self, text__age):
@@ -127,31 +120,24 @@ class Form(MDCard):
             filter = {"age.eq": f"'{text__age}'"}
 
         self.menu_a.dismiss()
-<<<<<<< HEAD
-=======
         age_filter = {"age.eq": f"'{text__age}'"}
->>>>>>> 67d42751ac15b73338b41012b17871b925d23e29
         res = [None]
         self.api.get_village_category(res, age_filter)
         village_list = []
         for i in res[0]:
             village_list.append(i[0])
             
-<<<<<<< HEAD
         filter = {"village.in[]":village_list}
         self.api.setFilters(filter)
     """
     For the interests
     """
-=======
         age_filter = {"village.in[]": village_list}
         self.api.set_filters(age_filter)
 
->>>>>>> 67d42751ac15b73338b41012b17871b925d23e29
     def set_chips(self, instance_chips):
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
-<<<<<<< HEAD
             print(instance_chips.text)
             filters = self.api.filters
             filter={"interest.in[]": [instance_chips.text]}
@@ -164,11 +150,10 @@ class Form(MDCard):
         res = [None]    
         self.api.getVillageCategory(res,filter)
         print(res)
-=======
-            # call set_interests
+
         else:
             instance_chips.color = [0, 0, 0, 0.1]
->>>>>>> 67d42751ac15b73338b41012b17871b925d23e29
+
 
     def set_interests(self, text__interest):
         self.ids.field_i.text = text__interest
