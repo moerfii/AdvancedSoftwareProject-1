@@ -1,6 +1,5 @@
 from kivy_garden.mapview import MapView
 from kivy.app import App
-from kivymd.uix.button import MDIconButton
 from .components.map.airbnbMarker import AirbnbMarker
 from .components.map.customCluster import CustomCluster
 from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
@@ -20,12 +19,9 @@ class AirbnbMapView(MapView):
         """
         query api for listings in fov. Fov defined by 4 corners of screen. places Clustermarkers & Markers wherever
         there is a matching listing in our database.
-        :param: *args
-        :returns: None
         """
 
         if len(args) > 0 and args[0] == "on_enter":
-            print("enter")
             self.firstCall = True
         lat1, lon1, lat2, lon2 = self.get_bbox()
         if self.firstCall:
@@ -35,15 +31,12 @@ class AirbnbMapView(MapView):
             lon2 -= (lon1-lon2)*2
             self.firstCall = False
 
-    
         app = App.get_running_app()
-        print(lat1, lat2, lon1, lon2)
-        print(lat1-lat2, lon1-lon2)
-        custom_filter = {'latitude.ge': lat1, 'latitude.le': lat2,'longitude.ge': lon1, 'longitude.le': lon2}
+        custom_filter = {'latitude.ge': lat1, 'latitude.le': lat2, 'longitude.ge': lon1, 'longitude.le': lon2}
         
         # seems to be more efficient to exploit the pointer ability of list elements
         listings = [None]
-        app.api.getListingLocations(listings, custom_filter)
+        app.api.get_listing_location(listings, custom_filter)
 
         layer = ClusteredMarkerLayer(cluster_cls=CustomCluster, cluster_radius="200dp", cluster_max_zoom=18)
         cnt = 0

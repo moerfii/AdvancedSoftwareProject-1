@@ -6,7 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import (NumericProperty, AliasProperty, OptionProperty,ReferenceListProperty, BoundedNumericProperty, ListProperty)
 
 """
-stolen from https://groups.google.com/g/kivy-users/c/oMFx0YKW5oA
+source: https://groups.google.com/g/kivy-users/c/oMFx0YKW5oA
 """
 
 
