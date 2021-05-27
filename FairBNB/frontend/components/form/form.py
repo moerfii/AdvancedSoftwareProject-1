@@ -174,10 +174,13 @@ class Form(MDCard):
             fair_filter['total_listings_count.le'] = 3
         self.api.set_filters(fair_filter)
 
-    def show_datepicker(self):
-        picker = MDDatePicker()
-        picker.bind(on_save=self.on_save, on_cancel=self.on_cancel)
-        picker.open()
+    def set_price(self, instance_price):
+        print(self.ids, instance_price.text)
+        if instance_price.text.isdigit():
+            price = int(instance_price.text)
+            self.ids.price_filter.value[0] = price
+        #if instance_pri
+
 
     def switch_to_mapscreen(self):
         price_range=self.ids.price_filter.value
@@ -201,8 +204,6 @@ class Form(MDCard):
         #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
         #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
 
-    def set_price(self, price):
-        print(price)
 
 if __name__ == "__main__":
 

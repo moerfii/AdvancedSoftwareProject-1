@@ -136,7 +136,7 @@
                 		MDChip:
                 			pos_hint: {"center_y": 1}
         					text: 'Shopping'
-        					icon: 'earth'
+        					icon: 'shopping'
         					color: 0,0,0,0.1
         					#selected_chip_color: app.them_cls.primary_color
         					on_release: form.set_interest(self)
@@ -171,7 +171,7 @@
 
         		BoxLayout:
         			size_hint: None, None
-                    size: 450, 40
+                    size: 450, 70
                     BoxLayout: 
                     	orientation: 'vertical'
                     	spacing: '10dp'
@@ -187,23 +187,36 @@
             				value: 0,9999
             				min:0
             				max:9999
-<<<<<<< HEAD
+
             			BoxLayout:
-            				MDLabel:
-            				    text: 'Minimum Price: {}'.format(int(price_filter.value[0]))
-            				MDLabel:
-            				    text: 'Maximum Price {}'.format(int(price_filter.value[1]))
-=======
-                            #on_change: form.set_price(self)
-                        BoxLayout:
-                            
-                            MDLabel:
-                                id:min_price
-                                text: 'Minimum Price: {}'.format(int(price_filter.value[0]))
-                            MDLabel:
-                                id:max_price
-                                text: 'Maximum Price {}'.format(int(price_filter.value[1]))
->>>>>>> c5f5c59c76c578a4cf9c49d6270a6f2fdffbfb5c
+                            size_hint: None, None
+                            size: 500, 50 
+                                                  
+                            BoxLayout:
+                                orientation: 'vertical'
+            				    MDLabel:
+                                    pos_hint: {"center_x": 0.5}   
+            				        text: 'Minimum : {}'.format(int(price_filter.value[0]))
+                                MDTextFieldRect:
+                                    id: min_p
+                                    size_hint: None, None
+                                    size: 80, 30
+                                    hint_text: '{}'.format(int(price_filter.value[0]))
+                                    on_focus: form.set_price(self)
+
+                            BoxLayout:
+                                orientation: 'vertical'
+            				    MDLabel:
+                                    pos_hint: {"center_x": 0.6}   
+            				        text: 'Maximum: {}'.format(int(price_filter.value[1]))
+                                MDTextFieldRect:
+                                    id: max_p
+                                    pos_hint: {"center_x": 0.5}   
+                                    size_hint: None, None
+                                    size: 80, 30
+                                    hint_text: '{}'.format(int(price_filter.value[1]))
+                                    background_color: [1,1,1,1]
+                                    #input_filter: 'int'
 
                 BoxLayout:
                 	size_hint: None, None
