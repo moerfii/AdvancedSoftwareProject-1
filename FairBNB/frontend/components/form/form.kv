@@ -135,13 +135,8 @@
                 		spacing: "10dp"
                 		MDChip:
                 			pos_hint: {"center_y": 1}
-<<<<<<< HEAD
         					text: 'Shopping'
         					icon: 'earth'
-=======
-        					text: 'shopping'
-        					icon: 'shopping'
->>>>>>> 360912c98f2ed99c304f9d16f7d8f1453d92c438
         					color: 0,0,0,0.1
         					#selected_chip_color: app.them_cls.primary_color
         					on_release: form.set_interest(self)
@@ -185,13 +180,22 @@
                 			text: "Price"
                 			bold: True
                 		RangeSlider:
-            				id: field_p
+            				id: price_filter
             				size_hint: None, None
             				size: 320, 30
             				pos_hint: {"center_x": 0.45}
             				value: 0,9999
             				min:0
             				max:9999
+                            #on_change: form.set_price(self)
+                        BoxLayout:
+                            
+                            MDLabel:
+                                id:min_price
+                                text: 'Minimum Price: {}'.format(int(price_filter.value[0]))
+                            MDLabel:
+                                id:max_price
+                                text: 'Maximum Price {}'.format(int(price_filter.value[1]))
 
                 BoxLayout:
                 	size_hint: None, None
