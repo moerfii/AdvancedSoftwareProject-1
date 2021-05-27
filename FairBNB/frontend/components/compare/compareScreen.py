@@ -33,10 +33,11 @@ class LocationButton(MDIconButton):
         Class defined in order to dynamically define the on_press functionality
         :param: location_dictionary
         :returns: None
-        """
-    def __init__(self, *args, location_dictionary=None, **kwargs):
+    """
+    def __init__(self, *args, location_dictionary=None,listing_id, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
         self.location_dictionary = location_dictionary
+        self.listing_id = listing_id
 
     def on_press(self):
         """
@@ -48,6 +49,9 @@ class LocationButton(MDIconButton):
         mapview = app.root.ids.mapview
         mapview.zoom = 19
         mapview.center_on(self.location_dictionary[self][0], self.location_dictionary[self][1])
+        print("eyyy")
+        print(self.location_dictionary[self])
+        mapview.selected_id = self.listing_id
         screen_manager = app.root.ids['screen_manager']
         screen_manager.current = "mapscreen"
 
@@ -212,7 +216,8 @@ class CompareScreen(MDBoxLayout):
                 loc_button = LocationButton(
                     icon='map-outline',
                     pos_hint={'center_x': .9, 'center_y': .5},
-                    location_dictionary=location_data
+                    location_dictionary=location_data,
+                    listing_id=data['id']
                 )
                 location_data[loc_button] = [float(data['latitude']), float(data['longitude'])]
 

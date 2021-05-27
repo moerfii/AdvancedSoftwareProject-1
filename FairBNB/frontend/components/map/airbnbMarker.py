@@ -1,6 +1,6 @@
 from kivy_garden.mapview import MapMarkerPopup
 from ...listingDetail import listing_detail
-
+from kivy.app import App
 
 class AirbnbMarker(MapMarkerPopup):
     """
@@ -8,8 +8,24 @@ class AirbnbMarker(MapMarkerPopup):
     """
     def __init__(self, id_listing, lon, lat, source):
         super(MapMarkerPopup, self).__init__(lon=lon, lat=lat, source=source)
+        self.lon=lon
+        
         self.id_listing = id_listing
 
     def on_release(self):
-        popup = listing_detail(self.id_listing)
+        """
+        returns popup with additional information and turns marker blue
+        """
+        app = App.get_running_app()
+        app.root.ids.mapview.selected_id=self.id_listing
+        self.source= "frontend/icons/marker2.png"
+        popup = listing_detail(self.id_listing,self)
         popup.open()
+
+    def reset_marker(self,*args):
+        """
+        resets marker back to default
+        """
+        self.source = "atlas://frontend/icons/frontendAtlas/marker"
+        app=App.get_running_app()
+        app.root.ids.mapview.selected_id=None
