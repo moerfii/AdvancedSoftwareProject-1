@@ -11,7 +11,7 @@ class AirbnbMapView(MapView):
     """
     listing_id_list = []
     firstCall = True
-
+    selected_id = -1
     def __init__(self, *args, **kwargs):
         super(AirbnbMapView, self).__init__(*args, **kwargs)
 
@@ -48,15 +48,27 @@ class AirbnbMapView(MapView):
             if listing_id in self.listing_id_list:
                 continue
             else:
-                layer.add_marker(
+                print(listing_id)
+                if(listing_id==self.selected_id):
+                    layer.add_marker(
                     lon=float(listing['longitude']),
                     lat=float(listing['latitude']),
                     cls=AirbnbMarker,
                     options={
-                        "source": "atlas://frontend/icons/frontendAtlas/marker",
+                        "source": "frontend/icons/marker2.png",
                         "id_listing": listing['id']
                     }
                 )
+                else:
+                    layer.add_marker(
+                        lon=float(listing['longitude']),
+                        lat=float(listing['latitude']),
+                        cls=AirbnbMarker,
+                        options={
+                            "source": "atlas://frontend/icons/frontendAtlas/marker",
+                            "id_listing": listing['id']
+                        }
+                    )
             cnt += 1
         # remove old layers
         for child in self.children:

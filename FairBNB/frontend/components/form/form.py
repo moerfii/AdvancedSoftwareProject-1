@@ -188,18 +188,10 @@ class Form(MDCard):
         self.api.set_filters(price_filter)
         app = App.get_running_app()
 
-        # mapview.firstCall=True
         screenmanager = app.root.ids['screen_manager']
         screenmanager.current = "mapscreen"
         mapview = app.root.ids['mapview']
-        #mapview.get_airbnb_in_fov()
-        #mapview._need_redraw_all = True
-        #Clock.schedule_once(mapview.fakeClick,0.5)
-        #Clock.schedule_once(mapview.get_airbnb_in_fov,0.1)
-        #Clock.schedule_once(lambda dt: mapview.canvas.ask_update(), 0.5)
 
-    def set_price(self, price):
-        print(price)
 
 if __name__ == "__main__":
 
