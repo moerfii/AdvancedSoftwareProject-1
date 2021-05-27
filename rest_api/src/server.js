@@ -110,7 +110,7 @@ const acceptedParams = {
     ],
     
     "village_category": [
-        "village",
+        //"village",
         "age",
         "interest"
     ]
