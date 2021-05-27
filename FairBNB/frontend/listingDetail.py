@@ -50,7 +50,7 @@ def open_link(url):
     webbrowser.open(url)
 
 
-def listing_detail(listing_id):
+def listing_detail(listing_id,parent):
     """
     Fetches listing details when clicking on marker on map. First makes API get request then continues to arrange data
     in widgets which is added to the Mapview Screen as popup.
@@ -138,7 +138,9 @@ def listing_detail(listing_id):
         pos_hint={'left': 0.9},
         auto_dismiss=True,
         separator_color=[.9, .4, .2, 1],
-        background_color=[0, 0, 0, 0]
+        background_color=[0, 0, 0, 0],
+        on_dismiss=parent.reset_marker
         )
+        
     
     return popup
