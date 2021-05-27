@@ -49,6 +49,7 @@
                     	hint_text: "Guests"
                     	helper_text: "you can enter 1 to 16"
                     	helper_text_mode: "on_error"
+                    	on_focus: form.set_guest(self)
                    
                 BoxLayout:
                     spacing: dp(40)
@@ -134,22 +135,27 @@
                 		spacing: "10dp"
                 		MDChip:
                 			pos_hint: {"center_y": 1}
+<<<<<<< HEAD
         					text: 'Shopping'
         					icon: 'earth'
+=======
+        					text: 'shopping'
+        					icon: 'shopping'
+>>>>>>> 360912c98f2ed99c304f9d16f7d8f1453d92c438
         					color: 0,0,0,0.1
         					#selected_chip_color: app.them_cls.primary_color
         					on_release: form.set_interest(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Food'
-        					icon: 'earth'
+        					icon: 'food'
         					color: 0,0,0,0.1
         					on_release: form.set_interest(self)
         					
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Sightseeing'
-        					icon: 'earth'
+        					icon: 'map'
         					color: 0,0,0,0.1
         					on_release: form.set_interest(self)
         			BoxLayout:
@@ -158,19 +164,19 @@
                 		MDChip:
                 			pos_hint: {"center_y": 1}
         					text: 'Art & Music'
-        					icon: 'earth'
+        					icon: 'draw'
         					color: 0,0,0,0.1
         					on_release: form.set_interest(self)
         				MDChip:
         					pos_hint: {"center_y": 1}
         					text: 'Nightlife'
-        					icon: 'earth'
+        					icon: 'glass-wine'
         					color: 0,0,0,0.1
         					on_release: form.set_interest(self)
 
         		BoxLayout:
         			size_hint: None, None
-                    size: 450, 60
+                    size: 450, 40
                     BoxLayout: 
                     	orientation: 'vertical'
                     	spacing: '10dp'

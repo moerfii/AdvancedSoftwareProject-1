@@ -106,6 +106,7 @@ class Form(MDCard):
                 self.ids.field_g.error = True
                 return
             self.set_guest(g_num)
+            self.ids.field_g.error = False
         else:
             self.ids.field_g.error = True
         
