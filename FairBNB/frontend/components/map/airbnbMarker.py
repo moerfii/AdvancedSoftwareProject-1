@@ -13,6 +13,9 @@ class AirbnbMarker(MapMarkerPopup):
         self.id_listing = id_listing
 
     def on_release(self):
+        """
+        returns popup with additional information and turns marker blue
+        """
         app = App.get_running_app()
         app.root.ids.mapview.selected_id=self.id_listing
         self.source= "frontend/icons/marker2.png"
@@ -20,6 +23,9 @@ class AirbnbMarker(MapMarkerPopup):
         popup.open()
 
     def reset_marker(self,*args):
+        """
+        resets marker back to default
+        """
         self.source = "atlas://frontend/icons/frontendAtlas/marker"
         app=App.get_running_app()
         app.root.ids.mapview.selected_id=None
