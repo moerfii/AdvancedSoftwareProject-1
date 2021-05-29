@@ -49,7 +49,6 @@ class LocationButton(MDIconButton):
         mapview = app.root.ids.mapview
         mapview.zoom = 19
         mapview.center_on(self.location_dictionary[self][0], self.location_dictionary[self][1])
-        print("eyyy")
         print(self.location_dictionary[self])
         mapview.selected_id = self.listing_id
         screen_manager = app.root.ids['screen_manager']
