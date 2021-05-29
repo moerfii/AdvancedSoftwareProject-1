@@ -174,13 +174,15 @@ class Form(MDCard):
             fair_filter['total_listings_count.le'] = 3
         self.api.set_filters(fair_filter)
 
-    def set_price(self, instance_price):
-        print(self.ids, instance_price.text)
-        if instance_price.text.isdigit():
-            price = int(instance_price.text)
-            self.ids.price_filter.value[0] = price
-        #if instance_pri
+    def set_price(self):
+        min_p, max_p = self.ids.min_p.text, self.ids.max_p.text
+        if min_p=="" or not min_p.isdigit():
+            min_p=self.ids.price_filter.min
+        if max_p=="" or not max_p.isdigit():
+            max_p=self.ids.price_filter.max
 
+        self.ids.price_filter.value1 = int(min_p)
+        self.ids.price_filter.value2=int(max_p)
 
     def switch_to_mapscreen(self):
         price_range=self.ids.price_filter.value
