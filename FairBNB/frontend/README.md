@@ -8,7 +8,7 @@ This folder holds the code for the frontend.
 
 
 # Programming languages and frameworks we used 
-## phython
+## python
 ## Kivy & KivyMD
 Kivy is an open source, cross-platform Python framework for the development of applications and KivyMD is a collection of Material Design compliant widgets for use with Kivy.
 We pick the Kivy since it provides interactive map widget which is the core components in our application. We also found that KivyMD supports various built-in components and widgets which make our development easy and quick.
