@@ -11,7 +11,7 @@ This folder holds the code for the frontend.
 
 Once you run the app, you will see the **form** page which is our home screen.   
 On the top-left corner, there is a hamburger button where you can go through all the screens (form, wish list and map) in our app.   
-<img width="563" alt="home" src="https://user-images.githubusercontent.com/40763359/120081835-d1700c80-c0bf-11eb-9b10-0987d5e18f80.png">
+<img width="563" alt="home" src="https://user-images.githubusercontent.com/40763359/120081835-d1700c80-c0bf-11eb-9b10-0987d5e18f80.png">   
 
 Search form takes several inputs to find your best accomodation - neighborhood, guests, age, high rating, super host, fair filter, interests and price.   
 
@@ -25,10 +25,10 @@ Search form takes several inputs to find your best accomodation - neighborhood, 
 `Price/` You can set the range of your budget with slider. If you want to set it precisely, you can manually type the price in the fill-in form as well.   
    
 After fill in the search form and click the search button, it will bring you to **map** page, where you can see the result of listings that fits to you.   
-<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081838-d5039380-c0bf-11eb-855b-5aad3e3c19a0.png">
+<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081838-d5039380-c0bf-11eb-855b-5aad3e3c19a0.png">   
 You can zoom-in and out throug the map to see more/less specific accomodation. You will see the clusters of listing untill you reach the one specific accomodation. When you see the red marker on the map, you can click it then deatil information will pop up. There, you can click the heart icon to add it to the wish list, or you can click magnifier icon which will take you to the airbnb web page of that listing.   
    
 Once you are done with the selecting accomodations, you can go to **wish list** menu and see the comparison of listing that you chose.    
-<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081839-d6cd5700-c0bf-11eb-8c47-1107b90281aa.png">
+<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081839-d6cd5700-c0bf-11eb-8c47-1107b90281aa.png">   
 We added labels - "best rating" and "best price" that can make your decision easy.   
 
