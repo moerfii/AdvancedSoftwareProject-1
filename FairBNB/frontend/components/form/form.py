@@ -15,7 +15,9 @@ class Form(MDCard):
         self.interests = set()
 
     def on_start(self):
-        
+        """
+        binds list items to widgets. The function is called once the Form class is initialised.
+        """
         neighborhoods = [
             {"viewclass": "OneLineListItem",
              "text": "---",
@@ -81,6 +83,9 @@ class Form(MDCard):
         self.api = app.api
 
     def set_neighborhood(self, text__neighbor):
+        """
+        sets the borough filter
+        """
         if text__neighbor=='---':
             self.ids.field_n.text = text__neighbor
             borough_filter = {"borough.eq":None}
@@ -91,13 +96,22 @@ class Form(MDCard):
         self.api.set_filters(borough_filter)
 
     def set_guest(self, n_guests):
+        """
+        sets the guests_included filter
+        """
         print("set_guest")
         print(n_guests)
-        guest_filter = {"guests_inclueded.ge":n_guests}
+        guest_filter = {"guests_included.ge":n_guests}
         self.api.set_filters(guest_filter)
 
 
     def set_error_message(self, instance_textfield):
+        """
+        checks if the text of a textfield is numerical. If yes the content of the
+        textfield will be relayed to set_guest, if not the textfield will display an
+        error message.
+
+        """
         g_num = instance_textfield.text
         if g_num.isdigit():
             g_num = int(g_num)
@@ -111,6 +125,9 @@ class Form(MDCard):
         
 
     def set_age(self, text__age):
+        """
+        sets the age filter
+        """
         if text__age=="---":
             self.ids.field_a.text = ""
             age_filter = {"age.eq":None}
@@ -130,6 +147,9 @@ class Form(MDCard):
 
 
     def set_interest(self, instance_chips):
+        """
+        adds/removes interests to a set and updated interest filters
+        """
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
             self.interests.add(instance_chips.text)
@@ -149,24 +169,36 @@ class Form(MDCard):
 
 
     def set_highrating(self, status):
+        """
+        sets the highrating filter
+        """
         rating_filter = {"review_score.ge":None}
         if(status):
             rating_filter["review_score.ge"] = 90
         self.api.set_filters(rating_filter)
 
     def set_superhost(self, status):
+        """
+        sets the superhost filter
+        """
         superhost_filter = {"is_superhost.eq": None}
         if status:
             superhost_filter['is_superhost.eq'] = True
         self.api.set_filters(superhost_filter)
 
     def set_fairfilter(self, status):
+        """
+        sets the fairfilter filter
+        """
         fair_filter = {"total_listings_count.le": None}
         if status:
             fair_filter['total_listings_count.le'] = 3
         self.api.set_filters(fair_filter)
 
     def set_price(self):
+        """
+        sets the price on the range slider. 
+        """
         min_p, max_p = self.ids.min_p.text, self.ids.max_p.text
         if min_p=="" or not min_p.isdigit():
             min_p=self.ids.price_filter.min
@@ -177,6 +209,9 @@ class Form(MDCard):
         self.ids.price_filter.value2=int(max_p)
 
     def switch_to_mapscreen(self):
+        """
+        sets the price filter and switches to mapscreen
+        """
         price_range=self.ids.price_filter.value
         if(price_range[0]==0):
             price_range[0]=None

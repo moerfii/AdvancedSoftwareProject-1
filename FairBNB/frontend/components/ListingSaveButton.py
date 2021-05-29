@@ -66,6 +66,9 @@ class ListingSaveButton(MDIconButton):
             self.remove_bookmark(self.parent.parent.parent)
 
     def bookmark(self):
+        """
+        stores the assigned data as a file LISTING_ID.json in the folder bookmarks
+        """
         if not os.path.isdir("bookmarks"):
             os.mkdir("bookmarks")
         with open(f"bookmarks/{self.data['id']}.json", "w+") as f:
@@ -74,6 +77,9 @@ class ListingSaveButton(MDIconButton):
         self.icon = 'heart'
 
     def remove_bookmark(self, child):
+        """
+        Removes bookmark
+        """
         if self.icon == 'delete':
             self.parent.parent.parent.parent.remove_widget(child)
         os.remove(f"bookmarks/{self.data['id']}.json")
