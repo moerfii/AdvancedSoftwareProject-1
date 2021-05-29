@@ -11,9 +11,6 @@ import webbrowser
 from kivy.config import Config
 from kivy.graphics import Color, RoundedRectangle
 
-Config.set("graphics", "width", "500")
-Config.set("graphics", "height", "300")
-
 
 class RoundedCornerLayout(MDBoxLayout):
     """
