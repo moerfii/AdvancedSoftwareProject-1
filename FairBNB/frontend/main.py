@@ -47,8 +47,6 @@ class MainApp(MDApp):
         """
         called on start, inits form
         """
-        # todo: delete fps_monitor
-        self.fps_monitor_start()
         form = self.root.ids.form
         form.on_start()
         
