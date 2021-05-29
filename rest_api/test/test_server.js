@@ -202,18 +202,6 @@ describe("Checking all requests/responses", () => {
     })
 
 
-    describe("/search_address", () => {
-        
-        it("returns status 200", (done) => {
-            chai.request(app)
-            .get("/search_address?location=300%20Jay%20St,%20Brooklyn,%20NY%2011201,%20United%20States")
-            .end(function (err, res) {
-                expect(res).to.have.status(200);
-                done();
-            })
-        }).timeout(20000)
-    })
-
 
     describe("/village_category as input for /listing_location", ()=>{
         it("returns status 200", (done) => {
