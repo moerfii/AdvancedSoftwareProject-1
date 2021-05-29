@@ -3,7 +3,7 @@
 This folder holds the FairBNB application.  
 `frontend/` holds the code used for the frontend  
 `kivymd/` holds kivy specific dependencies.  
-`restApiConnection/` holds the code for the stand-alone class used to communicate with the REST API.  
+`restAPIConnection/` holds the code for the stand-alone class used to communicate with the REST API.  
 `main.py` is used to start the application.
 
 ## Quickstart
