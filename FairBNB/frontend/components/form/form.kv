@@ -49,7 +49,7 @@
                     	hint_text: "Guests"
                     	helper_text: "you can enter 1 to 16"
                     	helper_text_mode: "on_error"
-                    	on_focus: form.set_guest(self)
+                    	on_focus: form.set_error_message(self)
                    
                 BoxLayout:
                     spacing: dp(40)
@@ -184,9 +184,9 @@
             				size_hint: None, None
             				size: 320, 30
             				pos_hint: {"center_x": 0.45}
-            				value: 0,9999
+            				value: 0,1000
             				min:0
-            				max:9999
+            				max:1000
 
             			BoxLayout:
                             size_hint: None, None
@@ -196,27 +196,29 @@
                                 orientation: 'vertical'
             				    MDLabel:
                                     pos_hint: {"center_x": 0.5}   
-            				        text: 'Minimum : {}'.format(int(price_filter.value[0]))
+            				        text: 'Minimum'
                                 MDTextFieldRect:
                                     id: min_p
                                     size_hint: None, None
                                     size: 80, 30
-                                    hint_text: '{}'.format(int(price_filter.value[0]))
-                                    on_focus: form.set_price(self)
+                                    multiline:False
+                                    text: '{}'.format(int(price_filter.value[0]))
+                                    on_focus: form.set_price()
 
                             BoxLayout:
                                 orientation: 'vertical'
             				    MDLabel:
-                                    pos_hint: {"center_x": 0.6}   
-            				        text: 'Maximum: {}'.format(int(price_filter.value[1]))
+                                    pos_hint: {"center_x": 0.54}   
+            				        text: 'Maximum'
                                 MDTextFieldRect:
                                     id: max_p
-                                    pos_hint: {"center_x": 0.5}   
+                                    pos_hint: {"center_x": 0.2}
+                                    multiline: False
                                     size_hint: None, None
                                     size: 80, 30
-                                    hint_text: '{}'.format(int(price_filter.value[1]))
+                                    text: '{}'.format(int(price_filter.value[1]))
                                     background_color: [1,1,1,1]
-                                    #input_filter: 'int'
+                                    on_focus: form.set_price()
 
                 BoxLayout:
                 	size_hint: None, None
