@@ -91,12 +91,13 @@ class Form(MDCard):
         self.api.set_filters(borough_filter)
 
     def set_guest(self, n_guests):
+        print("set_guest")
+        print(n_guests)
         guest_filter = {"guests_inclueded.ge":n_guests}
         self.api.set_filters(guest_filter)
 
 
     def set_error_message(self, instance_textfield):
-        print(instance_textfield.text)
         g_num = instance_textfield.text
         if g_num.isdigit():
             g_num = int(g_num)
@@ -132,7 +133,6 @@ class Form(MDCard):
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
             self.interests.add(instance_chips.text)
-            print(instance_chips.color)
         else:
             instance_chips.color = [0, 0, 0, 0.1]
             self.interests.discard(instance_chips.text)
@@ -145,15 +145,7 @@ class Form(MDCard):
             village_list.append(i[0])
         village_filter = {"village.in[]": village_list}
         self.api.set_filters(village_filter)
-        interest_filter = {"interest.in[]":self.interests}
-        self.api.set_filters(interest_filter)
-        res = [None]    
-        self.api.get_village_category(res,interest_filter)
-        village_list = []
-        for i in res[0]:
-            village_list.append(i[0])
-        village_filter = {"village.in[]": village_list}
-        self.api.set_filters(village_filter)
+
 
 
     def set_highrating(self, status):
@@ -186,7 +178,6 @@ class Form(MDCard):
 
     def switch_to_mapscreen(self):
         price_range=self.ids.price_filter.value
-        print(price_range)
         if(price_range[0]==0):
             price_range[0]=None
         if(price_range[1]==9999):

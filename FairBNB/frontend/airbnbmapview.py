@@ -48,7 +48,6 @@ class AirbnbMapView(MapView):
             if listing_id in self.listing_id_list:
                 continue
             else:
-                print(listing_id)
                 if(listing_id==self.selected_id):
                     layer.add_marker(
                     lon=float(listing['longitude']),
