@@ -1,13 +1,16 @@
 jobs:
   include:      
     - stage: Build rest api docker image
-      language: node_js
+      language: python
       addons:
         postgresql: 12
         apt: 
          packages:
            - postgresql-12
            - postgresql-client-12
+      install:
+        - nvm install node
+        - nvm use node
       before_script:
         - cd rest_api
         - npm install
@@ -17,9 +20,9 @@ jobs:
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker-compose build . -t rest_api
-        - docker- images
+        - docker-compose images
         - docker push $DOCKER_USERNAME/fairbnb:latest
-        
+
     - stage: test  
       language: python
       node_js: 3.7 

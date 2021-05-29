@@ -3,6 +3,13 @@ services:
     build: .
     ports:
       - 8888:8888
+    environment:
+      - PORT=8888
+      - DB_HOST=rest_api_postgres_1
+      - DB_USER=postgres
+      - DB_PASSWORD=aseisgreat
+      - DB_NAME=ase
+      - DB_PORT=5432
   postgres:
     build: ./db/
     ports:

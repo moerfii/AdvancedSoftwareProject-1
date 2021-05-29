@@ -13,4 +13,5 @@ COPY . .
 ENV POSTGRES_USER=postgres
 ENV POSTGRES_PASSWORD=aseisgreat
 RUN echo "hello"
+RUN echo $DB_host
 CMD [ "node", "src/server.js" ]
