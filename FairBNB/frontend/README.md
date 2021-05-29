@@ -11,6 +11,9 @@ This folder holds the code for the frontend.
 
 Once you run the app, you will see the **form** page which is our home screen.
 On the top-left corner, there is a hamburger button where you can go through all the screens (form, wish list and map) in our app. 
+<img width="619" alt="home" src="https://user-images.githubusercontent.com/40763359/120081835-d1700c80-c0bf-11eb-9b10-0987d5e18f80.png">
+<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081838-d5039380-c0bf-11eb-855b-5aad3e3c19a0.png">
+<img width="563" alt="wish" src="https://user-images.githubusercontent.com/40763359/120081839-d6cd5700-c0bf-11eb-8c47-1107b90281aa.png">
 
 Search form takes several inputs to find your best accomodation - neighborhood, guests, age, high rating, super host, fair filter, interests and price. 
 
