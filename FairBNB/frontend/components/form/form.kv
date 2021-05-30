@@ -1,28 +1,29 @@
 <Form>:
     id: form
     BoxLayout:
-        padding: dp(100)
-        spacing: dp(60)
+        padding: dp(200)
+        spacing: dp(80)
         canvas:
             Rectangle:
                 size: self.size
                 source: "frontend/icons/bg_map.png"
         MDCard:
-            pos_hint: {"center_x": 1, "center_y": 0.5}
+        	pos_hint: {"center_x": 0.5, "center_y": 0.5}
             elevation: 40
-            border_radius: 20
+            border_radius: 15
             radius: [15]
             size_hint: None, None
-            size: 490, 480
+            size: 500, 520
+            padding: "30dp", "30dp"
 
             BoxLayout:
                 id:baax
                 orientation: 'vertical'
-                padding: "40dp", "10dp"
+                padding: "40dp", "30dp", "0dp", "0dp"
                 spacing: dp(50)
-                size: 500, 460
+                size: 520, 480
                 size_hint: None, None
-                pos_hint: {"center_y": 0.55}
+                pos_hint: {"center_x": 0, "center_y": 0.55}
                 
                 BoxLayout:
                 	padding: "20dp", 0
@@ -171,10 +172,10 @@
 
         		BoxLayout:
         			size_hint: None, None
-                    size: 450, 70
+                    size: 450, 100
                     BoxLayout: 
                     	orientation: 'vertical'
-                    	spacing: '10dp'
+                    	spacing: '15dp'
         				MDLabel:
         					pos_hint: {"center_y": 1}
                 			text: "Price"
@@ -182,23 +183,25 @@
                 		RangeSlider:
             				id: price_filter
             				size_hint: None, None
-            				size: 320, 30
-            				pos_hint: {"center_x": 0.45}
+            				size: 320, 20
+            				pos_hint: {"center_x": 0.4, "center_y": 1}
             				value: 0,1000
             				min:0
             				max:1000
 
             			BoxLayout:
                             size_hint: None, None
-                            size: 500, 50 
-                                                  
+
+                            size: 500, 50               
                             BoxLayout:
                                 orientation: 'vertical'
             				    MDLabel:
-                                    pos_hint: {"center_x": 0.5}   
-            				        text: 'Minimum'
+                                    pos_hint: {"center_x": 0.6}   
+            				        text: 'Minimum $'
+            				        font_style: 'Caption'
                                 MDTextFieldRect:
                                     id: min_p
+                                    pos_hint: {"center_x": 0.25}
                                     size_hint: None, None
                                     size: 80, 30
                                     multiline:False
@@ -208,8 +211,9 @@
                             BoxLayout:
                                 orientation: 'vertical'
             				    MDLabel:
-                                    pos_hint: {"center_x": 0.54}   
-            				        text: 'Maximum'
+                                    pos_hint: {"center_x": 0.55}   
+            				        text: 'Maximum $'
+            				        font_style: 'Caption'
                                 MDTextFieldRect:
                                     id: max_p
                                     pos_hint: {"center_x": 0.2}
@@ -222,30 +226,32 @@
 
                 BoxLayout:
                 	size_hint: None, None
-                    size: 450, 30
-                    pos_hint: {"center_x": 0.85, "center_y": 2}
-                    padding: dp(20)
+                    size: 450, 20
+                    pos_hint: {"center_x": 0.7, "center_y": 1}
+                    padding: dp(10)
                     MDFillRoundFlatIconButton:
                         pos_hint: {"center_y": 0}
                         md_bg_color: 1, 0, 0, 0.7
                         size_hint: None, None
-                        size: 100,20
+                        size: 100, 30
                         icon: 'magnify'
                         text: "Search"
+                        font_style: 'Button'
                         on_release: form.switch_to_mapscreen()
 
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
             size: 300, 100
-            pos_hint: {"center_y": 0.7}
+            pos_hint: {"center_y": 0.8}
             spacing: dp(30)
             MDLabel:
                 text: "FairBnB"
-                text_color: app.theme_cls.primary_color
+                color: app.theme_cls.primary_color
                 font_style: 'H3'
                 bold: True
             MDLabel:
                 text: "A new way of finding your best neighborhood."
                 font_style: 'H5'
+                color: app.theme_cls.primary_color
                 bold: True

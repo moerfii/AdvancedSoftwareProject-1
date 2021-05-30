@@ -17,4 +17,7 @@ COPY . app
 
 RUN pip install --user -r  app/requirements.txt 
 RUN python .local/bin/garden install mapview
-CMD python app/main.py start
+WORKDIR /home/worker/app
+RUN mkdir bookmarks
+RUN chmod 777 bookmarks
+CMD python main.py start
