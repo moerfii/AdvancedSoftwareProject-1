@@ -271,10 +271,13 @@ class CompareScreen(MDBoxLayout):
             spacing=dp(4)
         )
         #if no listing is bookmarked then return
-        if(len(best_price_box) in [0]):
+        print(len(self.ids.comparebox.children))
+        if(len(self.ids.comparebox.children)==0):
             empty_label = MDLabel(text="No listing on Wishlist.\nPlease add some listings on the Map screen",pos_hint={"center_x":0.9,"center_y":4})
             self.ids.comparebox.height = self.height
             self.ids.comparebox.add_widget(empty_label)
+        elif(len(self.ids.comparebox.children)<=2):
+            return
         else:        
             min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
             if min(best_price_box, key=best_price_box.get) == max(best_rating_box, key=best_rating_box.get):
