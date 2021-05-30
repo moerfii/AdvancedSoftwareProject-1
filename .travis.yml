@@ -34,7 +34,7 @@ jobs:
         - ls
         - docker-compose build
         - docker-compose images
-        - docker push $DOCKER_USERNAME/fairbnb:latest
+        - docker-compose push
 
     - stage: test  
       language: python
