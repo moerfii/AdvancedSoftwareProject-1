@@ -1,13 +1,23 @@
+dist: focal
 jobs:
   include:      
     - stage: Build rest api docker image
       language: python
+      services: 
+        - docker
       addons:
         postgresql: 12
         apt: 
          packages:
            - postgresql-12
            - postgresql-client-12
+      env:
+        - DOCKER_COMPOSE_VERSION=1.29.1
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
       install:
         - nvm install node
         - nvm use node
@@ -21,8 +31,25 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker-compose build
         - docker-compose images
-        - docker push $DOCKER_USERNAME/fairbnb:latest
-
+        - docker-compose push
+    - stage: Build FairBNB docker image
+      language: python
+      services: 
+        - docker
+      env:
+        - DOCKER_COMPOSE_VERSION=1.29.1
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+      before_script:
+        - cd FairBNB
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker-compose build
+        - docker-compose images
+        - docker-compose push
     - stage: test  
       language: python
       node_js: 3.7 
