@@ -102,7 +102,10 @@ class Form(MDCard):
     def set_guest(self, n_guests):
         """
         sets the guests_included filter
-        int
+
+        Parameters
+        ----------
+        n_guests : int
         """
         guest_filter = {"guests_included.ge":n_guests}
         self.api.set_filters(guest_filter)
@@ -113,7 +116,10 @@ class Form(MDCard):
         checks if the text of a textfield is numerical. If yes the content of the
         textfield will be relayed to set_guest, if not the textfield will display an
         error message.
-        widget
+
+        Parameters
+        ----------
+        instance_textfield : widget
         """
         g_num = instance_textfield.text
         if g_num.isdigit():
@@ -130,7 +136,10 @@ class Form(MDCard):
     def set_age(self, text__age):
         """
         sets the age filter
-        str
+
+        Parameters
+        ----------
+        text__age : str
         """
         if text__age=="---":
             self.ids.field_a.text = ""
@@ -153,7 +162,10 @@ class Form(MDCard):
     def set_interest(self, instance_chips):
         """
         adds/removes interests to a set and updated interest filters
-        widget
+
+        Parameters
+        ----------
+        instance_chips : widget
         """
         if instance_chips.color == [0, 0, 0, 0.1]:
             instance_chips.color = [252/255, 186/255, 3/255, 1]
@@ -176,7 +188,10 @@ class Form(MDCard):
     def set_highrating(self, status):
         """
         sets the highrating filter
-        bool
+
+        Parameters
+        ----------
+        status : bool
         """
         rating_filter = {"review_score.ge":None}
         if(status):
@@ -186,7 +201,10 @@ class Form(MDCard):
     def set_superhost(self, status):
         """
         sets the superhost filter
-        bool
+
+        Parameters
+        ----------
+        status : bool
         """
         superhost_filter = {"is_superhost.eq": None}
         if status:
@@ -196,7 +214,10 @@ class Form(MDCard):
     def set_fairfilter(self, status):
         """
         sets the fairfilter filter
-        bool
+
+        Parameters
+        ----------
+        status : bool
         """
         fair_filter = {"total_listings_count.le": None}
         if status:

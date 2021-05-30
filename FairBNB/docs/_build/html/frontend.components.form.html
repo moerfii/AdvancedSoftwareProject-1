@@ -97,7 +97,7 @@
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.airbnbmapview">frontend.airbnbmapview module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.listingDetail">frontend.listingDetail module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.main">frontend.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frontend.html#frontend-main-module">frontend.main module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend">Module contents</a></li>
 </ul>
 </li>
@@ -201,6 +201,11 @@ directly sets the filter for the REST-API get request. The search button is simp
 <dt id="frontend.components.form.form.Form.set_age">
 <code class="sig-name descname">set_age</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text__age</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_age" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the age filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text__age</strong> (<em>str</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -209,36 +214,66 @@ directly sets the filter for the REST-API get request. The search button is simp
 <dd><p>checks if the text of a textfield is numerical. If yes the content of the
 textfield will be relayed to set_guest, if not the textfield will display an
 error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance_textfield</strong> (<em>widget</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="frontend.components.form.form.Form.set_fairfilter">
 <code class="sig-name descname">set_fairfilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_fairfilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the fairfilter filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>bool</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="frontend.components.form.form.Form.set_guest">
 <code class="sig-name descname">set_guest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_guests</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_guest" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the guests_included filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_guests</strong> (<em>int</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="frontend.components.form.form.Form.set_highrating">
 <code class="sig-name descname">set_highrating</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_highrating" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the highrating filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>bool</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="frontend.components.form.form.Form.set_interest">
 <code class="sig-name descname">set_interest</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_chips</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_interest" title="Permalink to this definition">¶</a></dt>
 <dd><p>adds/removes interests to a set and updated interest filters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>instance_chips</strong> (<em>widget</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="frontend.components.form.form.Form.set_neighborhood">
 <code class="sig-name descname">set_neighborhood</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text__neighbor</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_neighborhood" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the borough filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text__neighbor</strong> (<em>str</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -251,6 +286,11 @@ error message.</p>
 <dt id="frontend.components.form.form.Form.set_superhost">
 <code class="sig-name descname">set_superhost</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.form.form.Form.set_superhost" title="Permalink to this definition">¶</a></dt>
 <dd><p>sets the superhost filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>status</strong> (<em>bool</em>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

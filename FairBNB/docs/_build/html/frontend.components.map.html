@@ -97,7 +97,7 @@
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.airbnbmapview">frontend.airbnbmapview module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.listingDetail">frontend.listingDetail module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend.main">frontend.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="frontend.html#frontend-main-module">frontend.main module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="frontend.html#module-frontend">Module contents</a></li>
 </ul>
 </li>
@@ -190,14 +190,17 @@
 <em class="property">class </em><code class="sig-prename descclassname">frontend.components.map.airbnbMarker.</code><code class="sig-name descname">AirbnbMarker</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id_listing</span></em>, <em class="sig-param"><span class="n">lon</span></em>, <em class="sig-param"><span class="n">lat</span></em>, <em class="sig-param"><span class="n">source</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.map.airbnbMarker.AirbnbMarker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivy_garden.mapview.view.MapMarkerPopup</span></code></p>
 <p>This class expands MapMarkerPopup
-It displays a marker for a given latitude, longitude and source file.
-Arguments:</p>
-<blockquote>
-<div><p>id_listing: integer, id of a listing
-lon: float, longitude of listing
-lat: float, latitude of listing
-source: string, path to source file used to display marker</p>
-</div></blockquote>
+It displays a marker for a given latitude, longitude and source file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_listing</strong> (<em>int</em>) – id of a listing</p></li>
+<li><p><strong>lon</strong> (<em>float</em>) – longitude of listing</p></li>
+<li><p><strong>lat</strong> (<em>float</em>) – latitude of listing</p></li>
+<li><p><strong>source</strong> (<em>str</em>) – path to source file used to display marker</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt id="frontend.components.map.airbnbMarker.AirbnbMarker.on_release">
 <code class="sig-name descname">on_release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.map.airbnbMarker.AirbnbMarker.on_release" title="Permalink to this definition">¶</a></dt>
@@ -208,6 +211,11 @@ source: string, path to source file used to display marker</p>
 <dt id="frontend.components.map.airbnbMarker.AirbnbMarker.reset_marker">
 <code class="sig-name descname">reset_marker</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.components.map.airbnbMarker.AirbnbMarker.reset_marker" title="Permalink to this definition">¶</a></dt>
 <dd><p>resets marker back to default image</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*args</strong></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

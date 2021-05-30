@@ -97,7 +97,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-frontend.airbnbmapview">frontend.airbnbmapview module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-frontend.listingDetail">frontend.listingDetail module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-frontend.main">frontend.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontend-main-module">frontend.main module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-frontend">Module contents</a></li>
 </ul>
 </li>
@@ -281,10 +281,21 @@ there is a matching listing in our database.</p>
 <dt id="frontend.listingDetail.listing_detail">
 <code class="sig-prename descclassname">frontend.listingDetail.</code><code class="sig-name descname">listing_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">listing_id</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.listingDetail.listing_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fetches listing details when clicking on marker on map. First makes API get request then continues to arrange data
-in widgets which is added to the Mapview Screen as popup.
-:param listing_id: id of clicked on listing
-:type listing_id: int
-:return: popup</p>
+in widgets which is added to the Mapview Screen as popup.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>listing_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>parent</strong> (<em>widget</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>popup</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>widget</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -295,188 +306,12 @@ in widgets which is added to the Mapview Screen as popup.
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – The <cite>url</cite> defined in the listing, clicked on by user</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
 </dl>
 </dd></dl>
 
 </section>
-<section id="module-frontend.main">
-<span id="frontend-main-module"></span><h2>frontend.main module<a class="headerlink" href="#module-frontend.main" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="frontend.main.BaseWidget">
-<em class="property">class </em><code class="sig-prename descclassname">frontend.main.</code><code class="sig-name descname">BaseWidget</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.BaseWidget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.floatlayout.MDFloatLayout</span></code></p>
-</dd></dl>
-
-<dl class="py class">
-<dt id="frontend.main.Content">
-<em class="property">class </em><code class="sig-prename descclassname">frontend.main.</code><code class="sig-name descname">Content</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.Content" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></p>
-<p>required for .kv file</p>
-</dd></dl>
-
-<dl class="py class">
-<dt id="frontend.main.ContentNavigationDrawer">
-<em class="property">class </em><code class="sig-prename descclassname">frontend.main.</code><code class="sig-name descname">ContentNavigationDrawer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.ContentNavigationDrawer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></p>
-<p>required for .kv files</p>
-<dl class="py attribute">
-<dt id="frontend.main.ContentNavigationDrawer.nav_drawer">
-<code class="sig-name descname">nav_drawer</code><a class="headerlink" href="#frontend.main.ContentNavigationDrawer.nav_drawer" title="Permalink to this definition">¶</a></dt>
-<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id1"><span class="problematic" id="id2">**</span></a>kw)
-Property that represents a Python object.</p>
-<blockquote>
-<div><dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
-</dd>
-<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
-in a kv rule, will update the bound property when this object
-changes.</p>
-<p>That is the standard behavior is that if there’s a kv rule
-<code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
-properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code>. Then when the rule is applied, <code class="docutils literal notranslate"><span class="pre">text</span></code>
-becomes bound only to <code class="docutils literal notranslate"><span class="pre">d</span></code>. If <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, or <code class="docutils literal notranslate"><span class="pre">c</span></code> change,
-<code class="docutils literal notranslate"><span class="pre">text</span></code> still remains bound to <code class="docutils literal notranslate"><span class="pre">d</span></code>. Furthermore, if any of them
-were <code class="docutils literal notranslate"><span class="pre">None</span></code> when the rule was initially evaluated, e.g. <code class="docutils literal notranslate"><span class="pre">b</span></code> was
-<code class="docutils literal notranslate"><span class="pre">None</span></code>; then <code class="docutils literal notranslate"><span class="pre">text</span></code> is bound to <code class="docutils literal notranslate"><span class="pre">b</span></code> and will not become bound
-to <code class="docutils literal notranslate"><span class="pre">d</span></code> even when <code class="docutils literal notranslate"><span class="pre">b</span></code> is changed to not be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-<p>By setting <code class="docutils literal notranslate"><span class="pre">rebind</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>, however, the rule will be
-re-evaluated and all the properties rebound when that intermediate
-property changes. E.g. in the example above, whenever <code class="docutils literal notranslate"><span class="pre">b</span></code> changes
-or becomes not <code class="docutils literal notranslate"><span class="pre">None</span></code> if it was <code class="docutils literal notranslate"><span class="pre">None</span></code> before, <code class="docutils literal notranslate"><span class="pre">text</span></code> is
-evaluated again and becomes rebound to <code class="docutils literal notranslate"><span class="pre">d</span></code>. The overall result is
-that <code class="docutils literal notranslate"><span class="pre">text</span></code> is now bound to all the properties among <code class="docutils literal notranslate"><span class="pre">a</span></code>,
-<code class="docutils literal notranslate"><span class="pre">b</span></code>, or <code class="docutils literal notranslate"><span class="pre">c</span></code> that have <code class="docutils literal notranslate"><span class="pre">rebind</span></code> set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
-</dd>
-<dt><cite>**kwargs</cite>: a list of keyword arguments</dt><dd><dl class="simple">
-<dt><cite>baseclass</cite></dt><dd><p>If kwargs includes a <cite>baseclass</cite> argument, this value will be
-used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To mark the property as changed, you must reassign a new python object.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.9.0: </span><cite>rebind</cite> has been introduced.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.7.0: </span><cite>baseclass</cite> parameter added.</p>
-</div>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="frontend.main.ContentNavigationDrawer.screen_manager">
-<code class="sig-name descname">screen_manager</code><a class="headerlink" href="#frontend.main.ContentNavigationDrawer.screen_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id3"><span class="problematic" id="id4">**</span></a>kw)
-Property that represents a Python object.</p>
-<blockquote>
-<div><dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
-</dd>
-<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
-in a kv rule, will update the bound property when this object
-changes.</p>
-<p>That is the standard behavior is that if there’s a kv rule
-<code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
-properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code>. Then when the rule is applied, <code class="docutils literal notranslate"><span class="pre">text</span></code>
-becomes bound only to <code class="docutils literal notranslate"><span class="pre">d</span></code>. If <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, or <code class="docutils literal notranslate"><span class="pre">c</span></code> change,
-<code class="docutils literal notranslate"><span class="pre">text</span></code> still remains bound to <code class="docutils literal notranslate"><span class="pre">d</span></code>. Furthermore, if any of them
-were <code class="docutils literal notranslate"><span class="pre">None</span></code> when the rule was initially evaluated, e.g. <code class="docutils literal notranslate"><span class="pre">b</span></code> was
-<code class="docutils literal notranslate"><span class="pre">None</span></code>; then <code class="docutils literal notranslate"><span class="pre">text</span></code> is bound to <code class="docutils literal notranslate"><span class="pre">b</span></code> and will not become bound
-to <code class="docutils literal notranslate"><span class="pre">d</span></code> even when <code class="docutils literal notranslate"><span class="pre">b</span></code> is changed to not be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
-<p>By setting <code class="docutils literal notranslate"><span class="pre">rebind</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>, however, the rule will be
-re-evaluated and all the properties rebound when that intermediate
-property changes. E.g. in the example above, whenever <code class="docutils literal notranslate"><span class="pre">b</span></code> changes
-or becomes not <code class="docutils literal notranslate"><span class="pre">None</span></code> if it was <code class="docutils literal notranslate"><span class="pre">None</span></code> before, <code class="docutils literal notranslate"><span class="pre">text</span></code> is
-evaluated again and becomes rebound to <code class="docutils literal notranslate"><span class="pre">d</span></code>. The overall result is
-that <code class="docutils literal notranslate"><span class="pre">text</span></code> is now bound to all the properties among <code class="docutils literal notranslate"><span class="pre">a</span></code>,
-<code class="docutils literal notranslate"><span class="pre">b</span></code>, or <code class="docutils literal notranslate"><span class="pre">c</span></code> that have <code class="docutils literal notranslate"><span class="pre">rebind</span></code> set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
-</dd>
-<dt><cite>**kwargs</cite>: a list of keyword arguments</dt><dd><dl class="simple">
-<dt><cite>baseclass</cite></dt><dd><p>If kwargs includes a <cite>baseclass</cite> argument, this value will be
-used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To mark the property as changed, you must reassign a new python object.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.9.0: </span><cite>rebind</cite> has been introduced.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.7.0: </span><cite>baseclass</cite> parameter added.</p>
-</div>
-</div></blockquote>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="frontend.main.MainApp">
-<em class="property">class </em><code class="sig-prename descclassname">frontend.main.</code><code class="sig-name descname">MainApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.MainApp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></p>
-<p>MainApp: builds application by reading main.kv file</p>
-<dl class="py attribute">
-<dt id="frontend.main.MainApp.api">
-<code class="sig-name descname">api</code><em class="property"> = &lt;restAPIConnection.restAPIConnection.RestAPIConnection object&gt;</em><a class="headerlink" href="#frontend.main.MainApp.api" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="frontend.main.MainApp.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.MainApp.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>changes loading gif for asyncimage, changes color palette and builds main structure of application</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="frontend.main.MainApp.dialog">
-<code class="sig-name descname">dialog</code><em class="property"> = None</em><a class="headerlink" href="#frontend.main.MainApp.dialog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="frontend.main.MainApp.load_results">
-<code class="sig-name descname">load_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.MainApp.load_results" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="frontend.main.MainApp.on_start">
-<code class="sig-name descname">on_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.MainApp.on_start" title="Permalink to this definition">¶</a></dt>
-<dd><p>called on start, inits form</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="frontend.main.MainApp.search_menu">
-<code class="sig-name descname">search_menu</code><em class="property"> = None</em><a class="headerlink" href="#frontend.main.MainApp.search_menu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt id="frontend.main.run">
-<code class="sig-prename descclassname">frontend.main.</code><code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#frontend.main.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<section id="frontend-main-module">
+<h2>frontend.main module<a class="headerlink" href="#frontend-main-module" title="Permalink to this headline">¶</a></h2>
 </section>
 <section id="module-frontend">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-frontend" title="Permalink to this headline">¶</a></h2>
