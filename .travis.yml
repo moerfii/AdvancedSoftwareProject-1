@@ -1,3 +1,4 @@
+dist: focal
 jobs:
   include:      
     - stage: Build rest api docker image
