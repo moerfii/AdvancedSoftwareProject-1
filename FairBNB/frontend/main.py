@@ -41,7 +41,10 @@ class MainApp(MDApp):
     """
     dialog = None
     search_menu = None
-    api = RestAPIConnection()
+    with open("options.json") as f:
+        options = json.loads(f.read())
+    print(options)
+    api = RestAPIConnection(base_url=options["rest_api_url"])
 
     def on_start(self):
         """

@@ -21,7 +21,6 @@ class RestAPIConnection:
         filters = self.filters.copy()
         if custom_filters:
             for key in custom_filters.keys():
-                print(key)
 
                 filters[key] = custom_filters[key]
         filters = {k: v for k, v in filters.items() if v is not None}
