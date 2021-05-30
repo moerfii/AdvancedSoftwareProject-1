@@ -13,7 +13,8 @@ import os
 from .airbnbmapview import AirbnbMapView
 from restAPIConnection.restAPIConnection import RestAPIConnection
 from frontend.components.compare.compareScreen import CompareScreen
-
+from kivy.core.window import Window
+Window.maximize()
 
 class ContentNavigationDrawer(BoxLayout):
     """

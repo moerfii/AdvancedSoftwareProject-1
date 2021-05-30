@@ -7,8 +7,6 @@ services:
     environment:
       - DISPLAY=${DISPLAY}
       - XAUTHORITY=${XAUTHORITY}
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - $HOME/.Xauthority:/root/.Xauthority:rw
+    image: moerfi/fairbnb:FairBNB
 
     network_mode: host

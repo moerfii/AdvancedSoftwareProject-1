@@ -4,6 +4,7 @@ import json
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.uix.image import AsyncImage
+from kivy.uix.label import Label
 from kivymd.uix.card import MDSeparator
 from kivymd.uix.chip import MDChip
 from kivymd.uix.button import MDIconButton
@@ -49,14 +50,16 @@ class LocationButton(MDIconButton):
         :param: latitude
         :param: longitude
         """
+        print("on_press")
         app = App.get_running_app()
         mapview = app.root.ids.mapview
         mapview.zoom = 19
         mapview.center_on(self.location_dictionary[self][0], self.location_dictionary[self][1])
-        print(self.location_dictionary[self])
-        mapview.selected_id = self.listing_id
         screen_manager = app.root.ids['screen_manager']
         screen_manager.current = "mapscreen"
+        mapview.selected_id = self.listing_id
+        print(self.listing_id)
+        print(mapview.selected_id)
 
 
 class ContentReviews(MDBoxLayout):
@@ -154,13 +157,13 @@ class CompareScreen(MDBoxLayout):
                                       markup=True,
                                       halign='left',
                                       pos_hint={'center_x': .5, 'center_y': .85})
-
+                """
                 reviews_expansion = MDExpansionPanel(
                                         icon="",  # panel icon
                                         content=ContentReviews(),  # panel content
                                         panel_cls=MDExpansionPanelOneLine(text="Reviews"),  # panel class
                 )
-
+                """
                 if data['guests_included'] == 1:
 
                     guest_text = f"{data['guests_included']} guest · {data['minimum_nights']} minimum nights · " \
@@ -245,7 +248,7 @@ class CompareScreen(MDBoxLayout):
                 super_horizontal_box.add_widget(horizontal_box_rating)
 
                 vertical_box_nr_of_guests.add_widget(guests_included_label)
-                vertical_box_nr_of_guests.add_widget(reviews_expansion)
+                #vertical_box_nr_of_guests.add_widget(reviews_expansion)
 
                 super_vertical_box.add_widget(vertical_box_tile_and_room_type)
                 super_vertical_box.add_widget(vertical_box_nr_of_guests)
@@ -267,19 +270,26 @@ class CompareScreen(MDBoxLayout):
             color=[0.01, 0.28, 0.99, 1],
             spacing=dp(4)
         )
-        min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
+        #if no listing is bookmarked then return
+        if(len(best_price_box) in [0]):
+            empty_label = MDLabel(text="No listing on Wishlist.\nPlease add some listings on the Map screen",pos_hint={"center_x":0.9,"center_y":4})
+            self.ids.comparebox.height = self.height
+            self.ids.comparebox.add_widget(empty_label)
+        else:        
+            min(best_price_box, key=best_price_box.get).add_widget(best_price_chip)
+            if min(best_price_box, key=best_price_box.get) == max(best_rating_box, key=best_rating_box.get):
+                pos = {'center_x': .8, 'center_y': 0.77}
+            else:
+                pos = {'center_x': .8, 'center_y': .9}
+            best_rating_chip = MDChip(
+                text='BEST RATING',
+                pos_hint=pos,
+                icon='',
+                color=[0.98, 0.92, 0.01, 1],
+                spacing=dp(4)
+            )
+            # needs 10 ratings
+            if len(best_rating_box) is not 0:
+                max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
 
-        if min(best_price_box, key=best_price_box.get) == max(best_rating_box, key=best_rating_box.get):
-            pos = {'center_x': .8, 'center_y': 0.77}
-        else:
-            pos = {'center_x': .8, 'center_y': .9}
-        best_rating_chip = MDChip(
-            text='BEST RATING',
-            pos_hint=pos,
-            icon='',
-            color=[0.98, 0.92, 0.01, 1],
-            spacing=dp(4)
-        )
-        # needs 10 ratings
-        if len(best_rating_box) is not 0:
-            max(best_rating_box, key=best_rating_box.get).add_widget(best_rating_chip)
+
