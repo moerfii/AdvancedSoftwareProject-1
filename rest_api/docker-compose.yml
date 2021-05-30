@@ -16,3 +16,4 @@ services:
     image: moerfi/fairbnb:postgres
     ports:
       - 8887:5432
+
