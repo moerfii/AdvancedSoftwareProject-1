@@ -44,8 +44,8 @@ You can zoom-in and out throug the map to see more/less specific accomodation. Y
 <img width="800" alt="popup" src="https://user-images.githubusercontent.com/40763359/120100816-0e311780-c143-11eb-84ca-f6377f989508.png">   
     
 
-Once you are done with selecting accomodations, you can go to **wish list** menu and see the comparison of listing that you chose.    
-We added labels - "best rating" and "best price" that can make your decision easy.  
+Once you are done with selecting accomodations, you can go to **wish list** menu and see the comparison of listings that you chose.    
+We added labels - "best rating" and "best price" that can make your decision easy and quick.  
    
 <img width="800" alt="wishlist" src="https://user-images.githubusercontent.com/40763359/120100811-0cffea80-c143-11eb-88f9-a4e236866986.png">
      
