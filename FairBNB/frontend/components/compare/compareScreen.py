@@ -21,6 +21,10 @@ class WebButton(MDIconButton):
     :return: None
     """
     def __init__(self, *args, url_dictionary=None, **kwargs):
+        """
+        :param url_dictionary:
+        :type url_dictionary: str
+        """
         super(MDIconButton, self).__init__(*args, **kwargs)
         self.url_dictionary = url_dictionary
 

@@ -1,6 +1,7 @@
 services:
   rest-api:
     build: .
+    image: moerfi/fairbnb:rest-api
     ports:
       - 8888:8888
     environment:
@@ -12,5 +13,6 @@ services:
       - DB_PORT=5432
   postgres:
     build: ./db/
+    image: moerfi/fairbnb:postgres
     ports:
       - 8887:5432

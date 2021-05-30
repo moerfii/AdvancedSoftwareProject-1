@@ -79,6 +79,10 @@ class ListingSaveButton(MDIconButton):
     def remove_bookmark(self, child):
         """
         Removes bookmark
+
+        Returns
+        -------
+        child : widget
         """
         if self.icon == 'delete':
             self.parent.parent.parent.parent.remove_widget(child)

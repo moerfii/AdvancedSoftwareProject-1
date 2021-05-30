@@ -40,20 +40,28 @@ class RoundedCornerLayout(MDBoxLayout):
 def open_link(url):
     """
     opens the url in browser
-    :param url: url of listing
-    :type url: string
-    :return: None
+
+    Parameters
+    ----------
+    url :   str
+            The `url` defined in the listing, clicked on by user
     """
     webbrowser.open(url)
 
 
-def listing_detail(listing_id,parent):
+def listing_detail(listing_id, parent):
     """
     Fetches listing details when clicking on marker on map. First makes API get request then continues to arrange data
     in widgets which is added to the Mapview Screen as popup.
-    :param listing_id: id of clicked on listing
-    :type listing_id: int
-    :return: popup
+
+    Parameters
+    ----------
+    listing_id : int
+    parent : widget
+
+    Returns
+    -------
+    popup : widget
     """
 
     # get Data
@@ -138,6 +146,5 @@ def listing_detail(listing_id,parent):
         background_color=[0, 0, 0, 0],
         on_dismiss=parent.reset_marker
         )
-        
-    
+
     return popup

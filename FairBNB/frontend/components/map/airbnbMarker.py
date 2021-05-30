@@ -6,11 +6,17 @@ class AirbnbMarker(MapMarkerPopup):
     """
     This class expands MapMarkerPopup
     It displays a marker for a given latitude, longitude and source file.
-    Arguments:
-        id_listing: integer, id of a listing
-        lon: float, longitude of listing
-        lat: float, latitude of listing
-        source: string, path to source file used to display marker 
+
+    Parameters
+    ----------
+    id_listing : int
+        id of a listing
+    lon : float
+        longitude of listing
+    lat : float
+        latitude of listing
+    source : str
+        path to source file used to display marker
     """
     def __init__(self, id_listing, lon, lat, source):
         super(MapMarkerPopup, self).__init__(lon=lon, lat=lat, source=source)
@@ -27,9 +33,13 @@ class AirbnbMarker(MapMarkerPopup):
         popup = listing_detail(self.id_listing,self)
         popup.open()
 
-    def reset_marker(self,*args):
+    def reset_marker(self, *args):
         """
         resets marker back to default image
+
+        Parameters
+        ----------
+        *args
         """
         self.source = "atlas://frontend/icons/frontendAtlas/marker"
         app=App.get_running_app()
