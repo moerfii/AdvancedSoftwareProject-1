@@ -21,6 +21,7 @@ jobs:
         - cd ..
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker-compose -v
         - ls
         - docker-compose build
         - docker-compose images
