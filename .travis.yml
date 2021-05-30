@@ -32,7 +32,7 @@ jobs:
         - docker-compose build
         - docker-compose images
         - docker-compose push
-    - stage: Build rest api docker image
+    - stage: Build FairBNB docker image
       language: python
       services: 
         - docker
