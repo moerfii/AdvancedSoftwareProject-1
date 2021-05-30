@@ -18,14 +18,12 @@ from frontend.components.ListingSaveButton import ListingSaveButton
 class WebButton(MDIconButton):
     """
     Class defined in order to dynamically define the on_press functionality
-    :param: url_dictionary
-    :return: None
+
+    Parameters
+    ----------
+    url_dictionary : dict
     """
     def __init__(self, *args, url_dictionary=None, **kwargs):
-        """
-        :param url_dictionary:
-        :type url_dictionary: str
-        """
         super(MDIconButton, self).__init__(*args, **kwargs)
         self.url_dictionary = url_dictionary
 
@@ -35,9 +33,11 @@ class WebButton(MDIconButton):
 
 class LocationButton(MDIconButton):
     """
-        Class defined in order to dynamically define the on_press functionality
-        :param: location_dictionary
-        :return: None
+    Class defined in order to dynamically define the on_press functionality
+
+    Parameters
+    ----------
+    location_dictionary : dict
     """
     def __init__(self, *args, location_dictionary=None,listing_id, **kwargs):
         super(MDIconButton, self).__init__(*args, **kwargs)
@@ -47,8 +47,6 @@ class LocationButton(MDIconButton):
     def on_press(self):
         """
         takes lat,long and switches to mapscreen focused on given coordinates
-        :param: latitude
-        :param: longitude
         """
         print("on_press")
         app = App.get_running_app()
