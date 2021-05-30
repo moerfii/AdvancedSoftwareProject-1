@@ -3,7 +3,7 @@ from kivy.app import App
 from .components.map.airbnbMarker import AirbnbMarker
 from .components.map.customCluster import CustomCluster
 from .mapViewOverride.clustered_marker_layer import ClusteredMarkerLayer
-
+import json
 
 class AirbnbMapView(MapView):
     """
@@ -14,6 +14,9 @@ class AirbnbMapView(MapView):
     selected_id = -1
     def __init__(self, *args, **kwargs):
         super(AirbnbMapView, self).__init__(*args, **kwargs)
+        with open("options.json") as f:
+            options = json.loads(f.read())
+            self.limit = options['listing_limit']
 
     def get_airbnb_in_fov(self, *args):
         """
@@ -44,7 +47,7 @@ class AirbnbMapView(MapView):
         cnt = 0
         # add listing to layer, break after 10'000 listings for performance reasons
         for listing in listings[0]:
-            if cnt >= 10000:
+            if cnt >= self.limit:
                 break
             listing_id = listing['id']
             if listing_id in self.listing_id_list:
