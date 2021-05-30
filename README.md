@@ -7,4 +7,4 @@ It consist of "FairBNB/" which contains the code to build the application and "r
 
    
    
-   <img width="710" alt="home" src="https://user-images.githubusercontent.com/40763359/120100812-0d988100-c143-11eb-9a00-ff8f490a46b5.png">
+   <img width="800" alt="home" src="https://user-images.githubusercontent.com/40763359/120100812-0d988100-c143-11eb-9a00-ff8f490a46b5.png">
