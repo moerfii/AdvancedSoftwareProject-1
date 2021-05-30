@@ -36,17 +36,23 @@ Search form takes several inputs to find your best accomodation - neighborhood, 
 * `Interests` You can choose multiple interests that you are looking for during your stays. We pre-assigned specific interests to certain neighborhood and based on this, listings will be returned.   
 * `Price` You can set the range of your budget with slider. If you want to set it precisely, you can manually type the price in the fill-in form as well.   
    
-After fill in the search form and click the search button, it will bring you to **map** page, where you can see the result of listings that fits to you.   
-   
+After fill in the search form and click the search button, it will bring you to **map** page, where you can see the result of listings that fits to you.    
+You can zoom-in and out throug the map to see more/less specific accomodation. You will see the clusters of listing untill you reach the one specific accomodation. When you see the red marker on the map, you can click it then deatil information will pop up. There, you can click the heart icon to add it to the wish list, or you can click magnifier icon which will take you to the airbnb web page of that listing.   
+     
 <img width="800" alt="map" src="https://user-images.githubusercontent.com/40763359/120100815-0d988100-c143-11eb-87ba-e3902917638c.png">    
    
 <img width="800" alt="popup" src="https://user-images.githubusercontent.com/40763359/120100816-0e311780-c143-11eb-84ca-f6377f989508.png">   
     
-You can zoom-in and out throug the map to see more/less specific accomodation. You will see the clusters of listing untill you reach the one specific accomodation. When you see the red marker on the map, you can click it then deatil information will pop up. There, you can click the heart icon to add it to the wish list, or you can click magnifier icon which will take you to the airbnb web page of that listing.   
-   
-Once you are done with the selecting accomodations, you can go to **wish list** menu and see the comparison of listing that you chose.    
+
+Once you are done with selecting accomodations, you can go to **wish list** menu and see the comparison of listing that you chose.    
+We added labels - "best rating" and "best price" that can make your decision easy.  
    
 <img width="800" alt="wishlist" src="https://user-images.githubusercontent.com/40763359/120100811-0cffea80-c143-11eb-88f9-a4e236866986.png">
+     
+     
+Then, enjoy your trip with fairBnB !!! 
+    
+     
    
-We added labels - "best rating" and "best price" that can make your decision easy.   
+ 
 
