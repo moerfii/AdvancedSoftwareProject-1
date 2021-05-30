@@ -19,6 +19,7 @@ jobs:
         - cd ..
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - ls
         - docker-compose build
         - docker-compose images
         - docker push $DOCKER_USERNAME/fairbnb:latest
