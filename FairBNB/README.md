@@ -40,13 +40,13 @@ After fill in the search form and click the search button, it will bring you to 
    
 <img width="800" alt="map" src="https://user-images.githubusercontent.com/40763359/120100815-0d988100-c143-11eb-87ba-e3902917638c.png">    
    
-<img width="710" alt="popup" src="https://user-images.githubusercontent.com/40763359/120100816-0e311780-c143-11eb-84ca-f6377f989508.png">   
+<img width="800" alt="popup" src="https://user-images.githubusercontent.com/40763359/120100816-0e311780-c143-11eb-84ca-f6377f989508.png">   
     
 You can zoom-in and out throug the map to see more/less specific accomodation. You will see the clusters of listing untill you reach the one specific accomodation. When you see the red marker on the map, you can click it then deatil information will pop up. There, you can click the heart icon to add it to the wish list, or you can click magnifier icon which will take you to the airbnb web page of that listing.   
    
 Once you are done with the selecting accomodations, you can go to **wish list** menu and see the comparison of listing that you chose.    
    
-<img width="710" alt="wishlist" src="https://user-images.githubusercontent.com/40763359/120100811-0cffea80-c143-11eb-88f9-a4e236866986.png">
+<img width="800" alt="wishlist" src="https://user-images.githubusercontent.com/40763359/120100811-0cffea80-c143-11eb-88f9-a4e236866986.png">
    
 We added labels - "best rating" and "best price" that can make your decision easy.   
 
