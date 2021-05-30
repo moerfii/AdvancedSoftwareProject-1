@@ -52,7 +52,10 @@ We added labels - "best rating" and "best price" that can make your decision eas
      
 Then, enjoy your trip with fairBnB !!! 
     
-     
+## Additional Options
+In the options.json file one can modify the following options:
+* `rest_api_url`: sets the url for the used rest api. Default = "http:/localhost:8888"
+* `listing_limit`: The maximum amount of listings to render, decrease if performance is unsatisfactory. Default = 10000
    
  
 
